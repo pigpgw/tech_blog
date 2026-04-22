@@ -1,6 +1,6 @@
 ---
 name: ai-usage-recorder
-description: Use when deciding whether an AI-assisted task is worth documenting and when drafting structured Korean AI usage records. Selects only meaningful AI usage cases, separates the user's decisions/work from Codex's concrete contribution, and outputs markdown focused on problem solving, artifacts, validation/repair, rationale, and lessons learned.
+description: Use when deciding whether an AI-assisted task is worth documenting and when drafting structured Korean AI usage records. Selects only meaningful AI usage cases, separates the user's decisions/work from Codex's concrete contribution, and outputs markdown focused on problem solving, prompt engineering, tool/Skill/MCP usage, artifacts, validation/repair, rationale, and lessons learned.
 ---
 
 # AI Usage Recorder
@@ -42,6 +42,9 @@ If it is not worth recording, return only:
 
 - Focus on how the problem was solved, not just that AI was used.
 - Separate what the user decided or did from what Codex produced or changed.
+- Include the user's original prompt or the most important prompt excerpts when they show how the user directed the work.
+- Explain how the user refined the request through conversation, including rejected or corrected AI output.
+- Record the AI harness used, such as Codex Skills, MCP tools, terminal commands, Git, browser checks, CI, or documentation search.
 - Do not invent work, validation, or results that did not happen.
 - Keep the record factual and not exaggerated.
 - Emphasize process, judgment, and correction over only the final result.
@@ -63,6 +66,21 @@ When the case is worth recording, output this markdown structure:
 
 Codex가 한 작업:
 - Codex가 대화 과정에서 제안, 정리, 작성, 수정, 검증한 내용을 작성
+
+프롬프트 원문 / 핵심 질문:
+```txt
+사용자가 실제로 입력한 프롬프트나 핵심 질문을 작성
+긴 대화라면 대표 문장과 요구사항이 바뀐 지점을 중심으로 작성
+```
+
+커뮤니케이션 / 프롬프트 개선 과정:
+- 처음 요청에서 부족했던 점 작성
+- 사용자의 추가 질문, 반박, 수정 요청으로 요구사항이 어떻게 구체화되었는지 작성
+- AI 결과를 보고 사용자가 어떤 부분을 거절, 수정, 보완했는지 작성
+
+사용한 AI 하네스 / 도구:
+- 사용한 Skill, MCP, Git, 터미널, 브라우저 검증, CI, 문서 검색 등을 작성
+- 각 도구를 왜 사용했는지 작성
 
 산출물:
 - 생성된 결과물 작성
@@ -88,10 +106,14 @@ Codex가 한 작업:
 - If validation has not happened yet, write `아직 검증하지 않음` and add a concrete planned validation only when useful.
 - `내가 한 판단 / 작업` is required. Do not make the record look like Codex did everything.
 - `Codex가 한 작업` is required. Name concrete actions, not vague phrases like "AI를 사용했다".
+- `프롬프트 원문 / 핵심 질문` is required when the prompt itself demonstrates prompt engineering or requirement shaping.
+- `커뮤니케이션 / 프롬프트 개선 과정` is required when the output changed through follow-up feedback.
+- `사용한 AI 하네스 / 도구` is required. If no special tool was used, write `일반 Codex 대화만 사용`.
 - `선택 이유` must include at least one of: speed, consistency, maintainability, structure.
 - `배운 점` must be practical enough to apply in future development.
 - Prefer paths when artifacts are files, such as `docs/04-ai-usage-log.md` or `.codex/skills/name/SKILL.md`.
 - Remove low-value narration that only says the work happened.
+- Do not claim MCP, browser validation, CI, or tests were used unless they were actually used.
 
 ## Good Fit Examples
 
