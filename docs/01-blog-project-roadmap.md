@@ -57,8 +57,7 @@
 3. 자기소개 및 이력서 페이지에 기술 스택과 경험 요약을 넣는다.
 4. 블로그 샘플 데이터 타입과 목록/상세 렌더링을 연결한다.
 5. 모바일 화면, SEO, 접근성 기준을 확인한다.
-6. `.env.example`을 추가한다.
-7. Vercel preview deployment 접근 정책을 한 번 더 확인한다.
+6. Vercel preview deployment 접근 정책을 한 번 더 확인한다.
 
 ---
 
@@ -129,7 +128,7 @@
   - [x] `.env*.local`
   - [x] `.vercel`
   - [x] `.DS_Store`
-- [ ] `.env.example` 작성
+- [x] `.env.example` 작성
 - [x] README에 실행 방법 추가
 
 완료 기준:
@@ -139,7 +138,7 @@
 - [x] `npm run format:check`가 통과한다.
 - [x] `npm run type-check`가 통과한다.
 - [x] `npm run build`가 통과한다.
-- [ ] `.gitignore`, `prettier.config.mjs`, `.prettierignore`, `.env.example`이 있다.
+- [x] `.gitignore`, `prettier.config.mjs`, `.prettierignore`, `.env.example`이 있다.
 - [x] README만 보고 로컬 실행이 가능하다.
 
 ---
