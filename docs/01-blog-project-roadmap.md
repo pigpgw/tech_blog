@@ -5,7 +5,9 @@
 관련 문서:
 
 - 프로젝트 README: [README](../README.md)
+- 작업 규칙: [AGENTS](../AGENTS.md)
 - 학습 로드맵: [학습/블로깅 로드맵](./02-study-blogging-roadmap.md)
+- AI 활용 기록: [AI 활용 기록](./04-ai-usage-log.md)
 - Supabase/Admin 후순위 설계: [Supabase ERD 설계](./03-supabase-erd-design.md)
 
 ---
@@ -37,8 +39,8 @@
 
 목표: 개발을 시작할 수 있는 Next.js 환경을 만든다.
 
-- [ ] Git repository 초기화
-- [ ] `main`, `dev` 브랜치 생성
+- [x] Git repository 초기화
+- [x] `main`, `dev` 브랜치 생성
 - [ ] Next.js 프로젝트 생성 옵션 확정
     - [ ] TypeScript
     - [ ] App Router
@@ -90,15 +92,15 @@
     - [ ] `format`
     - [ ] `format:check`
     - [ ] `type-check`
-- [ ] `.gitignore` 작성
-    - [ ] `node_modules`
-    - [ ] `.next`
-    - [ ] `out`
-    - [ ] `dist`
-    - [ ] `coverage`
-    - [ ] `.env*.local`
-    - [ ] `.vercel`
-    - [ ] `.DS_Store`
+- [x] `.gitignore` 작성
+    - [x] `node_modules`
+    - [x] `.next`
+    - [x] `out`
+    - [x] `dist`
+    - [x] `coverage`
+    - [x] `.env*.local`
+    - [x] `.vercel`
+    - [x] `.DS_Store`
 - [ ] `.env.example` 작성
 - [ ] README에 실행 방법 추가
 
