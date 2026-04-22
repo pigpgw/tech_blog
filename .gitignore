@@ -22,6 +22,3 @@ coverage/
 # local editor/system
 .DS_Store
 *.log
-
-# local Codex workspace config
-.codex/
