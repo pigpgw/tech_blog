@@ -48,6 +48,7 @@
 - 로컬 개발 서버, lint, format check, type check, production build를 확인했다.
 - Vercel에 GitHub repository를 연결하고 production URL을 만들었다.
 - Vercel Web Analytics와 Speed Insights 코드를 연결했다.
+- Vercel command override를 끄고 Next.js preset 기본 빌드 설정으로 재배포를 확인했다.
 
 ### 남은 핵심 작업
 
@@ -57,7 +58,7 @@
 4. 블로그 샘플 데이터 타입과 목록/상세 렌더링을 연결한다.
 5. 모바일 화면, SEO, 접근성 기준을 확인한다.
 6. `.env.example`을 추가한다.
-7. Vercel preview deployment 접근 정책과 동작을 한 번 더 확인한다.
+7. Vercel preview deployment 접근 정책을 한 번 더 확인한다.
 
 ---
 
@@ -419,6 +420,7 @@ type Post = PostMeta & {
 - [x] production branch를 `main`으로 설정
 - [x] preview deployment 대상 브랜치 확인
 - [x] build command 확인
+- [x] command override 비활성화
 - [x] production deploy 확인
 - [x] Web Analytics 코드 연결
 - [x] Speed Insights 코드 연결
@@ -438,6 +440,7 @@ GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare
 - Production URL: <https://tech-blog-delta.vercel.app>
 - Production URL 응답: `200 OK` 확인
 - Source branch: `main`
+- Build setting: Next.js preset 기본값 사용
 - Web Analytics: `@vercel/analytics`
 - Speed Insights: `@vercel/speed-insights`
 

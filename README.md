@@ -116,6 +116,7 @@ npm run format
 
 `main` 브랜치에 push되면 Vercel production deployment가 실행된다.
 개별 deployment URL은 배포마다 달라지므로 README에는 production URL만 기록한다.
+Vercel Project Settings의 Build/Output/Install/Development Command override는 끄고, Next.js preset 기본값을 사용한다.
 
 ### 2차 MVP: 관리자와 Supabase 기반 글 관리
 
