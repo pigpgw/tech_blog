@@ -109,13 +109,13 @@ npm run format
 ## 배포
 
 - Production URL: <https://tech-blog-delta.vercel.app>
-- Vercel deployment URL: <https://tech-blog-cm00rukn1-pigpgws-projects.vercel.app>
 - 배포 플랫폼: Vercel
 - production branch: `main`
 - Web Analytics: `@vercel/analytics`
 - Speed Insights: `@vercel/speed-insights`
 
 `main` 브랜치에 push되면 Vercel production deployment가 실행된다.
+개별 deployment URL은 배포마다 달라지므로 README에는 production URL만 기록한다.
 
 ### 2차 MVP: 관리자와 Supabase 기반 글 관리
 

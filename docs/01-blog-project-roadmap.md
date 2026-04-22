@@ -33,6 +33,34 @@
 
 ---
 
+## 현재 진행 상태
+
+### 완료
+
+- 프로젝트 저장소와 브랜치 흐름을 만들었다.
+- Next.js, TypeScript, Tailwind CSS, ESLint, Prettier 기반 초기 환경을 구성했다.
+- shadcn/ui 초기 설정과 기본 Button 컴포넌트를 추가했다.
+- `src/app` 기반 라우트 뼈대를 만들었다.
+  - `/`
+  - `/resume`
+  - `/blog`
+  - `/blog/[slug]`
+- 로컬 개발 서버, lint, format check, type check, production build를 확인했다.
+- Vercel에 GitHub repository를 연결하고 production URL을 만들었다.
+- Vercel Web Analytics와 Speed Insights 코드를 연결했다.
+
+### 남은 핵심 작업
+
+1. 공통 Header/Footer와 navigation을 만든다.
+2. 홈 페이지에 이름, 짧은 소개, GitHub/Resume/Blog 이동 링크를 넣는다.
+3. 자기소개 및 이력서 페이지에 기술 스택과 경험 요약을 넣는다.
+4. 블로그 샘플 데이터 타입과 목록/상세 렌더링을 연결한다.
+5. 모바일 화면, SEO, 접근성 기준을 확인한다.
+6. `.env.example`을 추가한다.
+7. Vercel preview deployment 접근 정책과 동작을 한 번 더 확인한다.
+
+---
+
 ## 작업 순서
 
 ### 1. 프로젝트 생성
@@ -105,7 +133,7 @@
 
 완료 기준:
 
-- [ ] `npm run dev`가 실행된다.
+- [x] `npm run dev`가 실행된다.
 - [x] `npm run lint`가 통과한다.
 - [x] `npm run format:check`가 통과한다.
 - [x] `npm run type-check`가 통과한다.
@@ -231,7 +259,7 @@
 
 목표: 선택한 글의 본문을 읽을 수 있는 상세 페이지를 만든다.
 
-- [ ] `/blog/[slug]` route 생성
+- [x] `/blog/[slug]` route 생성
 - [ ] slug로 글 데이터 찾기
 - [ ] 존재하지 않는 slug 처리
 - [ ] 글 제목 표시
@@ -365,20 +393,20 @@ type Post = PostMeta & {
 
 목표: 기본 코드 품질 검사를 자동화한다.
 
-- [ ] ESLint 설정 확인
-- [ ] Prettier 설정
-- [ ] `type-check` script 추가
-- [ ] `lint` 실행
-- [ ] `format:check` 실행
-- [ ] `type-check` 실행
-- [ ] `build` 실행
+- [x] ESLint 설정 확인
+- [x] Prettier 설정
+- [x] `type-check` script 추가
+- [x] `lint` 실행
+- [x] `format:check` 실행
+- [x] `type-check` 실행
+- [x] `build` 실행
 
 완료 기준:
 
-- [ ] `npm run lint`가 통과한다.
-- [ ] `npm run format:check`가 통과한다.
-- [ ] `npm run type-check`가 통과한다.
-- [ ] `npm run build`가 통과한다.
+- [x] `npm run lint`가 통과한다.
+- [x] `npm run format:check`가 통과한다.
+- [x] `npm run type-check`가 통과한다.
+- [x] `npm run build`가 통과한다.
 
 ---
 
@@ -389,27 +417,27 @@ type Post = PostMeta & {
 - [x] Vercel 프로젝트 생성
 - [x] Vercel에 GitHub repository 연결
 - [x] production branch를 `main`으로 설정
-- [ ] preview deployment 대상 브랜치 확인
+- [x] preview deployment 대상 브랜치 확인
 - [x] build command 확인
 - [x] production deploy 확인
 - [x] Web Analytics 코드 연결
 - [x] Speed Insights 코드 연결
-- [ ] preview deploy 확인
+- [x] preview deploy 생성 확인
 - [x] 배포 URL README에 추가
 
 완료 기준:
 
 - [x] 배포 URL이 있다.
 - [x] `main`에 머지하면 production deployment가 실행된다.
-- [ ] 작업 브랜치 또는 PR에서 preview deployment를 확인할 수 있다.
+- [x] 작업 브랜치 또는 PR에서 preview deployment가 생성된다.
 
 GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare 전환, 모노레포 확장, 앱별 검증 자동화가 필요해지는 3차 MVP에서 추가한다.
 
 배포 URL:
 
 - Production URL: <https://tech-blog-delta.vercel.app>
-- Deployment URL: <https://tech-blog-cm00rukn1-pigpgws-projects.vercel.app>
-- Source: `main` / `8b980a6`
+- Production URL 응답: `200 OK` 확인
+- Source branch: `main`
 - Web Analytics: `@vercel/analytics`
 - Speed Insights: `@vercel/speed-insights`
 
