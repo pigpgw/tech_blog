@@ -1,6 +1,6 @@
 ---
 name: ai-usage-recorder
-description: Use when deciding whether an AI-assisted task is worth documenting and when drafting structured Korean AI usage records. Selects only meaningful AI usage cases, focuses on problem solving, and outputs markdown with problem, AI usage, artifacts, validation/repair, rationale, and lessons learned.
+description: Use when deciding whether an AI-assisted task is worth documenting and when drafting structured Korean AI usage records. Selects only meaningful AI usage cases, separates the user's decisions/work from Codex's concrete contribution, and outputs markdown focused on problem solving, artifacts, validation/repair, rationale, and lessons learned.
 ---
 
 # AI Usage Recorder
@@ -41,6 +41,8 @@ If it is not worth recording, return only:
 ## Writing Principles
 
 - Focus on how the problem was solved, not just that AI was used.
+- Separate what the user decided or did from what Codex produced or changed.
+- Do not invent work, validation, or results that did not happen.
 - Keep the record factual and not exaggerated.
 - Emphasize process, judgment, and correction over only the final result.
 - Use concise and clear Korean sentences.
@@ -53,11 +55,14 @@ When the case is worth recording, output this markdown structure:
 ```md
 ## [제목]
 
-문제:
-- 어떤 상황에서 어떤 문제가 있었는지 구체적으로 작성
+상황 / 문제:
+- 어떤 작업을 하던 중 어떤 문제가 있었는지 작성
 
-AI 활용 방식:
-- 어떤 방식으로 AI를 활용했는지 작성
+내가 한 판단 / 작업:
+- 사용자가 고민한 지점, 결정한 기준, 직접 지시하거나 수정한 내용을 작성
+
+Codex가 한 작업:
+- Codex가 대화 과정에서 제안, 정리, 작성, 수정, 검증한 내용을 작성
 
 산출물:
 - 생성된 결과물 작성
@@ -79,10 +84,14 @@ AI 활용 방식:
 
 ## Section Rules
 
-- `검증 / 수정` is required. If the user did not provide it, infer a realistic validation or correction from the task context.
+- `검증 / 수정` is required, but it must be factual.
+- If validation has not happened yet, write `아직 검증하지 않음` and add a concrete planned validation only when useful.
+- `내가 한 판단 / 작업` is required. Do not make the record look like Codex did everything.
+- `Codex가 한 작업` is required. Name concrete actions, not vague phrases like "AI를 사용했다".
 - `선택 이유` must include at least one of: speed, consistency, maintainability, structure.
 - `배운 점` must be practical enough to apply in future development.
 - Prefer paths when artifacts are files, such as `docs/04-ai-usage-log.md` or `.codex/skills/name/SKILL.md`.
+- Remove low-value narration that only says the work happened.
 
 ## Good Fit Examples
 
