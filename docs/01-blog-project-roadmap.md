@@ -41,57 +41,56 @@
 
 - [x] Git repository 초기화
 - [x] `main`, `dev` 브랜치 생성
-- [ ] Next.js 프로젝트 생성 옵션 확정
-  - [ ] TypeScript
-  - [ ] App Router
-  - [ ] Tailwind CSS
-  - [ ] ESLint
-  - [ ] `src/` 디렉토리 사용
-  - [ ] import alias 설정
-- [ ] `create-next-app` 실행
-- [ ] 기본 의존성 설치
-  - [ ] Next.js
-  - [ ] React
-  - [ ] TypeScript
-  - [ ] Tailwind CSS
-  - [ ] ESLint
-  - [ ] Prettier
-- [ ] Tailwind CSS 설정
-  - [ ] `tailwind.config` 확인
-  - [ ] `postcss.config` 확인
-  - [ ] `globals.css`에 Tailwind 지시문 추가
-  - [ ] 기본 CSS 변수 또는 색상 토큰 정리
-- [ ] ESLint 설정
-  - [ ] Next.js 권장 설정 적용
-  - [ ] TypeScript 규칙 적용
-  - [ ] `lint` script 연결
-  - [ ] `lint:fix` script 연결
-- [ ] Prettier 설정
-  - [ ] `.prettierrc` 작성
-  - [ ] `.prettierignore` 작성
-  - [ ] `eslint-config-prettier` 적용
-  - [ ] `prettier-plugin-tailwindcss` 적용
-  - [ ] `format` script 연결
-  - [ ] `format:check` script 연결
-- [ ] shadcn/ui 초기 설정
-  - [ ] `components.json` 생성
-  - [ ] `cn` 유틸 함수 준비
-  - [ ] 기본 UI 컴포넌트 추가 여부 결정
-- [ ] 기본 폴더 생성
-  - [ ] `src/app`
-  - [ ] `src/components`
-  - [ ] `src/lib`
-  - [ ] `src/data`
-  - [ ] `src/types`
-  - [ ] `content/posts`
-- [ ] npm scripts 정리
-  - [ ] `dev`
-  - [ ] `build`
-  - [ ] `lint`
-  - [ ] `lint:fix`
-  - [ ] `format`
-  - [ ] `format:check`
-  - [ ] `type-check`
+- [x] Next.js 프로젝트 생성 옵션 확정
+  - [x] TypeScript
+  - [x] App Router
+  - [x] Tailwind CSS
+  - [x] ESLint
+  - [x] `src/` 디렉토리 사용
+  - [x] import alias 설정
+- [x] `create-next-app` 실행
+- [x] 기본 의존성 설치
+  - [x] Next.js
+  - [x] React
+  - [x] TypeScript
+  - [x] Tailwind CSS
+  - [x] ESLint
+  - [x] Prettier
+- [x] Tailwind CSS 설정
+  - [x] `postcss.config` 확인
+  - [x] `globals.css`에 Tailwind 지시문 추가
+  - [x] 기본 CSS 변수 또는 색상 토큰 정리
+- [x] ESLint 설정
+  - [x] Next.js 권장 설정 적용
+  - [x] TypeScript 규칙 적용
+  - [x] `lint` script 연결
+  - [x] `lint:fix` script 연결
+- [x] Prettier 설정
+  - [x] `prettier.config.mjs` 작성
+  - [x] `.prettierignore` 작성
+  - [x] `eslint-config-prettier` 적용
+  - [x] `prettier-plugin-tailwindcss` 적용
+  - [x] `format` script 연결
+  - [x] `format:check` script 연결
+- [x] shadcn/ui 초기 설정
+  - [x] `components.json` 생성
+  - [x] `cn` 유틸 함수 준비
+  - [x] 기본 UI 컴포넌트 추가 여부 결정
+- [x] 기본 폴더 생성
+  - [x] `src/app`
+  - [x] `src/components`
+  - [x] `src/hooks`
+  - [x] `src/lib`
+  - [x] `src/utils`
+  - [x] `src/types`
+- [x] npm scripts 정리
+  - [x] `dev`
+  - [x] `build`
+  - [x] `lint`
+  - [x] `lint:fix`
+  - [x] `format`
+  - [x] `format:check`
+  - [x] `type-check`
 - [x] `.gitignore` 작성
   - [x] `node_modules`
   - [x] `.next`
@@ -102,17 +101,17 @@
   - [x] `.vercel`
   - [x] `.DS_Store`
 - [ ] `.env.example` 작성
-- [ ] README에 실행 방법 추가
+- [x] README에 실행 방법 추가
 
 완료 기준:
 
 - [ ] `npm run dev`가 실행된다.
-- [ ] `npm run lint`가 통과한다.
-- [ ] `npm run format:check`가 통과한다.
-- [ ] `npm run type-check`가 통과한다.
-- [ ] `npm run build`가 통과한다.
-- [ ] `.gitignore`, `.prettierrc`, `.prettierignore`, `.env.example`이 있다.
-- [ ] README만 보고 로컬 실행이 가능하다.
+- [x] `npm run lint`가 통과한다.
+- [x] `npm run format:check`가 통과한다.
+- [x] `npm run type-check`가 통과한다.
+- [x] `npm run build`가 통과한다.
+- [ ] `.gitignore`, `prettier.config.mjs`, `.prettierignore`, `.env.example`이 있다.
+- [x] README만 보고 로컬 실행이 가능하다.
 
 ---
 
@@ -388,7 +387,9 @@ type Post = PostMeta & {
 목표: 공개 URL을 만든다.
 
 - [ ] Vercel 프로젝트 생성
-- [ ] GitHub repository 연결
+- [ ] Vercel에 GitHub repository 연결
+- [ ] production branch를 `main`으로 설정
+- [ ] preview deployment 대상 브랜치 확인
 - [ ] build command 확인
 - [ ] production deploy 확인
 - [ ] preview deploy 확인
@@ -399,6 +400,8 @@ type Post = PostMeta & {
 - [ ] 배포 URL이 있다.
 - [ ] `main`에 머지하면 production deployment가 실행된다.
 - [ ] 작업 브랜치 또는 PR에서 preview deployment를 확인할 수 있다.
+
+GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare 전환, 모노레포 확장, 앱별 검증 자동화가 필요해지는 3차 MVP에서 추가한다.
 
 ---
 

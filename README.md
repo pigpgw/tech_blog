@@ -65,6 +65,37 @@
   - 별도 React Native 앱은 만들지 않는다.
   - 모바일 앱이 필요한 이유가 명확해질 때 PWA 또는 React Native를 비교 검토한다.
 
+## 로컬 실행 방법
+
+### 설치
+
+```bash
+npm install
+```
+
+### 개발 서버 실행
+
+```bash
+npm run dev
+```
+
+개발 서버 실행 후 브라우저에서 `http://localhost:3000`으로 접속한다.
+
+### 품질 검증
+
+```bash
+npm run lint
+npm run format:check
+npm run type-check
+npm run build
+```
+
+### 포맷팅
+
+```bash
+npm run format
+```
+
 ### 2차 MVP: 관리자와 Supabase 기반 글 관리
 
 - Supabase 연동
@@ -281,6 +312,8 @@ npm run lint
 npm run lint:fix
 npm run format
 npm run format:check
+npm run type-check
+npm run build
 ```
 
 ## 프론트엔드 디렉토리 구조
@@ -325,25 +358,24 @@ packages/
 └─ config/
 ```
 
-## CI/CD
-
-CI/CD는 GitHub Actions를 중심으로 구성한다.
+## 배포와 검증 흐름
 
 배포 플랫폼은 MVP 단계에 따라 다르게 사용한다.
 
 - 1차 MVP: Vercel
   - Next.js 블로그를 빠르게 배포하기 위해 Vercel을 사용한다.
-  - `main` 브랜치에 머지되면 production deployment가 실행된다.
-  - 작업 브랜치 또는 PR에서는 preview deployment로 배포 결과를 확인한다.
+  - Vercel에 GitHub repository를 연결한다.
+  - `main` 브랜치에 머지되면 production deployment가 실행되게 한다.
+  - 작업 브랜치 또는 PR에서는 Vercel preview deployment로 배포 결과를 확인한다.
+  - GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다.
 - 3차 MVP: Cloudflare 검토
   - profile, blog, resume, craft가 독립 앱으로 나뉘면 Cloudflare Pages Functions로 경로 기반 프록시를 검토한다.
+  - Cloudflare 전환 또는 모노레포 검증 자동화가 필요해질 때 GitHub Actions를 도입한다.
   - CDN, edge runtime, 비용 구조, 캐싱 전략이 중요해질 때 전환 여부를 판단한다.
 
-### GitHub Actions
+### 코드 검증
 
-배포 플랫폼과 별개로 코드 검증은 GitHub Actions에서 수행한다.
-
-작업 브랜치 push 또는 PR 생성 시 다음 검증을 실행한다.
+1차 MVP에서는 로컬에서 다음 검증을 실행한다.
 
 - `lint`: ESLint 검사
 - `format:check`: Prettier 포맷 검사
@@ -351,12 +383,14 @@ CI/CD는 GitHub Actions를 중심으로 구성한다.
 - `test`: 단위 테스트
 - `build`: Next.js 빌드 검증
 
+GitHub Actions는 3차 MVP에서 Cloudflare, 모노레포, 앱별 배포 검증이 필요해질 때 추가한다.
+
 ### 브랜치 흐름
 
 - 기능 개발, 버그 수정, 문서 수정은 작업 브랜치에서 진행한다.
 - 작업 중에는 필요할 때마다 작업 브랜치에 push한다.
 - 기능 단위 작업이 완료되면 작업 브랜치에서 `dev`로 PR을 생성한다.
-- PR에서 GitHub Actions 검증, 충돌 여부, Vercel preview deployment를 확인한다.
+- PR에서 충돌 여부와 Vercel preview deployment를 확인한다.
 - 검증이 끝난 PR만 `dev`로 머지한다.
 - 배포 가능한 상태가 되면 `dev`를 `main`으로 머지한다.
 - `main`에 반영되면 production deployment가 실행된다.
@@ -365,5 +399,5 @@ CI/CD는 GitHub Actions를 중심으로 구성한다.
 
 - 모든 커밋마다 PR을 만들지는 않는다.
 - 기능 단위 작업이 완료되어 `dev`에 머지할 때 PR을 사용한다.
-- PR에서는 GitHub Actions 검증, 충돌 여부, preview deployment를 확인한다.
+- PR에서는 충돌 여부와 preview deployment를 확인한다.
 - 간단한 문서 수정이나 오타 수정은 PR 없이 처리할 수 있다.
