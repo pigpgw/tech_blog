@@ -42,65 +42,65 @@
 - [x] Git repository 초기화
 - [x] `main`, `dev` 브랜치 생성
 - [ ] Next.js 프로젝트 생성 옵션 확정
-    - [ ] TypeScript
-    - [ ] App Router
-    - [ ] Tailwind CSS
-    - [ ] ESLint
-    - [ ] `src/` 디렉토리 사용
-    - [ ] import alias 설정
+  - [ ] TypeScript
+  - [ ] App Router
+  - [ ] Tailwind CSS
+  - [ ] ESLint
+  - [ ] `src/` 디렉토리 사용
+  - [ ] import alias 설정
 - [ ] `create-next-app` 실행
 - [ ] 기본 의존성 설치
-    - [ ] Next.js
-    - [ ] React
-    - [ ] TypeScript
-    - [ ] Tailwind CSS
-    - [ ] ESLint
-    - [ ] Prettier
+  - [ ] Next.js
+  - [ ] React
+  - [ ] TypeScript
+  - [ ] Tailwind CSS
+  - [ ] ESLint
+  - [ ] Prettier
 - [ ] Tailwind CSS 설정
-    - [ ] `tailwind.config` 확인
-    - [ ] `postcss.config` 확인
-    - [ ] `globals.css`에 Tailwind 지시문 추가
-    - [ ] 기본 CSS 변수 또는 색상 토큰 정리
+  - [ ] `tailwind.config` 확인
+  - [ ] `postcss.config` 확인
+  - [ ] `globals.css`에 Tailwind 지시문 추가
+  - [ ] 기본 CSS 변수 또는 색상 토큰 정리
 - [ ] ESLint 설정
-    - [ ] Next.js 권장 설정 적용
-    - [ ] TypeScript 규칙 적용
-    - [ ] `lint` script 연결
-    - [ ] `lint:fix` script 연결
+  - [ ] Next.js 권장 설정 적용
+  - [ ] TypeScript 규칙 적용
+  - [ ] `lint` script 연결
+  - [ ] `lint:fix` script 연결
 - [ ] Prettier 설정
-    - [ ] `.prettierrc` 작성
-    - [ ] `.prettierignore` 작성
-    - [ ] `eslint-config-prettier` 적용
-    - [ ] `prettier-plugin-tailwindcss` 적용
-    - [ ] `format` script 연결
-    - [ ] `format:check` script 연결
+  - [ ] `.prettierrc` 작성
+  - [ ] `.prettierignore` 작성
+  - [ ] `eslint-config-prettier` 적용
+  - [ ] `prettier-plugin-tailwindcss` 적용
+  - [ ] `format` script 연결
+  - [ ] `format:check` script 연결
 - [ ] shadcn/ui 초기 설정
-    - [ ] `components.json` 생성
-    - [ ] `cn` 유틸 함수 준비
-    - [ ] 기본 UI 컴포넌트 추가 여부 결정
+  - [ ] `components.json` 생성
+  - [ ] `cn` 유틸 함수 준비
+  - [ ] 기본 UI 컴포넌트 추가 여부 결정
 - [ ] 기본 폴더 생성
-    - [ ] `src/app`
-    - [ ] `src/components`
-    - [ ] `src/lib`
-    - [ ] `src/data`
-    - [ ] `src/types`
-    - [ ] `content/posts`
+  - [ ] `src/app`
+  - [ ] `src/components`
+  - [ ] `src/lib`
+  - [ ] `src/data`
+  - [ ] `src/types`
+  - [ ] `content/posts`
 - [ ] npm scripts 정리
-    - [ ] `dev`
-    - [ ] `build`
-    - [ ] `lint`
-    - [ ] `lint:fix`
-    - [ ] `format`
-    - [ ] `format:check`
-    - [ ] `type-check`
+  - [ ] `dev`
+  - [ ] `build`
+  - [ ] `lint`
+  - [ ] `lint:fix`
+  - [ ] `format`
+  - [ ] `format:check`
+  - [ ] `type-check`
 - [x] `.gitignore` 작성
-    - [x] `node_modules`
-    - [x] `.next`
-    - [x] `out`
-    - [x] `dist`
-    - [x] `coverage`
-    - [x] `.env*.local`
-    - [x] `.vercel`
-    - [x] `.DS_Store`
+  - [x] `node_modules`
+  - [x] `.next`
+  - [x] `out`
+  - [x] `dist`
+  - [x] `coverage`
+  - [x] `.env*.local`
+  - [x] `.vercel`
+  - [x] `.DS_Store`
 - [ ] `.env.example` 작성
 - [ ] README에 실행 방법 추가
 
@@ -122,8 +122,8 @@
 
 - [ ] App Router 기본 레이아웃 구성
 - [ ] Header 구현
-    - [ ] 좌측: 이름
-    - [ ] 우측: `Home`, `Resume`, `Blog`, `GitHub`
+  - [ ] 좌측: 이름
+  - [ ] 우측: `Home`, `Resume`, `Blog`, `GitHub`
 - [ ] Footer 구현
 - [ ] 페이지 공통 최대 너비 설정
 - [ ] 모바일에서 Header가 깨지지 않게 처리
@@ -168,12 +168,12 @@
 목표: 사용해온 기술, 경력/프로젝트, 관심 분야를 짧고 명확하게 보여준다.
 
 - [ ] 사용해온 기술 스택 정리
-    - [ ] JavaScript
-    - [ ] TypeScript
-    - [ ] React
-    - [ ] Next.js
-    - [ ] HTML/CSS
-    - [ ] Git
+  - [ ] JavaScript
+  - [ ] TypeScript
+  - [ ] React
+  - [ ] Next.js
+  - [ ] HTML/CSS
+  - [ ] Git
 - [ ] 해온 학습과 프로젝트 경험 정리
 - [ ] 경력 또는 활동 이력 정리
 - [ ] 관심 분야 정리
@@ -267,17 +267,17 @@
 
 ```ts
 type PostMeta = {
-    slug: string;
-    title: string;
-    description: string;
-    publishedAt: string;
-    category: string;
-    tags: string[];
-    draft: boolean;
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  category: string;
+  tags: string[];
+  draft: boolean;
 };
 
 type Post = PostMeta & {
-    content: string;
+  content: string;
 };
 ```
 

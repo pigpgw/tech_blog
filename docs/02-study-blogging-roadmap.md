@@ -13,13 +13,13 @@
 
 공고와 면접에서 반복되는 핵심 역량만 먼저 준비한다.
 
-| 우선순위 | 키워드 | 준비 방향 |
-| --- | --- | --- |
-| 필수 | HTML, CSS, JavaScript, TypeScript, React, Git, REST API, 반응형 | 반드시 공부하고 블로그 글과 코드로 증명한다. |
-| 중요 | Next.js, SSR/CSR, SEO, 성능, 상태관리, 테스트, CI/CD | 블로그 프로젝트에 적용하고 선택 기준을 설명한다. |
-| 확장 | Supabase/Auth, Admin, Profile/Blog/Resume/Craft, Monorepo, Cloudflare | 블로그가 안정된 뒤 관리자 글 관리와 모노레포 플랫폼으로 확장한다. |
-| 차별화 | 접근성, 번들 최적화, 운영/모니터링, 코드리뷰/문서화, AI 활용 | 실제 사례 1개 이상을 남긴다. |
-| 후순위 | PWA, React Native, WebGL, Docker/AWS 심화, GraphQL 심화 | 반응형 웹으로 부족한 요구가 생길 때만 한다. |
+| 우선순위 | 키워드                                                                | 준비 방향                                                         |
+| -------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 필수     | HTML, CSS, JavaScript, TypeScript, React, Git, REST API, 반응형       | 반드시 공부하고 블로그 글과 코드로 증명한다.                      |
+| 중요     | Next.js, SSR/CSR, SEO, 성능, 상태관리, 테스트, CI/CD                  | 블로그 프로젝트에 적용하고 선택 기준을 설명한다.                  |
+| 확장     | Supabase/Auth, Admin, Profile/Blog/Resume/Craft, Monorepo, Cloudflare | 블로그가 안정된 뒤 관리자 글 관리와 모노레포 플랫폼으로 확장한다. |
+| 차별화   | 접근성, 번들 최적화, 운영/모니터링, 코드리뷰/문서화, AI 활용          | 실제 사례 1개 이상을 남긴다.                                      |
+| 후순위   | PWA, React Native, WebGL, Docker/AWS 심화, GraphQL 심화               | 반응형 웹으로 부족한 요구가 생길 때만 한다.                       |
 
 ### 인프랩 공고에서 특히 보이는 것
 
@@ -338,20 +338,20 @@
 
 ## 3. 12주 학습 운영안
 
-| 주차 | 목표 | 블로그 산출물 |
-| --- | --- | --- |
-| 1주차 | 브라우저, HTML/CSS, 접근성 | 시맨틱 HTML 또는 브라우저 렌더링 글 1개 |
-| 2주차 | JavaScript 이벤트, 비동기 | debounce/throttle 글 1개 |
-| 3주차 | TypeScript 모델링 | Post/Category/Tag 모델링 글 1개 |
-| 4주차 | React props/state/hooks | 상태 위치 결정 글 1개 |
-| 5주차 | React effect, cleanup, 렌더링 | useEffect cleanup 또는 setState 글 1개 |
-| 6주차 | Next.js 라우팅, 렌더링 | CSR/SSR/SSG 비교 글 1개 |
-| 7주차 | SEO, metadata, sitemap | SEO 구성 글 1개 |
-| 8주차 | HTTP, REST, server state | 서버 상태와 클라이언트 상태 글 1개 |
-| 9주차 | TanStack Query, Zustand | 상태관리 선택 기준 글 1개 |
-| 10주차 | 성능 측정, 가상 리스트 | Lighthouse 또는 가상 리스트 글 1개 |
-| 11주차 | 테스트, CI, 배포 문제 | RTL/Actions 또는 chunk 오류 글 1개 |
-| 12주차 | AI 활용, 이력서 문장화 | AI 검증 글 또는 이력서 문장화 글 1개 |
+| 주차   | 목표                          | 블로그 산출물                           |
+| ------ | ----------------------------- | --------------------------------------- |
+| 1주차  | 브라우저, HTML/CSS, 접근성    | 시맨틱 HTML 또는 브라우저 렌더링 글 1개 |
+| 2주차  | JavaScript 이벤트, 비동기     | debounce/throttle 글 1개                |
+| 3주차  | TypeScript 모델링             | Post/Category/Tag 모델링 글 1개         |
+| 4주차  | React props/state/hooks       | 상태 위치 결정 글 1개                   |
+| 5주차  | React effect, cleanup, 렌더링 | useEffect cleanup 또는 setState 글 1개  |
+| 6주차  | Next.js 라우팅, 렌더링        | CSR/SSR/SSG 비교 글 1개                 |
+| 7주차  | SEO, metadata, sitemap        | SEO 구성 글 1개                         |
+| 8주차  | HTTP, REST, server state      | 서버 상태와 클라이언트 상태 글 1개      |
+| 9주차  | TanStack Query, Zustand       | 상태관리 선택 기준 글 1개               |
+| 10주차 | 성능 측정, 가상 리스트        | Lighthouse 또는 가상 리스트 글 1개      |
+| 11주차 | 테스트, CI, 배포 문제         | RTL/Actions 또는 chunk 오류 글 1개      |
+| 12주차 | AI 활용, 이력서 문장화        | AI 검증 글 또는 이력서 문장화 글 1개    |
 
 12주 이후 확장:
 

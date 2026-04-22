@@ -121,22 +121,22 @@ erDiagram
 
 ### `admin_users`
 
-| 컬럼 | 타입 | 설명 |
-|---|---|---|
-| `user_id` | `uuid` | Supabase Auth user id |
-| `email` | `text` | 관리자 이메일 |
-| `created_at` | `timestamptz` | 생성일 |
+| 컬럼         | 타입          | 설명                  |
+| ------------ | ------------- | --------------------- |
+| `user_id`    | `uuid`        | Supabase Auth user id |
+| `email`      | `text`        | 관리자 이메일         |
+| `created_at` | `timestamptz` | 생성일                |
 
 ### `categories`
 
-| 컬럼 | 타입 | 설명 |
-|---|---|---|
-| `id` | `uuid` | PK |
-| `slug` | `text` | URL용 고유 값 |
-| `name` | `text` | 화면 표시 이름 |
-| `description` | `text` | 설명 |
-| `sort_order` | `int` | 정렬 |
-| `created_at` | `timestamptz` | 생성일 |
+| 컬럼          | 타입          | 설명           |
+| ------------- | ------------- | -------------- |
+| `id`          | `uuid`        | PK             |
+| `slug`        | `text`        | URL용 고유 값  |
+| `name`        | `text`        | 화면 표시 이름 |
+| `description` | `text`        | 설명           |
+| `sort_order`  | `int`         | 정렬           |
+| `created_at`  | `timestamptz` | 생성일         |
 
 초기 예시:
 
@@ -151,19 +151,19 @@ erDiagram
 
 ### `posts`
 
-| 컬럼 | 타입 | 설명 |
-|---|---|---|
-| `id` | `uuid` | PK |
-| `category_id` | `uuid` | `categories.id` |
-| `author_id` | `uuid` | `admin_users.user_id` |
-| `slug` | `text` | URL용 고유 값 |
-| `title` | `text` | 제목 |
-| `description` | `text` | 요약 |
-| `content` | `text` | Markdown/MDX 본문 |
-| `status` | `text` | `draft`, `published`, `archived` |
-| `published_at` | `timestamptz` | 발행일 |
-| `created_at` | `timestamptz` | 생성일 |
-| `updated_at` | `timestamptz` | 수정일 |
+| 컬럼           | 타입          | 설명                             |
+| -------------- | ------------- | -------------------------------- |
+| `id`           | `uuid`        | PK                               |
+| `category_id`  | `uuid`        | `categories.id`                  |
+| `author_id`    | `uuid`        | `admin_users.user_id`            |
+| `slug`         | `text`        | URL용 고유 값                    |
+| `title`        | `text`        | 제목                             |
+| `description`  | `text`        | 요약                             |
+| `content`      | `text`        | Markdown/MDX 본문                |
+| `status`       | `text`        | `draft`, `published`, `archived` |
+| `published_at` | `timestamptz` | 발행일                           |
+| `created_at`   | `timestamptz` | 생성일                           |
+| `updated_at`   | `timestamptz` | 수정일                           |
 
 필수 제약:
 
@@ -173,20 +173,20 @@ erDiagram
 
 ### `tags`
 
-| 컬럼 | 타입 | 설명 |
-|---|---|---|
-| `id` | `uuid` | PK |
-| `slug` | `text` | URL용 고유 값 |
-| `name` | `text` | 화면 표시 이름 |
-| `description` | `text` | 설명 |
-| `created_at` | `timestamptz` | 생성일 |
+| 컬럼          | 타입          | 설명           |
+| ------------- | ------------- | -------------- |
+| `id`          | `uuid`        | PK             |
+| `slug`        | `text`        | URL용 고유 값  |
+| `name`        | `text`        | 화면 표시 이름 |
+| `description` | `text`        | 설명           |
+| `created_at`  | `timestamptz` | 생성일         |
 
 ### `post_tags`
 
-| 컬럼 | 타입 | 설명 |
-|---|---|---|
+| 컬럼      | 타입   | 설명       |
+| --------- | ------ | ---------- |
 | `post_id` | `uuid` | `posts.id` |
-| `tag_id` | `uuid` | `tags.id` |
+| `tag_id`  | `uuid` | `tags.id`  |
 
 필수 제약:
 
