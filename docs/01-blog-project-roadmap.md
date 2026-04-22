@@ -386,22 +386,32 @@ type Post = PostMeta & {
 
 목표: 공개 URL을 만든다.
 
-- [ ] Vercel 프로젝트 생성
-- [ ] Vercel에 GitHub repository 연결
-- [ ] production branch를 `main`으로 설정
+- [x] Vercel 프로젝트 생성
+- [x] Vercel에 GitHub repository 연결
+- [x] production branch를 `main`으로 설정
 - [ ] preview deployment 대상 브랜치 확인
-- [ ] build command 확인
-- [ ] production deploy 확인
+- [x] build command 확인
+- [x] production deploy 확인
+- [x] Web Analytics 코드 연결
+- [x] Speed Insights 코드 연결
 - [ ] preview deploy 확인
-- [ ] 배포 URL README에 추가
+- [x] 배포 URL README에 추가
 
 완료 기준:
 
-- [ ] 배포 URL이 있다.
-- [ ] `main`에 머지하면 production deployment가 실행된다.
+- [x] 배포 URL이 있다.
+- [x] `main`에 머지하면 production deployment가 실행된다.
 - [ ] 작업 브랜치 또는 PR에서 preview deployment를 확인할 수 있다.
 
 GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare 전환, 모노레포 확장, 앱별 검증 자동화가 필요해지는 3차 MVP에서 추가한다.
+
+배포 URL:
+
+- Production URL: <https://tech-blog-delta.vercel.app>
+- Deployment URL: <https://tech-blog-cm00rukn1-pigpgws-projects.vercel.app>
+- Source: `main` / `8b980a6`
+- Web Analytics: `@vercel/analytics`
+- Speed Insights: `@vercel/speed-insights`
 
 ---
 

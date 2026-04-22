@@ -67,6 +67,16 @@
 
 ## 로컬 실행 방법
 
+### Node.js 버전
+
+이 프로젝트는 Node.js `22.x`를 기준으로 실행한다.
+
+```bash
+nvm use
+```
+
+Node.js `24.x`도 사용할 수 있지만, 1차 MVP에서는 최신 기능보다 안정적인 LTS 환경이 더 중요하므로 Vercel과 로컬 기준을 `22.x`로 맞춘다.
+
 ### 설치
 
 ```bash
@@ -95,6 +105,17 @@ npm run build
 ```bash
 npm run format
 ```
+
+## 배포
+
+- Production URL: <https://tech-blog-delta.vercel.app>
+- Vercel deployment URL: <https://tech-blog-cm00rukn1-pigpgws-projects.vercel.app>
+- 배포 플랫폼: Vercel
+- production branch: `main`
+- Web Analytics: `@vercel/analytics`
+- Speed Insights: `@vercel/speed-insights`
+
+`main` 브랜치에 push되면 Vercel production deployment가 실행된다.
 
 ### 2차 MVP: 관리자와 Supabase 기반 글 관리
 
