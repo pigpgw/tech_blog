@@ -1,7 +1,8 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import "./globals.css";
+import { Header } from "@/components/layout/Header";
 
 export const metadata: Metadata = {
   title: "기술 블로그",
@@ -16,7 +17,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full font-sans antialiased">
       <body className="flex min-h-full flex-col">
-        {children}
+        <main className="min-h-screen bg-[#f8fafc] text-slate-950">
+          <div className="mx-auto flex min-h-full w-full max-w-3xl flex-col px-5 py-6 sm:px-8 sm:py-8">
+            <Header />
+            {children}
+          </div>
+        </main>
         <Analytics />
         <SpeedInsights />
       </body>
