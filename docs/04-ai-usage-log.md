@@ -242,4 +242,70 @@ mvp 1차용 퍼블리싱 해줘 Home에 전부 해줘 다른 컴포넌트로 분
 - 초기 MVP에서는 컴포넌트 분리보다 방문자가 바로 이해하는 정보 구조를 먼저 만드는 편이 효율적이다.
 - 퍼블리싱 후에는 시각 결과만 보지 말고 빌드까지 돌려서 아이콘 export 같은 사소한 의존성 문제도 바로 정리해야 한다.
 - 레퍼런스를 찾을 때는 막연히 "예쁘게"보다, 배경색 톤, 카드 밀도, CTA 대비처럼 바로 코드로 옮길 수 있는 기준으로 쪼개서 보는 편이 수정 속도가 빠르다.
+
+---
+
+## 파일 기반 블로그 콘텐츠 20개를 생성한 작업
+
+상황 / 문제:
+
+- 블로그 목록과 상세 페이지가 Markdown 콘텐츠를 읽는 구조로 바뀌는 중이었고, 실제 목록에서 확인할 수 있는 다양한 글 데이터가 부족했다.
+- 기존 `content/blog`에는 중복된 slug와 비슷한 내용의 짧은 샘플만 있어 목록, 카테고리, 상세 페이지 확인에 한계가 있었다.
+
+내가 한 판단 / 작업:
+
+- 사용자는 `content`에 블로그 글을 약 20개 작성하라고 요청했고, 각 글이 서로 다른 내용까지 갖추기를 요구했다.
+- 앞선 대화에서 `BlogPost`, `BlogPostDetail`, slug/id 사용 방식, frontmatter 검증 기준을 조정하며 Markdown 기반 콘텐츠 구조를 잡았다.
+
+Codex가 한 작업:
+
+- 기존 `content/blog/debounce.md`, `content/blog/tailwind.md`의 중복 샘플을 제거하고, 서로 다른 파일명과 slug를 가진 Markdown 글 20개를 작성했다.
+- 각 글에 `slug`, `title`, `description`, `publishedAt`, `category` frontmatter를 넣고, 본문은 여러 섹션으로 구성했다.
+- 목록 카드에서 slug 기반 링크를 사용하도록 정리하고, Markdown frontmatter 검증 함수와 타입 파일 분리 상태가 빌드 가능한지 확인했다.
+
+프롬프트 원문 / 핵심 질문:
+
+```txt
+content에 블로그 글 20개정도 써줘 다 다르게 내용까지 채워서
+```
+
+커뮤니케이션 / 프롬프트 개선 과정:
+
+- 사용자는 먼저 `gray-matter` 설치, `BlogPost` 타입 변경, `BlogPostDetail` 분리, frontmatter 타입 가드 구현을 순서대로 질문했다.
+- Codex는 `readFileSync`와 `readdirSync` 사용 위치, `unknown` 기반 타입 가드, `throw`를 통한 검증 실패 처리 방식을 설명했다.
+- 최종 요청에서 사용자는 실제 콘텐츠 생성을 요구했고, Codex는 기존 중복 샘플을 20개 글로 교체했다.
+
+사용한 AI 하네스 / 도구:
+
+- `ai-usage-recorder`: 이번 콘텐츠 대량 생성과 구조 정리 과정이 기록할 가치가 있는지 판단하고 문서 형식을 맞추기 위해 사용
+- 터미널: `find`, `rg`, `npm run build`, `npm run type-check`, `npm run lint`
+- `apply_patch`: `content/blog` Markdown 파일, 블로그 로더, 목록 페이지, AI 활용 로그 수정
+
+산출물:
+
+- `content/blog/*.md` 20개
+- `src/types/blog.ts`
+- `src/lib/blog-posts.ts`
+- `src/app/blog/page.tsx`
+- `src/app/blog/[slug]/page.tsx`
+- `docs/04-ai-usage-log.md`
+
+검증 / 수정:
+
+- Markdown 파일 수가 20개인지 확인했다.
+- `rg`로 slug 목록을 확인하고 중복 slug가 없음을 확인했다.
+- `npm run build`, `npm run type-check`, `npm run lint`를 실행해 통과를 확인했다.
+- 초기에 24개 글이 생성되어 요청 범위보다 많았고, 보조 주제 4개를 삭제해 20개로 맞췄다.
+
+선택 이유:
+
+- 다양한 샘플 콘텐츠를 한 번에 준비하면 목록, 상세, 카테고리 표시를 빠르게 검증할 수 있다.
+- frontmatter 형식을 모든 글에 일관되게 적용하면 이후 검색, 필터, 정렬 기능을 붙일 때 유지보수하기 쉽다.
+- 파일 기반 콘텐츠는 초기 MVP에서 속도가 빠르고, 저장소 diff로 글 변경 내역을 확인하기 쉽다.
+
+배운 점:
+
+- Markdown 기반 블로그는 콘텐츠 수가 늘어날수록 frontmatter 검증과 slug 중복 확인이 중요해진다.
+- 샘플 데이터라도 실제 화면에서 읽을 수 있는 수준으로 작성해야 목록과 상세 UI의 밀도, 줄바꿈, 카테고리 분포를 제대로 확인할 수 있다.
+- 대량 생성 작업은 결과 개수와 중복 여부를 반드시 별도 명령으로 검증하는 편이 안전하다.
 ```
