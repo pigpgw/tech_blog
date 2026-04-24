@@ -21,46 +21,6 @@
 - `/blog`: 블로그 목록
 - `/blog/[slug]`: 블로그 상세
 
-1차 MVP에서 하지 않는다.
-
-- 검색
-- 태그/카테고리 페이지
-- 다크모드
-- 관리자 페이지
-- DB 연동
-- 모바일 앱
-- 모노레포
-
----
-
-## 현재 진행 상태
-
-### 완료
-
-- 프로젝트 저장소와 브랜치 흐름을 만들었다.
-- Next.js, TypeScript, Tailwind CSS, ESLint, Prettier 기반 초기 환경을 구성했다.
-- shadcn/ui 초기 설정과 기본 Button 컴포넌트를 추가했다.
-- `src/app` 기반 라우트 뼈대를 만들었다.
-  - `/`
-  - `/resume`
-  - `/blog`
-  - `/blog/[slug]`
-- 로컬 개발 서버, lint, format check, type check, production build를 확인했다.
-- Vercel에 GitHub repository를 연결하고 production URL을 만들었다.
-- Vercel Web Analytics와 Speed Insights 코드를 연결했다.
-- Vercel command override를 끄고 Next.js preset 기본 빌드 설정으로 재배포를 확인했다.
-
-### 남은 핵심 작업
-
-1. 공통 Header/Footer와 navigation을 만든다.
-2. 홈 페이지에 이름, 짧은 소개, GitHub/Resume/Blog 이동 링크를 넣는다.
-3. 자기소개 및 이력서 페이지에 기술 스택과 경험 요약을 넣는다.
-4. 블로그 샘플 데이터 타입과 목록/상세 렌더링을 연결한다.
-5. 모바일 화면, SEO, 접근성 기준을 확인한다.
-6. Vercel preview deployment 접근 정책을 한 번 더 확인한다.
-
----
-
 ## 작업 순서
 
 ### 1. 프로젝트 생성
@@ -147,20 +107,18 @@
 
 목표: 모든 페이지가 같은 기본 구조를 사용하게 만든다.
 
-- [ ] App Router 기본 레이아웃 구성
-- [ ] Header 구현
-  - [ ] 좌측: 이름
-  - [ ] 우측: `Home`, `Resume`, `Blog`, `GitHub`
-- [ ] Footer 구현
-- [ ] 페이지 공통 최대 너비 설정
-- [ ] 모바일에서 Header가 깨지지 않게 처리
+- [x] App Router 기본 레이아웃 구성
+- [x] Header 구현
+  - [x] 좌측: 이름
+  - [x] 우측: `Home`, `Resume`, `Blog`, `GitHub`
+- [x] Footer 구현
+- [x] 페이지 공통 최대 너비 설정
 - [ ] 현재 페이지 표시 처리
 
 완료 기준:
 
-- [ ] `/`, `/resume`, `/blog`, `/blog/[slug]`에서 같은 Header/Footer가 보인다.
-- [ ] 모바일에서도 navigation을 사용할 수 있다.
-- [ ] GitHub 링크는 외부 링크로 동작한다.
+- [x] `/`, `/resume`, `/blog`, `/blog/[slug]`에서 같은 Header/Footer가 보인다.
+- [x] GitHub 링크는 외부 링크로 동작한다.
 
 ---
 
@@ -168,200 +126,104 @@
 
 목표: 방문자가 첫 화면에서 누구의 블로그인지 이해하고 다음 페이지로 이동할 수 있게 한다.
 
-- [ ] 이름 표시
-- [ ] 어떤 개발자인지 짧게 소개
-- [ ] GitHub 이동 링크 추가
-- [ ] Resume 이동 링크 추가
-- [ ] Blog 이동 버튼 추가
-- [ ] 모바일 화면에서 문구와 버튼이 겹치지 않게 처리
+- [x] 이름 표시
+- [x] 짧은 소개
+- [x] GitHub 이동 링크 추가
+- [x] Resume 이동 링크 추가
+- [x] Blog 이동 버튼 추가
 
 완료 기준:
 
-- [ ] 첫 화면에서 이름과 소개가 바로 보인다.
-- [ ] GitHub, Resume, Blog로 이동할 수 있다.
-- [ ] 과한 랜딩 페이지가 아니라 빠르게 탐색 가능한 화면이다.
-
-학습 포인트:
-
-- semantic HTML
-- link와 button 구분
-- responsive layout
-- Tailwind spacing
-
----
+- [x] 첫 화면에서 이름과 소개가 바로 보인다.
+- [x] GitHub, Resume, Blog로 이동할 수 있다.
+- [x] 과한 랜딩 페이지가 아니라 빠르게 탐색 가능한 화면이다.
 
 ### 4. 자기소개 및 이력서 페이지 만들기
 
 목표: 사용해온 기술, 경력/프로젝트, 관심 분야를 짧고 명확하게 보여준다.
 
-- [ ] 사용해온 기술 스택 정리
-  - [ ] JavaScript
-  - [ ] TypeScript
-  - [ ] React
-  - [ ] Next.js
-  - [ ] HTML/CSS
-  - [ ] Git
-- [ ] 해온 학습과 프로젝트 경험 정리
-- [ ] 경력 또는 활동 이력 정리
+- [x] 사용해온 기술 스택 정리
+  - [x] JavaScript
+  - [x] TypeScript
+  - [x] React
+  - [x] Next.js
+  - [x] HTML/CSS
+  - [x] Git
+- [x] 해온 학습과 프로젝트 경험 정리
+- [x] 경력 또는 활동 이력 정리
 - [ ] 관심 분야 정리
-- [ ] GitHub 이동 링크 추가
-- [ ] Blog 이동 링크 추가
-- [ ] 모바일에서 긴 기술명과 문장이 넘치지 않게 처리
+- [x] GitHub 이동 링크 추가
+- [x] Blog 이동 링크 추가
 
 완료 기준:
 
-- [ ] 어떤 기술을 다뤄봤는지 한눈에 보인다.
-- [ ] 경험이 과장 없이 정리되어 있다.
-- [ ] 이력서 페이지가 너무 무겁지 않고 가볍게 읽힌다.
-
-학습 포인트:
-
-- 정보 구조
-- list/table/card 중 적절한 표현 선택
-- 텍스트 계층 구조
-- 접근 가능한 링크 구성
-
----
+- [x] 어떤 기술을 다뤄봤는지 한눈에 보인다.
+- [x] 경험이 과장 없이 정리되어 있다.
+- [x] 이력서 페이지가 너무 무겁지 않고 가볍게 읽힌다.
 
 ### 5. 블로그 목록 페이지 만들기
 
 목표: 작성한 글을 목록으로 보여주고, 각 글 상세 페이지로 이동할 수 있게 만든다.
 
-- [ ] 샘플 글 데이터 3개 작성
-- [ ] 글 목록 렌더링
-- [ ] 글 제목 표시
-- [ ] 글 설명 표시
-- [ ] 작성일 표시
-- [ ] 태그 또는 카테고리 표시
-- [ ] 글 상세 페이지 링크 연결
-- [ ] 빈 목록 상태 처리
+- [x] Markdown 샘플 글 20개 작성
+- [x] 글 목록 렌더링
+- [x] 글 제목 표시
+- [x] 글 설명 표시
+- [x] 작성일 표시
+- [x] 카테고리 표시
+- [x] 글 상세 페이지 링크 연결
+- [x] 빈 목록 상태 처리
 - [ ] 최신순 정렬
-- [ ] 모바일에서 카드가 읽기 좋게 보이도록 처리
 
 완료 기준:
 
-- [ ] `/blog`에서 글 목록이 보인다.
-- [ ] 제목, 설명, 작성일, 태그 또는 카테고리가 보인다.
-- [ ] 글 카드를 누르면 `/blog/[slug]`로 이동한다.
-- [ ] 글이 없어도 빈 상태가 어색하지 않다.
-
-학습 포인트:
-
-- 배열 렌더링
-- key 처리
-- 날짜 정렬
-- UI empty state
-- 카드형 목록 레이아웃
-
----
+- [x] `/blog`에서 글 목록이 보인다.
+- [x] 제목, 설명, 작성일, 태그 또는 카테고리가 보인다.
+- [x] 글 카드를 누르면 `/blog/[slug]`로 이동한다.
+- [x] 글이 없어도 빈 상태가 어색하지 않다.
 
 ### 6. 블로그 상세 페이지 만들기
 
 목표: 선택한 글의 본문을 읽을 수 있는 상세 페이지를 만든다.
 
 - [x] `/blog/[slug]` route 생성
-- [ ] slug로 글 데이터 찾기
-- [ ] 존재하지 않는 slug 처리
-- [ ] 글 제목 표시
-- [ ] 글 설명 표시
-- [ ] 작성일 표시
-- [ ] 태그 또는 카테고리 표시
-- [ ] 본문 렌더링
-- [ ] 목록으로 돌아가기 링크 추가
-- [ ] 모바일에서 본문 줄 길이와 여백 확인
+- [x] slug로 글 데이터 찾기
+- [x] 존재하지 않는 slug 처리
+- [x] 글 제목 표시
+- [x] 글 설명 표시
+- [x] 작성일 표시
+- [x] 카테고리 표시
+- [x] 본문 렌더링
+- [x] 목록으로 돌아가기 링크 추가
 
 완료 기준:
 
-- [ ] `/blog/[slug]`에서 글 본문을 읽을 수 있다.
-- [ ] 없는 글은 어색한 빈 화면이 아니라 not found 상태로 처리한다.
-- [ ] 목록 페이지로 돌아갈 수 있다.
-
-학습 포인트:
-
-- dynamic route
-- route params
-- not-found 처리
-- article typography
-- 읽기 중심 레이아웃
-
----
+- [x] `/blog/[slug]`에서 글 본문을 읽을 수 있다.
+- [x] 없는 글은 어색한 빈 화면이 아니라 not found 상태로 처리한다.
+- [x] 목록 페이지로 돌아갈 수 있다.
 
 ### 7. 콘텐츠 데이터 구조 만들기
 
 목표: 나중에 Markdown/MDX로 확장할 수 있는 글 데이터 구조를 먼저 정한다.
 
-1차 MVP에서는 샘플 데이터로 시작하고, 이후 Markdown/MDX로 옮긴다.
+1차 MVP에서는 Markdown 파일과 frontmatter 기반으로 시작한다.
 
-```ts
-type PostMeta = {
-  slug: string;
-  title: string;
-  description: string;
-  publishedAt: string;
-  category: string;
-  tags: string[];
-  draft: boolean;
-};
-
-type Post = PostMeta & {
-  content: string;
-};
-```
-
-- [ ] `PostMeta` 타입 작성
-- [ ] `Post` 타입 작성
-- [ ] 샘플 post 배열 작성
+- [x] `BlogPost` 타입 작성
+- [x] `BlogPostDetail` 타입 작성
+- [x] Markdown post 20개 작성
 - [ ] 최신순 정렬 함수 작성
 - [ ] draft 필터링 함수 작성
-- [ ] 글 목록 페이지에서 샘플 데이터 연결
-- [ ] slug 기반 상세 조회 함수 작성
+- [x] 글 목록 페이지에서 Markdown 데이터 연결
+- [x] slug 기반 상세 조회 함수 작성
 
 완료 기준:
 
-- [ ] 글 데이터 구조가 타입으로 정의되어 있다.
+- [x] 글 데이터 구조가 타입으로 정의되어 있다.
 - [ ] draft 글은 목록에서 제외할 수 있다.
-- [ ] slug로 상세 글을 찾을 수 있다.
-- [ ] 나중에 Markdown/MDX frontmatter로 옮기기 쉽다.
+- [x] slug로 상세 글을 찾을 수 있다.
+- [x] Markdown/MDX frontmatter로 확장하기 쉽다.
 
-학습 포인트:
-
-- TypeScript type/interface
-- 도메인 모델링
-- filter/sort
-- UI 데이터 분리
-
----
-
-### 8. 반응형 웹 대응
-
-목표: 모바일에서도 홈, 이력서, 블로그 목록, 블로그 상세를 읽고 탐색할 수 있게 만든다.
-
-- [ ] 360px 화면 확인
-- [ ] 390px 화면 확인
-- [ ] 768px 화면 확인
-- [ ] 1280px 화면 확인
-- [ ] Header navigation 줄바꿈/간격 확인
-- [ ] 버튼 터치 영역 확인
-- [ ] 카드 텍스트 넘침 확인
-- [ ] 글 상세 본문 줄 길이 확인
-- [ ] 이력서 페이지 기술 스택 줄바꿈 확인
-
-완료 기준:
-
-- [ ] 모바일에서 가로 스크롤이 생기지 않는다.
-- [ ] 버튼과 링크를 손가락으로 누르기 쉽다.
-- [ ] 텍스트가 카드나 버튼 밖으로 넘치지 않는다.
-
-학습 포인트:
-
-- mobile-first CSS
-- flex/grid
-- width/max-width
-- responsive typography
-
----
-
-### 9. 기본 SEO와 접근성
+### 8. 기본 SEO와 접근성
 
 목표: 기본적인 웹 품질을 갖춘다.
 
@@ -380,16 +242,7 @@ type Post = PostMeta & {
 - [ ] 키보드로 주요 링크를 이동할 수 있다.
 - [ ] heading 구조가 어색하지 않다.
 
-학습 포인트:
-
-- Next.js metadata
-- semantic HTML
-- keyboard navigation
-- accessibility basics
-
----
-
-### 10. 린트/포맷/타입 체크
+### 9. 린트/포맷/타입 체크
 
 목표: 기본 코드 품질 검사를 자동화한다.
 
@@ -410,7 +263,7 @@ type Post = PostMeta & {
 
 ---
 
-### 11. Vercel 1차 배포
+### 10. Vercel 1차 배포
 
 목표: 공개 URL을 만든다.
 
@@ -432,8 +285,6 @@ type Post = PostMeta & {
 - [x] `main`에 머지하면 production deployment가 실행된다.
 - [x] 작업 브랜치 또는 PR에서 preview deployment가 생성된다.
 
-GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare 전환, 모노레포 확장, 앱별 검증 자동화가 필요해지는 3차 MVP에서 추가한다.
-
 배포 URL:
 
 - Production URL: <https://tech-blog-delta.vercel.app>
@@ -442,37 +293,6 @@ GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare
 - Build setting: Next.js preset 기본값 사용
 - Web Analytics: `@vercel/analytics`
 - Speed Insights: `@vercel/speed-insights`
-
----
-
-## AI 퍼블리싱 사용 방식
-
-디자인을 따로 길게 잡지 않고, 페이지별로 AI에게 퍼블리싱을 맡기면서 만든다.
-
-사용 스킬:
-
-- `$blog-ui-publisher`
-
-사용 단위:
-
-1. 홈 페이지 퍼블리싱 프롬프트 생성
-2. 이력서 페이지 퍼블리싱 프롬프트 생성
-3. 블로그 목록 페이지 퍼블리싱 프롬프트 생성
-4. 블로그 상세 페이지 퍼블리싱 프롬프트 생성
-5. 모바일 레이아웃 검수
-6. 접근성/SEO 검수
-
-프롬프트에 반드시 포함할 것:
-
-- 구현할 페이지
-- 페이지 목적
-- 들어갈 콘텐츠
-- 제외할 기능
-- 모바일 요구사항
-- 접근성 요구사항
-- 완료 기준
-
----
 
 ## 1차 MVP 이후
 
@@ -516,15 +336,6 @@ GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare
 - [ ] 일반 방문자는 공개된 글만 볼 수 있다.
 - [ ] draft 글은 공개 페이지에 보이지 않는다.
 - [ ] Supabase key가 client에 잘못 노출되지 않는다.
-
-학습 포인트:
-
-- Supabase Auth
-- RLS
-- server/client data fetching
-- form handling
-- 권한 기반 UI
-- 공개 데이터와 관리자 데이터 분리
 
 ### 블로그 사용성 개선
 
@@ -578,21 +389,6 @@ GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다. Cloudflare
 - [ ] 각 앱은 독립적으로 배포 가능하다.
 - [ ] 단일 도메인 경로가 적절한 앱으로 라우팅된다.
 - [ ] 공통 테마와 GNB/Footer를 여러 앱에서 공유한다.
-
-### 모바일 확장 검토
-
-먼저 반응형 웹으로 대응한다.
-
-- [ ] PWA가 필요한지 검토
-- [ ] React Native 또는 Expo가 필요한지 검토
-
-React Native는 아래 요구가 생길 때만 검토한다.
-
-- 푸시 알림
-- 네이티브 공유
-- 파일/카메라/알림 같은 OS 기능
-- App Store 또는 Play Store 배포
-- 웹과 다른 모바일 전용 흐름
 
 ### 후순위 인프라
 

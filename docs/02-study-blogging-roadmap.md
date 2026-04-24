@@ -310,7 +310,7 @@
 
 #### 공부할 것
 
-- [ ] `/`, `/resume`, `/blog`, `/blog/[slug]` 기반 1차 MVP
+- [x] `/`, `/resume`, `/blog`, `/blog/[slug]` 기반 1차 MVP
 - [ ] 관리자만 글을 추가/수정할 수 있는 Admin 확장
 - [ ] 태그/카테고리/검색/다크모드
 - [ ] `Post`, `Tag`, `Category`, `Theme` 타입 모델링
