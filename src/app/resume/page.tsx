@@ -9,24 +9,24 @@ import {
 
 const techGroups = [
   {
-    title: "Frontend",
-    items: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "Tailwind CSS",
-      "Zustand",
-      "TanStack Query",
-    ],
+    title: "Core Frontend",
+    items: ["React", "Next.js", "TypeScript", "JavaScript"],
+  },
+  {
+    title: "UI / State",
+    items: ["Tailwind CSS", "Zustand", "TanStack Query"],
   },
   {
     title: "Backend / Data",
     items: ["Express.js", "Flask", "MySQL", "MariaDB", "DynamoDB"],
   },
   {
-    title: "Cloud / Quality",
-    items: ["AWS", "Bedrock", "Lambda", "SQS", "S3", "Jest", "Cypress"],
+    title: "Cloud",
+    items: ["AWS"],
+  },
+  {
+    title: "Quality",
+    items: ["Jest", "Cypress"],
   },
 ];
 
@@ -42,6 +42,7 @@ const experiences = [
         title: "LG 공통 업무 플랫폼 CPPM",
         period: "2025.10 - 2025.12",
         stack: "React · AWS Bedrock · Lambda · SQS · DynamoDB · S3",
+        links: [],
         bullets: [
           "외부 LLM 사용이 제한된 대기업 보안 환경에서 AWS Lex와 Bedrock Agent를 비교 검토하고, 자유 질의와 동적 시각화 요구에 맞춰 Bedrock 기반 AI 챗봇 PoC와 아키텍처를 설계했습니다.",
           "일반 대화까지 분석 지침이 붙던 구조를 Routing Agent, 대화 Agent, 분석 Agent로 분리해 요청 유형별로 필요한 지침과 도구만 사용하도록 구성했습니다.",
@@ -57,6 +58,7 @@ const experiences = [
         title: "프비티 B2B SaaS",
         period: "2025.07 - 2026.01",
         stack: "React · Next.js · MariaDB · MySQL",
+        links: [],
         bullets: [
           "고객 랜딩, 콘텐츠, 이벤트, 배너, 팝업, 룰렛 프로모션 등 사용자 노출 기능을 확장하고 진입, 참여, 결과 확인, 혜택 수령, 리뷰 유도 플로우를 구현했습니다.",
           "게임 정보 조회, 결과 수령 확인, CTA 클릭 여부 등 프로모션 API를 연동하고 storeTableHashID 기반 중복 참여 방지와 예외 처리를 적용했습니다.",
@@ -78,6 +80,12 @@ const experiences = [
         title: "SmileTogether",
         period: "2025.01 - 2025.03",
         stack: "React · Zustand · TanStack Query · Socket.io · CI/CD",
+        links: [
+          {
+            label: "GitHub",
+            href: "https://github.com/pigpgw/smiletogether",
+          },
+        ],
         bullets: [
           "서비스 운영 흐름이 끊기지 않도록 알림, 채팅, CI/CD 파이프라인 자동화를 구현했습니다.",
           "기능 구현뿐 아니라 릴리즈와 운영 흐름까지 고려해 팀 단위 개발을 진행했습니다.",
@@ -96,6 +104,16 @@ const experiences = [
         title: "Code Sync",
         period: "2024.10 - 2024.11",
         stack: "React · TypeScript · Socket.io · Tailwind CSS · Zustand · Monaco · Yjs",
+        links: [
+          {
+            label: "GitHub",
+            href: "https://github.com/pigpgw/code-sync-fe",
+          },
+          {
+            label: "팀 저장소",
+            href: "https://github.com/jungle-6-3/code-sync-fe",
+          },
+        ],
         bullets: [
           "GitHub PR 번호 입력만으로 메타데이터, 변경 파일, diff, 리뷰 댓글을 수집하고 Monaco Editor에서 실시간 코드 리뷰를 진행하는 협업 도구를 구현했습니다.",
           "삭제·이동된 파일 댓글이 GitHub REST API의 최신 파일 목록에서 빠지는 문제를 comment.path와 현재 filename 비교로 재해석해 Outdated 상태와 안내 메시지로 표시했습니다.",
@@ -110,6 +128,20 @@ const experiences = [
         title: "시스템 프로그래밍 · 운영체제",
         period: "2024.07 - 2024.09",
         stack: "C · CSAPP · Pintos",
+        links: [
+          {
+            label: "Pintos",
+            href: "https://github.com/pigpgw/Pintos-kaist",
+          },
+          {
+            label: "Malloc",
+            href: "https://github.com/pigpgw/malloc-lab",
+          },
+          {
+            label: "Tiny Web Server",
+            href: "https://github.com/pigpgw/webproxy-lab",
+          },
+        ],
         bullets: [
           "CSAPP 기반 시스템 프로그래밍 학습을 통해 malloc, mmap 메모리 관리와 Tiny Web Server를 구현했습니다.",
           "Pintos 운영체제 프로젝트에서 Thread Scheduling, Process Management, File System을 구현했습니다.",
@@ -117,17 +149,112 @@ const experiences = [
       },
     ],
   },
+  {
+    company: "국제공동 프로젝트",
+    period: "2023.03 - 2023.12",
+    role: "전자공학과 대표",
+    description:
+      "원격의료를 위한 AI 기반 의료영상처리 알고리즘 적용 연구에 참여했습니다.",
+    projects: [
+      {
+        title: "원격의료 의료영상 AI 연구",
+        period: "2023.03 - 2023.12",
+        stack: "Python · PyTorch · U-Net · ResNet50",
+        links: [
+          {
+            label: "GitHub",
+            href: "https://github.com/pigpgw/AI-Powered-Image-Processing-for-Telemedicine",
+          },
+        ],
+        bullets: [
+          "뇌종양 영상과 폐질환 영상을 대상으로 의료영상 AI 모델과 optimizer 조합별 성능을 비교했습니다.",
+          "ICICT 2023 치앙마이 포스터상과 조선대학교 총장배 모범상을 수상했습니다.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "퓨처 이모텍",
+    period: "2023.02",
+    role: "단기 인턴",
+    description:
+      "탄소중립 시장 자료 조사와 보고서 작성을 지원했습니다.",
+    projects: [
+      {
+        title: "탄소중립 시장 조사",
+        period: "2023.02.02 - 2023.02.22",
+        stack: "Research · Report",
+        links: [],
+        bullets: [
+          "국내외 탄소중립 사례를 비교 분석하고 광주 지역 특성을 반영한 정책 기초 자료를 정리했습니다.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "아티피셜 소사이어티",
+    period: "2022.07",
+    role: "단기 인턴",
+    description:
+      "AI 시선추적 기반 독해력 향상 서비스의 데이터와 모델 업무를 지원했습니다.",
+    projects: [
+      {
+        title: "AI 시선추적 서비스 지원",
+        period: "2022.07.02 - 2022.07.24",
+        stack: "AI · Data · Crawling",
+        links: [],
+        bullets: [
+          "데이터 증대, 데이터 확보, 모델 훈련, 크롤링 업무를 지원했습니다.",
+        ],
+      },
+    ],
+  },
 ];
 
 const educationItems = [
-  "조선대학교 전자공학과 / AI 헬스케어 융합전공",
-  "ICICT 2023 치앙마이 포스터상 - 원격의료 의료영상 AI 모델 성능 비교 연구",
-  "조선대학교 IT융합대학 캡스톤디자인 경진대회 은상 - 어안렌즈 Semantic Segmentation 기반 사각지대 위험 판단",
-  "조선대학교 총장배 모범상",
-  "크래프톤 정글 우수 프로젝트 선정",
-  "부스트코스 Python, Data Science, AI Basic, 생성형 AI 코칭스터디",
-  "아티피셜 소사이어티 단기 인턴 - AI 시선추적 서비스 데이터 증대, 모델 훈련, 크롤링",
-  "퓨처 이모텍 단기 인턴 - 탄소중립 시장 자료 조사 및 보고서 작성",
+  {
+    text: "2024.07.01 - 2024.11.30 크래프톤 정글 6기 - 우수 프로젝트 선정(Code Sync)",
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/pigpgw/code-sync-fe",
+      },
+      {
+        label: "우수 프로젝트",
+        href: "https://jungle.krafton.com/news/59",
+      },
+    ],
+  },
+  {
+    text: "2024.02.18 조선대학교 졸업 및 총장배 모범상 수상",
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/pigpgw/AI-Powered-Image-Processing-for-Telemedicine",
+      },
+    ],
+  },
+  {
+    text: "2023.08.29 조선대학교 IT융합대학 캡스톤디자인 경진대회 은상(암진단 프로젝트)",
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/pigpgw/cancer-metastasis-prediction",
+      },
+    ],
+  },
+  {
+    text: "2023.07.06 - 2023.07.08 ICICT 치앙마이 포스터상(원격의료 의료영상 AI 모델 성능 비교 연구)",
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/pigpgw/AI-Powered-Image-Processing-for-Telemedicine",
+      },
+    ],
+  },
+  {
+    text: "2018.03 - 2024.02 조선대학교 전자공학과 / AI 헬스케어 융합전공",
+  },
 ];
 
 const contacts = [
@@ -165,8 +292,8 @@ export default function ResumePage() {
               박건우
             </p>
             <p className="mt-5 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
-              React 기반 화면 구현과 API 연동, AWS 서버리스 처리 경험을
-              프로젝트 중심으로 정리했습니다.
+              누군가에게 도움이 되는 서비스를 만들고 싶다는 마음으로 개발하는
+              박건우입니다.
             </p>
           </div>
 
@@ -189,49 +316,82 @@ export default function ResumePage() {
 
       <section
         aria-label="이력 상세 정보"
-        className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.4fr]"
+        className="mt-8 space-y-6"
       >
-        <div className="space-y-6">
-          <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)]">
-            <h2 className="text-lg font-semibold text-slate-950">기술 스택</h2>
-            <div className="mt-5 space-y-5">
-              {techGroups.map((group) => (
-                <div key={group.title}>
-                  <h3 className="text-sm font-semibold text-slate-500">
-                    {group.title}
-                  </h3>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="inline-flex min-h-9 items-center rounded-full border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+        <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)] sm:p-7">
+          <div className="flex flex-col gap-2 border-b border-slate-100 pb-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold text-blue-600">Stack</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950">
+                기술 스택
+              </h2>
             </div>
-          </section>
+            <p className="text-sm leading-6 text-slate-500">
+              프로젝트에서 실제 사용한 기술만 분류했습니다.
+            </p>
+          </div>
 
-          <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)]">
-            <h2 className="text-lg font-semibold text-slate-950">
-              학력/수상/교육
-            </h2>
-            <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
-              {educationItems.map((item) => (
-                <li key={item} className="flex gap-3">
-                  <BriefcaseBusiness
-                    className="mt-1 size-4 shrink-0 text-blue-600"
-                    aria-hidden="true"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
+          <div className="mt-6 divide-y divide-slate-100">
+            {techGroups.map((group) => (
+              <div
+                key={group.title}
+                className="grid gap-3 py-4 first:pt-0 last:pb-0 sm:grid-cols-[160px_1fr] sm:items-start"
+              >
+                <h3 className="text-sm font-semibold leading-8 text-slate-950">
+                  {group.title}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="inline-flex min-h-8 items-center rounded-full px-1 text-sm font-medium text-slate-700"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)]">
+          <h2 className="text-lg font-semibold text-slate-950">
+            학력/수상/교육
+          </h2>
+          <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
+            {educationItems.map((item) => (
+              <li key={item.text} className="flex gap-3">
+                <BriefcaseBusiness
+                  className="mt-1 size-4 shrink-0 text-blue-600"
+                  aria-hidden="true"
+                />
+                <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                  <span className="min-w-0">{item.text}</span>
+                  {item.links && item.links.length > 0 ? (
+                    <div className="flex shrink-0 flex-wrap gap-1.5 sm:justify-end">
+                      {item.links.map((link) => (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex min-h-7 items-center gap-1 whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 px-2.5 text-[11px] font-semibold leading-none text-blue-700 transition hover:border-blue-200 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
+                        >
+                          {link.label}
+                          <ArrowUpRight
+                            className="size-2.5"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <section
           aria-labelledby="resume-experience"
@@ -244,7 +404,7 @@ export default function ResumePage() {
                 id="resume-experience"
                 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950"
               >
-                프로젝트와 경력
+                주요 경험
               </h2>
             </div>
             <Link
@@ -295,6 +455,25 @@ export default function ResumePage() {
                       <p className="mt-2 text-xs font-semibold leading-6 text-blue-700">
                         {project.stack}
                       </p>
+                      {project.links.length > 0 ? (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {project.links.map((link) => (
+                            <a
+                              key={link.href}
+                              href={link.href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex min-h-8 items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-blue-700 transition hover:border-blue-200 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
+                            >
+                              {link.label}
+                              <ArrowUpRight
+                                className="size-3"
+                                aria-hidden="true"
+                              />
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
                       <ul className="mt-3 space-y-2">
                         {project.bullets.map((bullet) => (
                           <li
