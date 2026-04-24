@@ -4,7 +4,6 @@ import {
   BriefcaseBusiness,
   Code2,
   Mail,
-  MapPin,
   Phone,
 } from "lucide-react";
 
@@ -42,14 +41,16 @@ const experiences = [
       {
         title: "LG 공통 업무 플랫폼 CPPM",
         period: "2025.10 - 2025.12",
-        stack: "React · AWS Bedrock · Lambda · SQS · DynamoDB · S3 · OpenSearch",
+        stack: "React · AWS Bedrock · Lambda · SQS · DynamoDB · S3",
         bullets: [
-          "AWS Lex의 Intent/Slot 방식이 자유 질의와 동적 그래프 생성 요구에 맞지 않는다고 판단하고, Bedrock Agent 기반 PoC로 기술 적합성을 검증했습니다.",
-          "일반 대화까지 대용량 분석 지침을 포함하던 문제를 Master Router, Chat Agent, Supervisor, OpenSearch Agent, Graph Agent 역할 분리로 해결했습니다.",
-          "업무 지침을 매 요청 프롬프트에 직접 주입하던 구조를 Knowledge Base RAG로 전환해 반복 입력 토큰과 지침 유지보수 부담을 줄이는 구조로 개선했습니다.",
+          "외부 LLM 사용이 제한된 대기업 보안 환경에서 AWS Lex와 Bedrock Agent를 비교 검토하고, 자유 질의와 동적 시각화 요구에 맞춰 Bedrock 기반 AI 챗봇 PoC와 아키텍처를 설계했습니다.",
+          "일반 대화까지 분석 지침이 붙던 구조를 Routing Agent, 대화 Agent, 분석 Agent로 분리해 요청 유형별로 필요한 지침과 도구만 사용하도록 구성했습니다.",
+          "업무 지침 직접 주입 방식을 Knowledge Base RAG로 전환해 관련 chunk만 참조하도록 만들고, 고정 지침 2K token과 업무 문서 20K token을 매번 넣는 예시 대비 5개 chunk 기준 약 4.5K token 수준으로 입력 컨텍스트를 줄일 수 있는 구조를 잡았습니다.",
+          "OpenSearch 조회, Knowledge Base 지표 정의 참조, 그래프 코드 동적 생성, Lambda 실행, S3 저장, URL 반환으로 이어지는 데이터 시각화 파이프라인을 구현했습니다.",
+          "초기 프롬프트만으로는 검색어 임의 변경, 결과 없음 상황의 허위 응답, URL 누락이 반복되어 Agent별 출력 규칙, 재시도 제한, Lambda 실행 검증을 함께 두는 하네스 엔지니어링을 적용했습니다.",
           "API Gateway WebSocket route Lambda가 Bedrock 응답을 기다리며 타임아웃되는 문제를 Request Lambda, SQS, Worker Lambda, DynamoDB 기반 비동기 처리로 분리했습니다.",
-          "Agent Trace를 파싱해 요청 분석, Agent 라우팅, OpenSearch 조회, 그래프 생성, S3 업로드 단계를 UI에 표시해 장시간 응답을 오류로 오인하는 문제를 줄였습니다.",
-          "AI 생성 Markdown은 DOMPurify sanitize 후 렌더링하고, Bedrock/S3/DynamoDB 접근은 Lambda와 IAM Role 뒤로 격리해 브라우저 노출 위험을 낮췄습니다.",
+          "엘리베이터 피치 효과 관점에서 단순 로딩 대신 Agent Trace를 파싱해 요청 분석, Agent 라우팅, OpenSearch 조회, 그래프 생성, S3 업로드 단계를 실시간 UI로 표시했습니다.",
+          "AI 생성 Markdown은 DOMPurify sanitize 후 렌더링하고, API Key와 Bedrock 호출은 Lambda 뒤로 격리했으며, Agent와 Lambda별 IAM Role을 최소 권한으로 분리했습니다.",
         ],
       },
       {
@@ -57,7 +58,8 @@ const experiences = [
         period: "2025.07 - 2026.01",
         stack: "React · Next.js · MariaDB · MySQL",
         bullets: [
-          "고객 랜딩, 콘텐츠, 이벤트, 배너, 팝업, 룰렛 프로모션 등 사용자 노출 기능을 확장했습니다.",
+          "고객 랜딩, 콘텐츠, 이벤트, 배너, 팝업, 룰렛 프로모션 등 사용자 노출 기능을 확장하고 진입, 참여, 결과 확인, 혜택 수령, 리뷰 유도 플로우를 구현했습니다.",
+          "게임 정보 조회, 결과 수령 확인, CTA 클릭 여부 등 프로모션 API를 연동하고 storeTableHashID 기반 중복 참여 방지와 예외 처리를 적용했습니다.",
           "36,238 LOC, 300+ 파일, 39개 API 규모의 영업관리 시스템을 기존 수발주 시스템에서 분리하는 작업에 참여했습니다.",
           "인증·계정 경계가 기존 서비스에 묶여 있던 문제를 직원 정보 기반 로그인, 직원·코드 관리 기능 이관, MariaDB API 규격 수정으로 정리했습니다.",
           "PHP/MySQL 기반 레거시 코드와 신규 React 화면이 함께 동작해야 하는 제약에서 API 의존성과 화면 진입 흐름을 조정했습니다.",
@@ -95,12 +97,13 @@ const experiences = [
         period: "2024.10 - 2024.11",
         stack: "React · TypeScript · Socket.io · Tailwind CSS · Zustand · Monaco · Yjs",
         bullets: [
-          "GitHub PR 데이터를 기반으로 변경 파일, diff, 댓글을 조회하는 실시간 코드 리뷰 협업 도구를 설계·구현했습니다.",
-          "삭제·이동된 파일 댓글이 REST API 변경 파일 목록에 없어지는 Outdated 문제를 comment.path와 현재 filename 비교로 분기해 안내했습니다.",
-          "PR 병합 후 head 브랜치 삭제로 파일 조회가 실패하던 문제를 branch ref 기준에서 merge commit SHA 또는 head SHA 기반 stableRef 조회로 전환했습니다.",
-          "방 생성자와 참가자가 GitHub API를 반복 호출하던 구조를 Y.Doc 공유 상태 기반으로 바꿔 2인 접속 기준 API Call을 약 40% 줄였습니다.",
+          "GitHub PR 번호 입력만으로 메타데이터, 변경 파일, diff, 리뷰 댓글을 수집하고 Monaco Editor에서 실시간 코드 리뷰를 진행하는 협업 도구를 구현했습니다.",
+          "삭제·이동된 파일 댓글이 GitHub REST API의 최신 파일 목록에서 빠지는 문제를 comment.path와 현재 filename 비교로 재해석해 Outdated 상태와 안내 메시지로 표시했습니다.",
+          "PR 병합 후 head 브랜치 삭제로 변경 내역 조회가 실패하던 문제를 branch ref 기준에서 merge commit SHA 또는 head SHA 기반 stableRef 조회로 전환했습니다.",
+          "사용자별 GitHub API 반복 호출 구조를 방 생성자 1회 조회와 Y.Doc 공유 상태 동기화 구조로 바꿔 2인 접속 기준 API Call을 약 40% 줄였습니다.",
+          "Monaco Editor + Yjs 기반 동시 편집, 커서 동기화, 상대방 코드 위치 이동, Editor 화면 캡처 후 Draw Board 공유 기능을 구현했습니다.",
           "Monaco, Excalidraw, BlockNote, Yjs, Peer.js가 초기 번들에 몰리던 문제를 route chunk로 분리해 초기 JS gzip 번들을 1,820.83 KiB에서 99.35 KiB로 줄였습니다.",
-          "코드 리뷰 프로세스 개선을 통해 팀 주간 평균 PR 댓글 수를 285건에서 89건으로 줄였고, 우수 프로젝트로 선정됐습니다.",
+          "코드 리뷰 프로세스 개선을 통해 팀 주간 평균 PR 댓글 수를 285건에서 89건으로 줄였고, 크래프톤 정글 우수 프로젝트로 선정됐습니다.",
         ],
       },
       {
@@ -116,7 +119,16 @@ const experiences = [
   },
 ];
 
-const awards = ["크래프톤 정글 우수 프로젝트 선정"];
+const educationItems = [
+  "조선대학교 전자공학과 / AI 헬스케어 융합전공",
+  "ICICT 2023 치앙마이 포스터상 - 원격의료 의료영상 AI 모델 성능 비교 연구",
+  "조선대학교 IT융합대학 캡스톤디자인 경진대회 은상 - 어안렌즈 Semantic Segmentation 기반 사각지대 위험 판단",
+  "조선대학교 총장배 모범상",
+  "크래프톤 정글 우수 프로젝트 선정",
+  "부스트코스 Python, Data Science, AI Basic, 생성형 AI 코칭스터디",
+  "아티피셜 소사이어티 단기 인턴 - AI 시선추적 서비스 데이터 증대, 모델 훈련, 크롤링",
+  "퓨처 이모텍 단기 인턴 - 탄소중립 시장 자료 조사 및 보고서 작성",
+];
 
 const contacts = [
   {
@@ -204,24 +216,19 @@ export default function ResumePage() {
           </section>
 
           <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)]">
-            <h2 className="text-lg font-semibold text-slate-950">수상/교육</h2>
+            <h2 className="text-lg font-semibold text-slate-950">
+              학력/수상/교육
+            </h2>
             <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
-              {awards.map((award) => (
-                <li key={award} className="flex gap-3">
+              {educationItems.map((item) => (
+                <li key={item} className="flex gap-3">
                   <BriefcaseBusiness
                     className="mt-1 size-4 shrink-0 text-blue-600"
                     aria-hidden="true"
                   />
-                  <span>{award}</span>
+                  <span>{item}</span>
                 </li>
               ))}
-              <li className="flex gap-3">
-                <MapPin
-                  className="mt-1 size-4 shrink-0 text-blue-600"
-                  aria-hidden="true"
-                />
-                <span>크래프톤 정글 6기 · CS/운영체제/팀 프로젝트 집중 과정</span>
-              </li>
             </ul>
           </section>
         </div>
