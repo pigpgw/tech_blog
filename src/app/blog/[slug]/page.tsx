@@ -2,6 +2,10 @@ import Link from "next/link";
 import { getPostBySlug } from "@/lib/blog-posts";
 import { ChevronLeft, Clock3, NotebookPen } from "lucide-react";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import remarkGfm from "remark-gfm";
+import "highlight.js/styles/github.css";
 
 export default async function BlogDetailPage({
   params,
@@ -75,8 +79,13 @@ export default async function BlogDetailPage({
           Article
         </div>
 
-        <div className="mt-6 text-base leading-8 whitespace-pre-line text-slate-700">
-          {blogItem.content}
+        <div className="blog-markdown mt-6">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeHighlight]}
+          >
+            {blogItem.content}
+          </ReactMarkdown>
         </div>
       </section>
     </article>
