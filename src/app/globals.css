@@ -127,3 +127,62 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .blog-markdown {
+    @apply text-base leading-8 text-slate-700;
+  }
+
+  .blog-markdown > * + * {
+    @apply mt-5;
+  }
+
+  .blog-markdown h2 {
+    @apply mt-10 text-2xl font-semibold leading-9 text-slate-950;
+  }
+
+  .blog-markdown h3 {
+    @apply mt-8 text-xl font-semibold leading-8 text-slate-950;
+  }
+
+  .blog-markdown p {
+    @apply leading-8;
+  }
+
+  .blog-markdown strong {
+    @apply font-semibold text-slate-950;
+  }
+
+  .blog-markdown a {
+    @apply font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-900;
+  }
+
+  .blog-markdown ul,
+  .blog-markdown ol {
+    @apply ml-6 space-y-2;
+  }
+
+  .blog-markdown ul {
+    @apply list-disc;
+  }
+
+  .blog-markdown ol {
+    @apply list-decimal;
+  }
+
+  .blog-markdown blockquote {
+    @apply border-l-4 border-slate-300 pl-4 text-slate-600;
+  }
+
+  .blog-markdown code:not(pre code) {
+    @apply rounded-md bg-slate-100 px-1.5 py-0.5 text-sm font-semibold text-slate-900;
+  }
+
+  .blog-markdown pre {
+    @apply overflow-x-auto rounded-2xl border border-slate-200 bg-slate-950 p-5 text-sm leading-7;
+  }
+
+  .blog-markdown pre code {
+    @apply bg-transparent p-0 text-sm;
+  }
+}
