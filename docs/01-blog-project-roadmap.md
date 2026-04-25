@@ -110,15 +110,15 @@
 - [x] App Router 기본 레이아웃 구성
 - [x] Header 구현
   - [x] 좌측: 이름
-  - [x] 우측: `Home`, `Resume`, `Blog`, `GitHub`
-- [x] Footer 구현
+  - [x] 우측: `Blog`, `Resume`
+- [ ] Footer 구현
 - [x] 페이지 공통 최대 너비 설정
 - [ ] 현재 페이지 표시 처리
 
 완료 기준:
 
-- [x] `/`, `/resume`, `/blog`, `/blog/[slug]`에서 같은 Header/Footer가 보인다.
-- [x] GitHub 링크는 외부 링크로 동작한다.
+- [x] `/`, `/resume`, `/blog`, `/blog/[slug]`에서 같은 Header가 보인다.
+- [x] Home과 Resume의 GitHub 링크는 외부 링크로 동작한다.
 
 ---
 
@@ -165,7 +165,7 @@
 
 목표: 작성한 글을 목록으로 보여주고, 각 글 상세 페이지로 이동할 수 있게 만든다.
 
-- [x] Markdown 샘플 글 20개 작성
+- [x] Markdown 템플릿 글 작성
 - [x] 글 목록 렌더링
 - [x] 글 제목 표시
 - [x] 글 설명 표시
@@ -194,11 +194,16 @@
 - [x] 작성일 표시
 - [x] 카테고리 표시
 - [x] 본문 렌더링
+- [x] `react-markdown`으로 Markdown 본문 렌더링
+- [x] `remark-gfm`으로 GFM 문법 확장
+- [x] `rehype-highlight`로 코드 블록 하이라이트 적용
+- [x] `.blog-markdown` 본문 스타일 적용
 - [x] 목록으로 돌아가기 링크 추가
 
 완료 기준:
 
 - [x] `/blog/[slug]`에서 글 본문을 읽을 수 있다.
+- [x] 제목, 문단, 목록, 인라인 코드, 코드 블록이 Markdown 구조에 맞게 보인다.
 - [x] 없는 글은 어색한 빈 화면이 아니라 not found 상태로 처리한다.
 - [x] 목록 페이지로 돌아갈 수 있다.
 
@@ -210,7 +215,7 @@
 
 - [x] `BlogPost` 타입 작성
 - [x] `BlogPostDetail` 타입 작성
-- [x] Markdown post 20개 작성
+- [x] Markdown 템플릿 post 작성
 - [ ] 최신순 정렬 함수 작성
 - [ ] draft 필터링 함수 작성
 - [x] 글 목록 페이지에서 Markdown 데이터 연결
@@ -276,6 +281,7 @@
 - [x] production deploy 확인
 - [x] Web Analytics 코드 연결
 - [x] Speed Insights 코드 연결
+- [x] Vercel Analytics에서 방문자 수와 페이지뷰 확인 가능한 상태 구성
 - [x] preview deploy 생성 확인
 - [x] 배포 URL README에 추가
 
