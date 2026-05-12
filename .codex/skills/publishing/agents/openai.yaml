@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publishing"
+  short_description: "HTML/CSS 퍼블리싱과 접근성 기준을 적용한다"
+  default_prompt: "Use $publishing to implement or review semantic, accessible HTML/CSS publishing work."

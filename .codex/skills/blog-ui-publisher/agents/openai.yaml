@@ -1,0 +1,3 @@
+interface:
+  display_name: "Blog UI Publisher"
+  short_description: "블로그 퍼블리싱 기본기와 Next 기준을 검수한다"
