@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Skill Builder"
+  short_description: "Agent Skill 작성 기준을 설계하고 검증한다"
+  default_prompt: "Use $agent-skill-builder to create a focused SKILL.md for a repeatable Codex workflow."
