@@ -1,0 +1,390 @@
+---
+slug: "agent-skills"
+title: "Agent Skills와 SKILL.md 작성 가이드"
+description: "Agent Skills의 개념, 동작 방식, 좋은 Skill의 조건, SKILL.md 작성 구조와 검증 기준을 정리합니다."
+publishedAt: "2026-05-11"
+category: "AI"
+---
+
+## Agent Skills란?
+
+Agent Skill은 AI 에이전트가 특정 작업을 일관되게 수행하도록 지식, 절차, 예제, 스크립트, 템플릿을 묶어둔 작업 단위다.
+
+컨텍스트 파일이 프로젝트 소개서라면, Skill은 업무 매뉴얼이다. 프로젝트 소개서는 전체 배경을 알려준다. Skill은 특정 작업을 어떤 순서와 기준으로 처리할지 지시한다.
+
+Skill의 중심 파일은 `SKILL.md`다. 이 파일에는 최소한 이름, 설명, 작업 지침이 들어간다. 필요한 경우 `scripts/`, `references/`, `assets/`, `examples/` 같은 보조 리소스를 함께 둔다.
+
+```txt
+my-skill/
+├── SKILL.md
+├── scripts/
+├── references/
+├── assets/
+└── examples/
+```
+
+Agent Skills의 목적은 긴 프롬프트를 저장하는 것이 아니다. 반복되는 작업 기준을 버전 관리 가능한 폴더로 분리하는 것이다.
+
+## 왜 필요한가?
+
+AI 에이전트는 작업 맥락을 알아야 안정적으로 동작한다. 코드 리뷰 기준, 문서 작성 형식, 브랜치 네이밍 규칙, 블로그 퍼블리싱 기준은 모델이 기본으로 아는 정보가 아니다.
+
+Skill은 이런 기준을 재사용 가능한 지침으로 만든다.
+
+- 반복 설명을 줄인다.
+- 작업 결과의 일관성을 높인다.
+- 팀이나 프로젝트의 규칙을 Git으로 관리한다.
+- 변경된 규칙을 하나의 파일에서 갱신한다.
+- 복잡한 작업을 단계별 워크플로우로 고정한다.
+
+예를 들어 코드 리뷰 Skill이 있으면 매번 “가독성, 예측 가능성, 응집도, 결합도 기준으로 봐줘”라고 설명하지 않는다. 사용자가 `리뷰`나 `코드리뷰`를 요청하면 에이전트가 해당 Skill을 선택하고 정해진 기준으로 검토한다.
+
+## 동작 방식
+
+Agent Skills는 점진적 공개 방식으로 동작한다. 에이전트는 모든 Skill 본문을 처음부터 읽지 않는다. 필요한 정보만 단계적으로 읽는다.
+
+```txt
+Discovery -> Activation -> Execution
+```
+
+### Discovery
+
+에이전트는 먼저 Skill의 이름과 `description`만 확인한다. 이 단계에서 어떤 Skill을 활성화할지 판단한다.
+
+### Activation
+
+사용자 요청이 특정 Skill의 `description`과 맞으면 에이전트가 해당 `SKILL.md`를 읽는다. 따라서 `description`은 Skill 선택 품질을 결정한다.
+
+### Execution
+
+에이전트는 `SKILL.md`의 지침을 따라 작업한다. 필요할 때만 `references/` 문서, `scripts/` 스크립트, `assets/` 템플릿을 추가로 사용한다.
+
+## 좋은 Skill의 조건
+
+좋은 Skill은 범위가 좁다.
+
+좋은 예:
+
+```txt
+HTML/CSS 퍼블리싱 접근성 검수
+모바일 레이아웃 overflow 점검
+한국어 Conventional Commit 메시지 생성
+```
+
+좋지 않은 예:
+
+```txt
+웹 개발
+코드 작성
+문서 작업
+```
+
+범위가 넓으면 에이전트가 언제 Skill을 써야 하는지 판단하기 어렵다. “웹 개발”은 대부분의 요청에 걸린다. “HTML/CSS 퍼블리싱 접근성 검수”는 활성화 조건이 명확하다.
+
+좋은 Skill은 실행 가능한 지침을 담는다.
+
+모호한 지침:
+
+```txt
+테스트를 잘 작성한다.
+접근성을 고려한다.
+좋은 커밋 메시지를 만든다.
+```
+
+실행 가능한 지침:
+
+```txt
+`git status --short`로 변경 파일을 먼저 확인한다.
+아이콘만 있는 버튼에는 `aria-label`을 제공한다.
+커밋 subject는 한국어로 작성하고 `~한다`로 끝낸다.
+```
+
+좋은 Skill은 적절한 크기를 유지한다. `SKILL.md`에는 자주 쓰는 핵심 지침만 둔다. 긴 정책, 많은 예제, 도메인 설명은 `references/`로 분리한다. 반복 실행이 필요한 검증이나 생성 작업은 `scripts/`로 분리한다.
+
+## Skill 목적 정의
+
+`SKILL.md`를 쓰기 전에 목적을 먼저 정의한다.
+
+확인할 질문:
+
+- 어떤 반복 작업을 개선하는가?
+- 누가 이 Skill을 사용하는가?
+- 어떤 실수를 줄이는가?
+- 무엇을 범위 밖으로 둘 것인가?
+- 사용 후 어떤 산출물이 나와야 하는가?
+
+예시:
+
+```txt
+목적: 디자인 요구사항을 semantic HTML과 유지보수 가능한 CSS로 구현한다.
+주요 오류 방지: 의미 없는 div 남용, label 누락, 모바일 overflow, 과한 ARIA, 브라우저별 레이아웃 차이.
+산출물: HTML/CSS 또는 React 마크업 수정, 접근성 점검 결과, 반응형 검증 기록.
+범위 밖: API 설계, 데이터베이스 모델링, 비즈니스 로직 리팩터링.
+```
+
+목적이 한두 문장으로 정리되지 않으면 Skill을 나눈다.
+
+## SKILL.md 기본 구조
+
+`SKILL.md`는 YAML frontmatter와 Markdown 본문으로 구성한다.
+
+```md
+---
+name: publishing
+description: Use when writing, reviewing, or repairing HTML/CSS publishing work. Applies to semantic markup, responsive layout, cross-browser checks, accessibility, CSS components, and design-to-markup implementation.
+---
+
+# Web Publishing
+
+## Mission
+
+Turn design requirements into semantic, accessible, responsive HTML/CSS.
+
+## Use When
+
+- Converting a design or written requirement into markup.
+- Implementing responsive layouts.
+- Reviewing semantic HTML and accessibility.
+- Fixing cross-browser CSS issues.
+
+## Rules
+
+- Use semantic tags before adding ARIA.
+- Use `a` for navigation and `button` for actions.
+- Connect form controls with labels.
+- Use Flexbox or Grid for layout.
+- Keep touch targets at least 44px by 44px.
+
+## Validation
+
+- Check keyboard navigation.
+- Check heading order and accessible names.
+- Verify mobile widths defined by the project.
+- Record browser-specific fallback risks.
+```
+
+구조는 작업 성격에 맞게 조정한다. 핵심은 “언제 쓰는가”, “어떤 순서로 일하는가”, “무엇을 금지하는가”, “어떻게 검증하는가”를 명확히 쓰는 것이다.
+
+## description 작성법
+
+`description`은 Skill 선택에 직접 사용된다. 본문보다 먼저 읽힌다.
+
+작성 기준:
+
+- 어떤 작업에 쓰는지 밝힌다.
+- 주요 기술 스택이나 파일 형식을 넣는다.
+- 사용자가 입력할 만한 트리거 단어를 포함한다.
+- 너무 일반적인 표현을 피한다.
+
+좋은 예:
+
+```yaml
+description: Use when writing, reviewing, or repairing HTML/CSS publishing work. Applies to semantic markup, responsive layout, cross-browser checks, accessibility, CSS components, and design-to-markup implementation.
+```
+
+아쉬운 예:
+
+```yaml
+description: 테스트 관련 규칙
+```
+
+첫 번째 설명은 HTML/CSS, publishing, semantic markup, responsive layout, accessibility, cross-browser처럼 선택에 필요한 단어를 포함한다. 두 번째 설명은 테스트 종류와 대상이 없다.
+
+## 본문 작성 패턴
+
+Skill 본문은 명령문으로 작성한다.
+
+피할 표현:
+
+```txt
+타입을 잘 쓴다.
+에러 처리를 적절히 한다.
+적절한 검증을 추가합니다.
+```
+
+권장 표현:
+
+```txt
+함수 파라미터와 반환값에 TypeScript 타입을 명시한다.
+외부 API 호출과 파일 I/O에는 에러 경로를 정의한다.
+검증하지 않은 결과를 검증했다고 쓰지 않는다.
+```
+
+금지 규칙도 필요하다. 해야 할 일만 쓰면 에이전트가 흔한 실패를 반복한다.
+
+예시:
+
+```txt
+사용자가 만든 변경을 되돌리지 않는다.
+실제로 실행하지 않은 테스트를 실행했다고 말하지 않는다.
+`div role="button"`을 기본 선택지로 사용하지 않는다.
+```
+
+## 좋은 예와 나쁜 예
+
+예제는 에이전트가 따라 할 패턴을 보여준다. 좋은 예와 나쁜 예를 함께 두면 의도가 명확해진다.
+
+```md
+## CSS Naming
+
+Use BEM when the project has no existing class naming convention.
+
+Good:
+
+- `.post-card`
+- `.post-card__title`
+- `.post-card--featured`
+
+Bad:
+
+- `.box1`
+- `.blue-title`
+- `.post-card-title-wrapper-inner`
+```
+
+예제는 많을수록 좋은 자료가 아니다. 반복적으로 헷갈리는 판단, 형식 오류가 잦은 출력, 프로젝트 컨벤션이 강한 영역에만 둔다.
+
+## 리소스 분리
+
+`SKILL.md`만으로 부족한 작업은 보조 리소스를 사용한다.
+
+```txt
+.codex/skills/publishing/
+├── SKILL.md
+├── examples/
+│   ├── card-markup.md
+│   ├── form-field.md
+│   └── responsive-grid.md
+└── scripts/
+    └── check-overflow.sh
+```
+
+리소스 사용 기준:
+
+- `examples/`: 에이전트가 복사할 좋은 패턴이 필요할 때
+- `references/`: 정책, 스키마, 긴 설명이 `SKILL.md`를 너무 길게 만들 때
+- `scripts/`: 반복 검증이나 파일 생성이 필요할 때
+- `assets/`: 템플릿, 이미지, 문서 자산이 필요할 때
+
+`SKILL.md`는 실행 흐름을 담고, 자세한 자료는 필요할 때만 읽도록 분리한다.
+
+## 프로젝트 예시
+
+이 블로그 프로젝트에서는 Skill을 역할별로 나눈다.
+
+### 블로그 퍼블리싱 Skill
+
+```txt
+blog-ui-publisher
+```
+
+역할:
+
+- Next.js App Router 구조 검수
+- semantic HTML 확인
+- 접근성 기본 점검
+- metadata와 route 의도 확인
+- 기술 블로그 문체 검수
+
+이 Skill에는 CSS 세부 규칙을 넣지 않는다. CSS 레이아웃과 반응형 기준은 별도 학습 후 `publishing` Skill에 반영한다.
+
+### 코드 리뷰 Skill
+
+```txt
+code-review-fundamentals
+```
+
+역할:
+
+- 버그와 회귀 우선 검토
+- 가독성, 예측 가능성, 응집도, 결합도 기준 적용
+- 접근성, 성능, 검증 누락 확인
+
+### AI 활용 기록 Skill
+
+```txt
+ai-usage-recorder
+```
+
+역할:
+
+- 기록할 가치가 있는 AI 사용만 선별
+- 사용자의 판단과 Codex의 작업 분리
+- 실제 검증과 미검증 내용을 구분
+
+### Skill 작성 Skill
+
+```txt
+agent-skill-builder
+```
+
+역할:
+
+- Skill 목적 정의
+- trigger description 작성
+- `SKILL.md` 구조화
+- `agents/openai.yaml` 작성
+- validator 실행과 반복 개선
+
+## Skill 테스트
+
+Skill을 작성한 뒤 다음을 확인한다.
+
+### 활성화 테스트
+
+관련 요청에서 Skill이 선택되는지 확인한다.
+
+```txt
+이 카드 목록을 semantic HTML과 반응형 CSS 기준으로 퍼블리싱해줘.
+```
+
+선택되지 않으면 `description`에 작업 대상과 트리거 단어를 보강한다.
+
+### 과활성화 테스트
+
+관련 없는 요청에서 Skill이 선택되지 않는지 확인한다.
+
+```txt
+Supabase 테이블 구조 설계해줘.
+```
+
+불필요하게 선택되면 `description`이 너무 넓다. 범위를 줄인다.
+
+### 출력 테스트
+
+에이전트가 지침을 따라 원하는 산출물을 만드는지 확인한다. 예상과 다르면 규칙을 더 구체화한다.
+
+모호한 규칙:
+
+```txt
+적절한 에러 처리를 추가한다.
+```
+
+수정한 규칙:
+
+```txt
+모바일에서 가로 스크롤을 만드는 요소를 찾고, 원인과 수정 CSS를 함께 제시한다.
+```
+
+## Skill 관리
+
+Skill은 코드처럼 관리한다.
+
+- Git으로 변경 이력을 남긴다.
+- 프로젝트 규칙이 바뀌면 Skill을 함께 수정한다.
+- 실제 사용 중 실패한 출력은 `SKILL.md`의 규칙이나 예제로 반영한다.
+- 분기별로 오래된 기술 스택, 실행 명령, 검증 절차를 점검한다.
+
+Skill이 낡으면 에이전트도 낡은 방식으로 작업한다. Skill은 한 번 만든 뒤 방치하는 문서가 아니라, 반복 작업의 품질을 유지하는 운영 자산이다.
+
+## 정리
+
+Agent Skills는 AI에게 더 긴 프롬프트를 주기 위한 장치가 아니다. 반복 업무의 기준을 명시하고, 실행 순서와 검증 방법을 고정하는 구조다.
+
+좋은 Skill은 좁은 범위, 명확한 `description`, 실행 가능한 규칙, 필요한 예제, 검증 절차를 가진다. 반대로 범위가 넓고 추상적인 Skill은 활성화도 어렵고 결과도 흔들린다.
+
+AI 활용 품질은 프롬프트 길이보다 작업 기준의 명확성에 달려 있다. 반복해서 설명하는 작업이 있다면 Skill로 분리한다.
+
+## 참고 링크
+
+- [Agent Skills Overview](https://agentskills.io/home)
