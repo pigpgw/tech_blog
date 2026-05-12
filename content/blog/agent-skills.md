@@ -131,36 +131,36 @@ HTML/CSS 퍼블리싱 접근성 검수
 ```md
 ---
 name: publishing
-description: Use when writing, reviewing, or repairing HTML/CSS publishing work. Applies to semantic markup, responsive layout, cross-browser checks, accessibility, CSS components, and design-to-markup implementation.
+description: HTML/CSS 퍼블리싱 작업을 작성, 검토, 수정할 때 사용한다. 시맨틱 마크업, 반응형 레이아웃, 크로스 브라우징, 접근성, CSS 컴포넌트, 디자인 시안 마크업 변환을 다룬다.
 ---
 
-# Web Publishing
+# 웹 퍼블리싱
 
-## Mission
+## 목적
 
-Turn design requirements into semantic, accessible, responsive HTML/CSS.
+디자인 요구사항을 시맨틱하고 접근 가능한 반응형 HTML/CSS로 구현한다.
 
-## Use When
+## 사용 시점
 
-- Converting a design or written requirement into markup.
-- Implementing responsive layouts.
-- Reviewing semantic HTML and accessibility.
-- Fixing cross-browser CSS issues.
+- 디자인 시안이나 요구사항을 마크업으로 변환한다.
+- 반응형 레이아웃을 구현한다.
+- 시맨틱 HTML과 접근성을 검토한다.
+- 브라우저별 CSS 차이를 수정한다.
 
-## Rules
+## 작업 규칙
 
-- Use semantic tags before adding ARIA.
-- Use `a` for navigation and `button` for actions.
-- Connect form controls with labels.
-- Use Flexbox or Grid for layout.
-- Keep touch targets at least 44px by 44px.
+- ARIA를 추가하기 전에 시맨틱 태그를 먼저 선택한다.
+- 이동은 `a`, 실행은 `button`으로 구현한다.
+- form control은 `label`과 연결한다.
+- 레이아웃은 Flexbox 또는 Grid로 구성한다.
+- 모바일 터치 영역은 가로와 세로 모두 최소 44px을 확보한다.
 
-## Validation
+## 검증
 
-- Check keyboard navigation.
-- Check heading order and accessible names.
-- Verify mobile widths defined by the project.
-- Record browser-specific fallback risks.
+- 키보드 탐색을 확인한다.
+- heading 계층과 accessible name을 확인한다.
+- 프로젝트가 정한 모바일 폭에서 화면을 검증한다.
+- 브라우저별 대체 처리가 필요한 지점을 기록한다.
 ```
 
 구조는 작업 성격에 맞게 조정한다. 핵심은 “언제 쓰는가”, “어떤 순서로 일하는가”, “무엇을 금지하는가”, “어떻게 검증하는가”를 명확히 쓰는 것이다.
@@ -179,7 +179,7 @@ Turn design requirements into semantic, accessible, responsive HTML/CSS.
 좋은 예:
 
 ```yaml
-description: Use when writing, reviewing, or repairing HTML/CSS publishing work. Applies to semantic markup, responsive layout, cross-browser checks, accessibility, CSS components, and design-to-markup implementation.
+description: HTML/CSS 퍼블리싱 작업을 작성, 검토, 수정할 때 사용한다. 시맨틱 마크업, 반응형 레이아웃, 크로스 브라우징, 접근성, CSS 컴포넌트, 디자인 시안 마크업 변환을 다룬다.
 ```
 
 아쉬운 예:
@@ -188,7 +188,7 @@ description: Use when writing, reviewing, or repairing HTML/CSS publishing work.
 description: 테스트 관련 규칙
 ```
 
-첫 번째 설명은 HTML/CSS, publishing, semantic markup, responsive layout, accessibility, cross-browser처럼 선택에 필요한 단어를 포함한다. 두 번째 설명은 테스트 종류와 대상이 없다.
+첫 번째 설명은 HTML/CSS, 퍼블리싱, 시맨틱 마크업, 반응형 레이아웃, 접근성, 크로스 브라우징처럼 선택에 필요한 단어를 포함한다. 두 번째 설명은 테스트 종류와 대상이 없다.
 
 ## 본문 작성 패턴
 
@@ -225,17 +225,17 @@ Skill 본문은 명령문으로 작성한다.
 예제는 에이전트가 따라 할 패턴을 보여준다. 좋은 예와 나쁜 예를 함께 두면 의도가 명확해진다.
 
 ```md
-## CSS Naming
+## CSS 네이밍
 
-Use BEM when the project has no existing class naming convention.
+프로젝트에 기존 클래스 네이밍 규칙이 없으면 BEM을 사용한다.
 
-Good:
+좋은 예:
 
 - `.post-card`
 - `.post-card__title`
 - `.post-card--featured`
 
-Bad:
+나쁜 예:
 
 - `.box1`
 - `.blue-title`
