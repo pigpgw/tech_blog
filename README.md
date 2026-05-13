@@ -64,6 +64,29 @@
   - 별도 React Native 앱은 만들지 않는다.
   - 모바일 앱이 필요한 이유가 명확해질 때 PWA 또는 React Native를 비교 검토한다.
 
+## URL 구조
+
+- `/`: Home. Resume, Blog, Lab으로 이동하는 허브.
+- `/resume`: 이력서와 프로젝트 증빙.
+- `/blog`: 글 목록.
+- `/blog/[slug]`: 글 상세.
+- `/blog/categories/[...segments]`: 카테고리별 글 목록.
+- `/lab`: 실습 목록.
+- `/lab/[slug]`: 개별 실습.
+- `/admin/login`: 관리자 로그인.
+- `/admin/posts`: 관리자 글 목록.
+- `/admin/posts/new`: 새 글 작성.
+- `/admin/posts/[id]/edit`: 글 수정.
+- `/admin/posts/[id]/preview`: 글 미리보기.
+
+URL 기준:
+
+- 공개 글은 slug로 접근한다.
+- Admin 글 수정은 DB id로 접근한다.
+- 카테고리는 path로 표현한다. 예: `/blog/categories/web/react`.
+- 검색어, 태그, 페이지, 정렬처럼 공유 가능한 목록 상태만 query string으로 둔다.
+- drawer, modal, toast, form 입력 상태는 URL에 남기지 않는다.
+
 ## 로컬 실행 방법
 
 ### Node.js 버전
@@ -113,7 +136,8 @@ npm run format
 - Web Analytics: `@vercel/analytics`
 - Speed Insights: `@vercel/speed-insights`
 
-`main` 브랜치에 push되면 Vercel production deployment가 실행된다.
+평소 작업은 `dev`에서 진행하고, 배포할 준비가 끝나면 `main`에 반영한다.
+`main`에 push되면 Vercel production deployment가 실행된다.
 개별 deployment URL은 배포마다 달라지므로 README에는 production URL만 기록한다.
 Vercel Project Settings의 Build/Output/Install/Development Command override는 끄고, Next.js preset 기본값을 사용한다.
 
@@ -201,53 +225,6 @@ Vercel Project Settings의 Build/Output/Install/Development Command override는 
   - 단순 블로그 MVP 단계에서는 먼저 도입하지 않는다.
 
 ## 컨벤션
-
-### 브랜치
-
-브랜치는 `main`, `dev`, 작업 브랜치로 구분한다.
-
-- `main`
-  - 배포용 브랜치이다.
-  - 실제 서비스에 배포되는 안정적인 코드만 반영한다.
-  - 직접 커밋하지 않고, 검증이 끝난 `dev` 브랜치만 머지한다.
-- `dev`
-  - 작업 내용을 합치는 통합 브랜치이다.
-  - 모든 작업 브랜치는 `dev`에서 분기한다.
-  - 기능 개발과 수정이 끝난 작업 브랜치는 PR 검증 후 `dev`로 머지한다.
-  - 배포 전 검증이 끝나면 `main`으로 머지한다.
-- 작업 브랜치
-  - 실제 기능 개발, 버그 수정, 문서 수정은 작업 브랜치에서 진행한다.
-  - 기능 단위 작업이 완료되면 `dev`로 PR을 생성한다.
-  - 간단한 문서 수정이나 오타 수정은 PR 없이 처리할 수 있다.
-
-브랜치 이름 형식:
-
-```txt
-타입/작업-이름
-```
-
-브랜치 이름 예시:
-
-```txt
-feature/blog-list
-feature/post-detail
-fix/markdown-parser
-refactor/post-model
-docs/readme
-style/mobile-layout
-chore/next-config
-test/post-parser
-```
-
-브랜치 타입:
-
-- `feature`: 새로운 기능 추가
-- `fix`: 버그 수정
-- `refactor`: 동작 변경 없는 코드 구조 개선
-- `docs`: 문서 수정
-- `style`: CSS, UI 스타일 수정
-- `chore`: 설정, 패키지, 빌드 관련 작업
-- `test`: 테스트 추가 또는 수정
 
 ### 커밋
 
@@ -386,8 +363,8 @@ packages/
 - 1차 MVP: Vercel
   - Next.js 블로그를 빠르게 배포하기 위해 Vercel을 사용한다.
   - Vercel에 GitHub repository를 연결한다.
-  - `main` 브랜치에 머지되면 production deployment가 실행되게 한다.
-  - 작업 브랜치 또는 PR에서는 Vercel preview deployment로 배포 결과를 확인한다.
+  - 평소 작업은 `dev`에서 진행하고, 배포할 준비가 끝나면 `main`에 반영한다.
+  - `main`에 push되면 Vercel production deployment로 배포 결과를 확인한다.
   - GitHub Actions는 1차 MVP에서는 필수로 도입하지 않는다.
 - 3차 MVP: Cloudflare 검토
   - profile, blog, resume, craft가 독립 앱으로 나뉘면 Cloudflare Pages Functions로 경로 기반 프록시를 검토한다.
@@ -405,20 +382,3 @@ packages/
 - `build`: Next.js 빌드 검증
 
 GitHub Actions는 3차 MVP에서 Cloudflare, 모노레포, 앱별 배포 검증이 필요해질 때 추가한다.
-
-### 브랜치 흐름
-
-- 기능 개발, 버그 수정, 문서 수정은 작업 브랜치에서 진행한다.
-- 작업 중에는 필요할 때마다 작업 브랜치에 push한다.
-- 기능 단위 작업이 완료되면 작업 브랜치에서 `dev`로 PR을 생성한다.
-- PR에서 충돌 여부와 Vercel preview deployment를 확인한다.
-- 검증이 끝난 PR만 `dev`로 머지한다.
-- 배포 가능한 상태가 되면 `dev`를 `main`으로 머지한다.
-- `main`에 반영되면 production deployment가 실행된다.
-
-### PR 사용 기준
-
-- 모든 커밋마다 PR을 만들지는 않는다.
-- 기능 단위 작업이 완료되어 `dev`에 머지할 때 PR을 사용한다.
-- PR에서는 충돌 여부와 preview deployment를 확인한다.
-- 간단한 문서 수정이나 오타 수정은 PR 없이 처리할 수 있다.

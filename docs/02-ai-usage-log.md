@@ -142,18 +142,6 @@ Codex가 한 작업:
 
 - `.codex/skills/ai-usage-recorder/SKILL.md`
 
-### `branch-starter`
-
-목적:
-
-- 새 작업을 시작할 때 작업 내용을 기준으로 브랜치 타입과 이름 제안
-- `dev` 기준으로 작업 브랜치를 만드는 흐름 정리
-- 변경 중인 파일이 있을 때 브랜치 전환 전에 멈추고 처리 방법을 확인
-
-파일:
-
-- `.codex/skills/branch-starter/SKILL.md`
-
 ### `agent-skill-builder`
 
 목적:

@@ -2,7 +2,7 @@
 
 ## 프로젝트 규칙
 
-- 사용자가 별도로 요청하지 않으면 `dev` 또는 작업 브랜치에서 작업한다.
+- 사용자가 별도로 요청하지 않으면 `dev`에서 작업한다.
 - 프로젝트 문서는 한국어로 작성한다.
 - 커밋 메시지는 `README.md`의 커밋 컨벤션을 따른다.
 - 기록할 가치가 있는 AI 활용 사례는 `docs/02-ai-usage-log.md`에 남긴다.
@@ -26,3 +26,5 @@ Co-authored-by: Codex <codex@openai.com>
 
 - body가 있으면 body 아래에 둔다.
 - body가 없으면 subject 아래에 한 줄을 띄우고 둔다.
+- Codex와 함께 작업한 의미 있는 커밋은 커밋 전후로 footer 포함 여부를 확인한다.
+- footer가 빠졌으면 `git commit --amend` 또는 추가 커밋으로 바로 수정한다.
