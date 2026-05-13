@@ -17,6 +17,7 @@ Use this skill for publishing work in this repository. For framework architectur
 Use this skill when:
 
 - Converting a design, Figma frame, image, or written requirement into HTML/CSS.
+- Publishing Admin or tool screens from verbal requirements when no formal design exists.
 - Implementing responsive layouts for desktop, tablet, and mobile.
 - Applying web accessibility, keyboard navigation, WAI-ARIA, or web standards.
 - Handling Chrome, Safari, Firefox, Edge, Android Chrome, or iOS Safari differences.
@@ -39,6 +40,36 @@ Before editing:
 4. Check framework context: plain HTML/CSS, React, Next.js, Vue, or another stack.
 5. Inspect existing reset, variables, tokens, class naming, component patterns, and shared styles.
 6. Reuse project conventions before introducing new naming, tokens, or components.
+7. If no design exists, infer layout from the current product tone and write down assumptions.
+
+## Project Defaults
+
+When the request is "현재 톤과 비슷하게 퍼블리싱해줘" or no design is provided:
+
+- Match the existing pages before inventing a new visual direction.
+- Use the project's current stack and conventions first: Next.js, JSX, Tailwind utilities, existing shared components, and existing spacing/radius/color patterns.
+- Use Tailwind's default spacing, font, color, and breakpoint scale unless the project already has a stronger token.
+- Keep visual styling restrained: clear hierarchy, readable spacing, visible borders/focus, and no decorative layout that does not help the task.
+- Do not add a new design system, theme, animation language, or component abstraction unless repeated code proves it is needed.
+- Record assumptions in the final response or AI usage log when the design was inferred.
+
+For Admin screens:
+
+- Prioritize task completion over brand expression.
+- Prefer dense but readable layouts: page header, primary action, filters/search, list/table/card list, form, preview, and clear status regions.
+- Implement loading, empty, error, disabled, dirty, saving, success, and validation states when the screen needs them.
+- Use semantic form, table/list, dialog, disclosure, and status markup before tuning visual details.
+- Keep Admin UI consistent with public pages, but allow a quieter operational tone.
+- Validate at desktop-first working sizes first, then refine mobile only when it is a real target for the Admin flow.
+
+Admin publishing workflow:
+
+1. Name the route, user, task, and success state.
+2. Build the semantic shell: heading, navigation/back link, primary action, content region.
+3. Add the minimum useful layout with existing utilities and components.
+4. Add interaction states and accessible labels.
+5. Check keyboard flow, visible focus, overflow, and responsive width.
+6. If the same pattern repeats, extract a small component and document why.
 
 ## HTML Rules
 
