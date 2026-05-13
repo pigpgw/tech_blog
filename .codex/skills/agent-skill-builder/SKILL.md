@@ -75,7 +75,7 @@ Good:
 ```txt
 agent-skill-builder
 code-review-fundamentals
-blog-ui-publisher
+api-contract-reviewer
 ```
 
 Avoid:

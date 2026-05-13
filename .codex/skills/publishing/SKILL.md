@@ -10,7 +10,7 @@ description: >
 
 Turn designs or requirements into semantic, accessible, responsive HTML/CSS that follows web standards and the project's existing conventions.
 
-Use this skill for general publishing work. For this blog's Next.js-specific structure and guide-style article writing, use `blog-ui-publisher` first, then use this skill only when CSS or visual publishing details are needed.
+Use this skill for publishing work in this repository. For framework architecture, data flow, backend, deployment, or article planning, follow the project roadmap and official framework documentation instead of a blog-specific publishing skill.
 
 ## When To Use
 
