@@ -38,8 +38,13 @@ export default async function BlogDetailPage({
 
   if (!blogItem) notFound();
 
+  const titleId = "blog-post-title";
+
   return (
-    <article className="flex flex-1 flex-col py-10 sm:py-14">
+    <article
+      aria-labelledby={titleId}
+      className="flex flex-1 flex-col py-10 sm:py-14"
+    >
       <div className="flex items-center justify-between gap-4">
         <Link
           href="/blog"
@@ -55,13 +60,19 @@ export default async function BlogDetailPage({
           <span className="inline-flex min-h-9 items-center rounded-full bg-blue-50 px-3 font-semibold text-blue-700">
             {blogItem.category}
           </span>
-          <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-slate-100 px-3 font-medium text-slate-600">
+          <time
+            dateTime={blogItem.publishedAt}
+            className="inline-flex min-h-9 items-center gap-2 rounded-full bg-slate-100 px-3 font-medium text-slate-600"
+          >
             <Clock3 className="size-4" aria-hidden="true" />
             {blogItem.publishedAt}
-          </span>
+          </time>
         </div>
 
-        <h1 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl">
+        <h1
+          id={titleId}
+          className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl"
+        >
           {blogItem.title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600">
@@ -79,6 +90,9 @@ export default async function BlogDetailPage({
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
+            components={{
+              h1: "h2",
+            }}
           >
             {blogItem.content}
           </ReactMarkdown>

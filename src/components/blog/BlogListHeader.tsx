@@ -19,14 +19,16 @@ export const BlogListHeader = () => {
           >
             카테고리
           </h2>
-          {blogCategories.map((category) => (
-            <span
-              key={category}
-              className="inline-flex min-h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700"
-            >
-              {category}
-            </span>
-          ))}
+          <ul className="flex flex-wrap gap-3">
+            {blogCategories.map((category) => (
+              <li
+                key={category}
+                className="inline-flex min-h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700"
+              >
+                {category}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </header>
