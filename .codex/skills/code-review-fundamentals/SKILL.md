@@ -12,7 +12,7 @@ Review frontend changes as a code reviewer. Prioritize bugs, regressions, mainta
 
 ## References
 
-- First read `docs/05-code-review-fundamentals.md` when this repository is available.
+- First read `docs/03-code-review-fundamentals.md` when this repository is available.
 - If that document is not available or a portable summary is enough, read `references/toss-frontend-fundamentals.md`.
 - Use official Toss Frontend Fundamentals as the source of the quality criteria, but do not quote long passages.
 
