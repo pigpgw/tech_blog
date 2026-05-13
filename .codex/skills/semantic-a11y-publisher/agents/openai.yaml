@@ -1,4 +1,0 @@
-interface:
-  display_name: "Semantic A11y Publisher"
-  short_description: "시맨틱 구조와 접근성 중심의 퍼블리싱 기준을 적용한다"
-  default_prompt: "Use $semantic-a11y-publisher to implement or review semantic structure and accessibility for this publishing request."
