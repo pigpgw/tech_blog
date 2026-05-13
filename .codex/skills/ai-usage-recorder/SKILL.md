@@ -114,13 +114,13 @@ Codex가 한 작업:
 - `사용한 AI 하네스 / 도구` is required. If no special tool was used, write `일반 Codex 대화만 사용`.
 - `선택 이유` must include at least one of: speed, consistency, maintainability, structure.
 - `배운 점` must be practical enough to apply in future development.
-- Prefer paths when artifacts are files, such as `docs/04-ai-usage-log.md` or `.codex/skills/name/SKILL.md`.
+- Prefer paths when artifacts are files, such as `docs/02-ai-usage-log.md` or `.codex/skills/name/SKILL.md`.
 - Remove low-value narration that only says the work happened.
 - Do not claim MCP, browser validation, CI, or tests were used unless they were actually used.
 
 ## Good Fit Examples
 
-- Creating `blog-ui-publisher` to standardize AI publishing prompts
+- Creating a project-specific Skill to standardize repeated AI-assisted work
 - Creating `commit-message-generator` to automate Korean Conventional Commit messages
 - Using AI to restructure a project roadmap into implementation tasks
 - Using AI to debug a mobile layout and then adjusting padding or semantic tags
