@@ -17,13 +17,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) {
     return {
-      title: "글을 찾을 수 없습니다 | 박건우 Tech Blog",
+      title: "글을 찾을 수 없습니다",
       description: "요청한 블로그 글을 찾을 수 없습니다.",
     };
   }
 
   return {
-    title: `${post.title} | 박건우 Tech Blog`,
+    title: post.title,
     description: post.description,
   };
 }

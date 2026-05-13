@@ -1,5 +1,11 @@
 import Link from "next/link";
 import { BookOpen, FileText, Home } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "페이지를 찾을 수 없습니다",
+  description: "요청한 페이지를 찾을 수 없습니다.",
+};
 
 export default function NotFound() {
   return (

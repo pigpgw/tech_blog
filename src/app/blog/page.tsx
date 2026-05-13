@@ -4,7 +4,7 @@ import { BlogPostList } from "@/components/blog/BlogPostList";
 import { blogPosts } from "@/lib/blog-posts";
 
 export const metadata: Metadata = {
-  title: "Tech Blog",
+  title: "문제와 해결 과정을 기록한 글",
   description:
     "개발하며 배우고 경험한 문제 해결 과정과 기술 내용을 기록하는 개발 블로그",
 };

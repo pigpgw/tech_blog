@@ -1,4 +1,11 @@
 import { ArrowUpRight, BriefcaseBusiness, Mail, Phone } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "박건우 Resume",
+  description:
+    "박건우의 프론트엔드, AI, 백엔드 프로젝트 경험과 기술 역량을 정리한 이력서",
+};
 
 const techGroups = [
   {

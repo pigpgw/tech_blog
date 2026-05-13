@@ -1,5 +1,11 @@
 import { BookOpen, Home } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "글을 찾을 수 없습니다",
+  description: "요청한 블로그 글을 찾을 수 없습니다.",
+};
 
 export default function BlogPostNotFound() {
   return (
@@ -13,7 +19,7 @@ export default function BlogPostNotFound() {
           id="not-found-title"
           className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl"
         >
-          페이지를 찾을 수 없습니다
+          글을 찾을 수 없습니다
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-slate-600 sm:text-base">
           요청한 블로그 글을 찾을 수 없습니다. 글 주소가 바뀌었거나 아직

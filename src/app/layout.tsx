@@ -5,7 +5,10 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/header";
 
 export const metadata: Metadata = {
-  title: "박건우 Tech Blog",
+  title: {
+    default: "박건우 Tech Blog",
+    template: "%s | 박건우 Tech Blog",
+  },
   description: "개발하며 마주친 문제와 해결 과정을 기록하는 기술 블로그",
 };
 
