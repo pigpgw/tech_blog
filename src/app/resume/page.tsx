@@ -1,4 +1,3 @@
-import { ArrowUpRight, BriefcaseBusiness, Mail, Phone } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -122,218 +121,117 @@ const contacts = [
     value: "ceh20002@naver.com",
     href: "mailto:ceh20002@naver.com",
     accessibleName: "이메일 보내기: ceh20002@naver.com",
-    icon: Mail,
   },
   {
     label: "Phone",
     value: "010-9473-7427",
     href: "tel:01094737427",
     accessibleName: "전화 걸기: 010-9473-7427",
-    icon: Phone,
   },
 ];
 
 export default function ResumePage() {
   return (
-    <div className="flex flex-1 flex-col py-10 sm:py-14">
-      <section className="rounded-[32px] border border-slate-200/80 bg-linear-to-br from-white via-white to-slate-50 p-7 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_48px_rgba(15,23,42,0.08)] sm:p-10">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-blue-600">Resume</p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
-              박건우
-            </h1>
-            <p className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-slate-900 sm:text-3xl">
-              Developer
-            </p>
-            <p className="mt-5 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
-              전자공학으로 시작해 스타트업 인턴, 국제 학회 연구, 대기업
-              프로젝트까지 다양한 환경에서 경험을 쌓아온 Developer입니다.
-              디지엠유닛원에서 B2B SaaS와 LG 공통업무 서비스의 AI 업무지원
-              기능을 개발하며 사용자 흐름, 데이터 연동, 보안 경계를 함께 고려한
-              제품 개선을 경험했습니다.
-            </p>
-          </div>
+    <>
+      <section>
+        <p>Resume</p>
+        <h1>박건우</h1>
+        <p>Developer</p>
+        <p>
+          전자공학으로 시작해 스타트업 인턴, 국제 학회 연구, 대기업 프로젝트까지
+          다양한 환경에서 경험을 쌓아온 Developer입니다. 디지엠유닛원에서 B2B
+          SaaS와 LG 공통업무 서비스의 AI 업무지원 기능을 개발하며 사용자 흐름,
+          데이터 연동, 보안 경계를 함께 고려한 제품 개선을 경험했습니다.
+        </p>
 
-          <div className="grid gap-2 text-sm text-slate-600">
-            {contacts.map(
-              ({ label, value, href, accessibleName, icon: Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={accessibleName}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-slate-200 bg-white px-4 font-medium transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    href.startsWith("http") ? "noopener noreferrer" : undefined
-                  }
-                >
-                  <Icon className="size-4 text-blue-600" aria-hidden="true" />
-                  <span>{value}</span>
-                </a>
-              ),
-            )}
-          </div>
-        </div>
+        <ul>
+          {contacts.map(({ label, value, href, accessibleName }) => (
+            <li key={label}>
+              <a href={href} aria-label={accessibleName}>
+                {label}: {value}
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <section aria-label="이력 상세 정보" className="mt-8 space-y-6">
-        <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)] sm:p-7">
-          <div className="flex flex-col gap-2 border-b border-slate-100 pb-5 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold text-blue-600">Stack</p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950">
-                기술 스택
-              </h2>
-            </div>
-            <p className="text-sm leading-6 text-slate-500">
-              프로젝트에서 실제 사용한 기술만 분류했습니다.
-            </p>
-          </div>
+      <section aria-label="이력 상세 정보">
+        <section>
+          <p>Stack</p>
+          <h2>기술 스택</h2>
+          <p>프로젝트에서 실제 사용한 기술만 분류했습니다.</p>
 
-          <div className="mt-6 divide-y divide-slate-100">
+          <div>
             {techGroups.map((group) => (
-              <div
-                key={group.title}
-                className="grid gap-3 py-4 first:pt-0 last:pb-0 sm:grid-cols-[160px_1fr] sm:items-start"
-              >
-                <h3 className="text-sm leading-8 font-semibold text-slate-950">
-                  {group.title}
-                </h3>
-                <div className="flex flex-wrap gap-2">
+              <section key={group.title}>
+                <h3>{group.title}</h3>
+                <ul>
                   {group.items.map((item) => (
-                    <span
-                      key={item}
-                      className="inline-flex min-h-8 items-center rounded-full px-1 text-sm font-medium text-slate-700"
-                    >
-                      {item}
-                    </span>
+                    <li key={item}>{item}</li>
                   ))}
-                </div>
-              </div>
+                </ul>
+              </section>
             ))}
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)]">
-          <h2 className="text-lg font-semibold text-slate-950">수상</h2>
-          <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
+        <section>
+          <h2>수상</h2>
+          <ul>
             {awardItems.map((item) => (
-              <li key={item.text} className="flex gap-3">
-                <BriefcaseBusiness
-                  className="mt-1 size-4 shrink-0 text-blue-600"
-                  aria-hidden="true"
-                />
-                <div className="min-w-0 flex-1">
-                  <span className="min-w-0">{item.text}</span>
-                </div>
-              </li>
+              <li key={item.text}>{item.text}</li>
             ))}
           </ul>
         </section>
 
-        <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)]">
-          <h2 className="text-lg font-semibold text-slate-950">학력</h2>
-          <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
+        <section>
+          <h2>학력</h2>
+          <ul>
             {educationItems.map((item) => (
-              <li key={item.text} className="flex gap-3">
-                <BriefcaseBusiness
-                  className="mt-1 size-4 shrink-0 text-blue-600"
-                  aria-hidden="true"
-                />
-                <span className="min-w-0">{item.text}</span>
-              </li>
+              <li key={item.text}>{item.text}</li>
             ))}
           </ul>
         </section>
 
-        <section
-          aria-labelledby="resume-experience"
-          className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)] sm:p-7"
-        >
-          <div className="border-b border-slate-100 pb-5">
-            <div>
-              <p className="text-sm font-semibold text-blue-600">Experience</p>
-              <h2
-                id="resume-experience"
-                className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950"
-              >
-                주요 경험
-              </h2>
-            </div>
-          </div>
+        <section aria-labelledby="resume-experience">
+          <p>Experience</p>
+          <h2 id="resume-experience">주요 경험</h2>
 
-          <div className="mt-6 space-y-8">
+          <div>
             {experiences.map((experience) => (
-              <article key={experience.company} className="space-y-5">
+              <article key={experience.company}>
                 <header>
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold tracking-tight text-slate-950">
-                        {experience.company}
-                      </h3>
-                      <p className="mt-1 text-sm font-semibold text-slate-500">
-                        {experience.role}
-                      </p>
-                    </div>
-                    <p className="text-sm font-medium text-slate-500">
-                      {experience.period}
-                    </p>
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
-                    {experience.description}
-                  </p>
+                  <h3>{experience.company}</h3>
+                  <p>{experience.role}</p>
+                  <p>{experience.period}</p>
+                  <p>{experience.description}</p>
                 </header>
 
-                <div className="space-y-4">
+                <div>
                   {experience.projects.map((project) => (
-                    <section
-                      key={project.title}
-                      className="border-l-2 border-slate-200 pl-4"
-                    >
-                      <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                        <h4 className="font-semibold text-slate-950">
-                          {project.title}
-                        </h4>
-                        <p className="text-xs font-medium text-slate-500">
-                          {project.period}
-                        </p>
-                      </div>
-                      <p className="mt-2 text-xs leading-6 font-semibold text-blue-700">
-                        Tech Stack : {project.stack}
-                      </p>
+                    <section key={project.title}>
+                      <h4>{project.title}</h4>
+                      <p>{project.period}</p>
+                      <p>Tech Stack : {project.stack}</p>
                       {project.links.length > 0 ? (
-                        <div className="mt-3 flex flex-wrap gap-2">
+                        <ul>
                           {project.links.map((link) => (
-                            <a
-                              key={link.href}
-                              href={link.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`${project.title} ${link.label} 새 탭에서 열기`}
-                              className="inline-flex min-h-8 items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-blue-700 transition hover:border-blue-200 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
-                            >
-                              {link.label}
-                              <ArrowUpRight
-                                className="size-3"
-                                aria-hidden="true"
-                              />
-                            </a>
+                            <li key={link.href}>
+                              <a
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${project.title} ${link.label} 새 탭에서 열기`}
+                              >
+                                {link.label}
+                              </a>
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       ) : null}
-                      <ul className="mt-3 space-y-2">
+                      <ul>
                         {project.bullets.map((bullet) => (
-                          <li
-                            key={bullet}
-                            className="flex gap-3 text-sm leading-7 text-slate-700"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="mt-2.5 size-1.5 shrink-0 rounded-full bg-slate-400"
-                            />
-                            <span>{bullet}</span>
-                          </li>
+                          <li key={bullet}>{bullet}</li>
                         ))}
                       </ul>
                     </section>
@@ -344,6 +242,6 @@ export default function ResumePage() {
           </div>
         </section>
       </section>
-    </div>
+    </>
   );
 }
