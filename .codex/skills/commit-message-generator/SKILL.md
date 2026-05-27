@@ -22,9 +22,9 @@ Analyze the current changes and produce a commit message that follows this proje
 - Prefer `type: subject` by default.
 - Use `scope` only when it makes the affected area clearer.
 - Mark breaking changes with `!` or `BREAKING CHANGE:` in the footer.
-- Suggest `Co-authored-by: Codex <codex@openai.com>` only when Codex directly produced or edited meaningful committed artifacts.
-- Do not add `Co-authored-by` when the user did the actual work and Codex only answered a question, gave light feedback, or checked wording.
-- Do not add `Co-authored-by` for trivial formatting, simple questions, or low-value boilerplate.
+- Suggest `Co-authored-by: Codex <codex@openai.com>` only when Codex directly wrote, edited, diagnosed, or otherwise materially contributed to committed code, documentation, configuration, workflow, or Skill artifacts.
+- Do not add `Co-authored-by` when the user performed the actual work and Codex only answered questions, gave light feedback, reviewed wording, or provided suggestions not reflected in committed files.
+- Do not add `Co-authored-by` for trivial formatting-only changes, simple questions, or low-value boilerplate generation.
 
 ## Format
 
@@ -97,13 +97,13 @@ Write a footer only for:
 
 - `BREAKING CHANGE:`
 - related issue or reference link
-- Codex directly producing or editing committed artifacts:
+- Codex directly contributing to committed artifacts:
 
 ```txt
 Co-authored-by: Codex <codex@openai.com>
 ```
 
-Do not use `Co-authored-by` just because Codex discussed the task. Use it only when Codex-authored changes are part of the commit.
+Use `Co-authored-by` only when Codex-authored or materially Codex-assisted artifacts are part of the commit. Keep the README exclusions: no footer for light feedback, simple questions, trivial formatting-only changes, or low-value boilerplate.
 
 ## Output
 
