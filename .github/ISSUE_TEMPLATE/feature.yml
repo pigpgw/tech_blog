@@ -1,0 +1,54 @@
+name: 기능/개선
+description: 새로운 기능, 화면, 사용자 경험 개선을 정리한다.
+title: "[Feature] "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 배경 / 문제
+      description: 왜 이 작업이 필요한지 작성한다.
+      placeholder: 예) 블로그 목록에서 글이 늘어나면 원하는 글을 찾기 어렵다.
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: 목표
+      description: 완료되면 어떤 상태가 되어야 하는지 작성한다.
+      placeholder: 예) 제목, 요약, 태그 기준으로 공개 글을 검색할 수 있다.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 작업 범위
+      description: 포함할 작업과 제외할 작업을 구분한다.
+      placeholder: |
+        포함:
+        - 검색 입력 UI 추가
+        - 공개 글 목록 필터링
+
+        제외:
+        - 서버 검색 API
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: 검증 기준
+      description: 어떤 명령이나 화면 확인으로 완료를 판단할지 작성한다.
+      placeholder: |
+        - npm run lint
+        - npm run type-check
+        - npm run build
+        - 브라우저에서 /blog 검색 동작 확인
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: 참고 / 메모
+      description: 관련 문서, 링크, 결정 사항이 있으면 작성한다.
+    validations:
+      required: false
