@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 export default function Home() {
+  const user = null;
+  console.log(user.name);
+
   return (
     <section>
       <p>Developer Notes</p>
