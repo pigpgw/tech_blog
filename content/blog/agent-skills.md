@@ -249,7 +249,7 @@ Skill 본문은 명령문으로 작성한다.
 `SKILL.md`만으로 부족한 작업은 보조 리소스를 사용한다.
 
 ```txt
-.codex/skills/publishing/
+.agents/skills/blog-ui-publisher/
 ├── SKILL.md
 ├── examples/
 │   ├── card-markup.md

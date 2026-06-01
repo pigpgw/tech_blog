@@ -89,16 +89,16 @@ helper
 Use a project-local skill when the workflow depends on this repository:
 
 ```txt
-.codex/skills/<skill-name>/SKILL.md
+.agents/skills/<skill-name>/SKILL.md
 ```
 
 Use a global skill when the workflow is reusable across many repositories:
 
 ```txt
-~/.codex/skills/<skill-name>/SKILL.md
+~/.agents/skills/<skill-name>/SKILL.md
 ```
 
-If the user did not specify a location and the repository already has `.codex/skills`, prefer the repository-local path.
+If the user did not specify a location and the repository already has `.agents/skills`, prefer the repository-local path.
 
 ## 4. Decide Resources
 
@@ -179,21 +179,27 @@ Recommended body structure:
 # Skill Name
 
 ## Mission
+
 One or two sentences.
 
 ## Workflow
+
 Numbered steps Codex should follow.
 
 ## Rules
+
 Specific requirements and non-goals.
 
 ## Examples
+
 Good and bad examples when they clarify behavior.
 
 ## Validation
+
 Commands or checks to run before finishing.
 
 ## Output
+
 Expected response shape when useful.
 ```
 
@@ -251,7 +257,7 @@ Rules:
 Run the available validator when possible:
 
 ```bash
-python3 /path/to/quick_validate.py .codex/skills/<skill-name>
+python3 /path/to/quick_validate.py .agents/skills/<skill-name>
 ```
 
 If the validator is unavailable, manually check:

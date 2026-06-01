@@ -106,17 +106,17 @@ Codex가 한 작업:
 
 ## 현재 등록한 AI 활용 자동화
 
-### `publishing`
+### `blog-ui-publisher`
 
 목적:
 
-- HTML/CSS 퍼블리싱, 반응형 레이아웃, 크로스브라우저, 접근성 기준을 반복 적용
-- semantic markup, CSS token, BEM, Flex/Grid, form, modal, tab 같은 공통 패턴 검수
-- 블로그 전용 Next 구조와 분리된 범용 퍼블리싱 기준 제공
+- 블로그 프로젝트의 Home, Resume, Blog, Lab, Admin UI 퍼블리싱 기준을 반복 적용
+- semantic JSX/HTML, 접근성, Tailwind/CSS layout, responsive checks 기준 검수
+- 현재 Next.js, React, TypeScript, Tailwind, shadcn/ui 구조에 맞춘 UI 작업 흐름 제공
 
 파일:
 
-- `.codex/skills/publishing/SKILL.md`
+- `.agents/skills/blog-ui-publisher/SKILL.md`
 
 ### `commit-message-generator`
 
@@ -128,7 +128,7 @@ Codex가 한 작업:
 
 파일:
 
-- `.codex/skills/commit-message-generator/SKILL.md`
+- `.agents/skills/commit-message-generator/SKILL.md`
 
 ### `ai-usage-recorder`
 
@@ -140,7 +140,7 @@ Codex가 한 작업:
 
 파일:
 
-- `.codex/skills/ai-usage-recorder/SKILL.md`
+- `.agents/skills/ai-usage-recorder/SKILL.md`
 
 ### `agent-skill-builder`
 
@@ -152,7 +152,7 @@ Codex가 한 작업:
 
 파일:
 
-- `.codex/skills/agent-skill-builder/SKILL.md`
+- `.agents/skills/agent-skill-builder/SKILL.md`
 
 ---
 
@@ -237,7 +237,7 @@ Codex가 한 작업:
 
 Codex가 한 작업:
 
-- `README.md`, `AGENTS.md`, `.codex/skills/code-review-fundamentals/SKILL.md`, `.codex/skills/code-review-fundamentals/references/toss-frontend-fundamentals.md`, `.codex/skills/ai-usage-recorder/SKILL.md`의 오래된 문서 경로를 새 경로로 바꿨다.
+- `README.md`, `AGENTS.md`, `.agents/skills/code-review-fundamentals/SKILL.md`, `.agents/skills/code-review-fundamentals/references/toss-frontend-fundamentals.md`, `.agents/skills/ai-usage-recorder/SKILL.md`의 오래된 문서 경로를 새 경로로 바꿨다.
 - `docs/02-ai-usage-log.md`의 코드블록 닫힘 표기를 정리했다.
 - `rg`로 오래된 참조가 남지 않았는지 확인하고, 포맷과 diff 공백 검증을 실행했다.
 

@@ -58,49 +58,61 @@ If it is not worth recording, return only:
 
 When the case is worth recording, output this markdown structure:
 
-```md
+````md
 ## [제목]
 
 상황 / 문제:
+
 - 어떤 작업을 하던 중 어떤 문제가 있었는지 작성
 
 내가 한 판단 / 작업:
+
 - 사용자가 고민한 지점, 결정한 기준, 직접 지시하거나 수정한 내용을 작성
 
 Codex가 한 작업:
+
 - Codex가 대화 과정에서 제안, 정리, 작성, 수정, 검증한 내용을 작성
 
 프롬프트 원문 / 핵심 질문:
+
 ```txt
 사용자가 실제로 입력한 프롬프트나 핵심 질문을 작성
 긴 대화라면 대표 문장과 요구사항이 바뀐 지점을 중심으로 작성
 ```
+````
 
 커뮤니케이션 / 프롬프트 개선 과정:
+
 - 처음 요청에서 부족했던 점 작성
 - 사용자의 추가 질문, 반박, 수정 요청으로 요구사항이 어떻게 구체화되었는지 작성
 - AI 결과를 보고 사용자가 어떤 부분을 거절, 수정, 보완했는지 작성
 
 사용한 AI 하네스 / 도구:
+
 - 사용한 Skill, MCP, Git, 터미널, 브라우저 검증, CI, 문서 검색 등을 작성
 - 각 도구를 왜 사용했는지 작성
 
 산출물:
+
 - 생성된 결과물 작성
 - 가능하면 파일 경로나 이름 포함
 
 검증 / 수정:
+
 - AI 결과에서 발견한 문제점 작성
 - 직접 수정한 부분 작성
 - 검증 방법 작성
 
 선택 이유:
+
 - 왜 이 AI 활용 방식을 선택했는지 작성
 - 속도, 일관성, 유지보수, 구조 관점 중 하나 이상 포함
 
 배운 점:
+
 - 이번 경험에서 얻은 실제 개발 인사이트 작성
 - 다음에 어떻게 더 잘 적용할지 작성
+
 ```
 
 ## Section Rules
@@ -114,7 +126,7 @@ Codex가 한 작업:
 - `사용한 AI 하네스 / 도구` is required. If no special tool was used, write `일반 Codex 대화만 사용`.
 - `선택 이유` must include at least one of: speed, consistency, maintainability, structure.
 - `배운 점` must be practical enough to apply in future development.
-- Prefer paths when artifacts are files, such as `docs/02-ai-usage-log.md` or `.codex/skills/name/SKILL.md`.
+- Prefer paths when artifacts are files, such as `docs/02-ai-usage-log.md` or `.agents/skills/name/SKILL.md`.
 - Remove low-value narration that only says the work happened.
 - Do not claim MCP, browser validation, CI, or tests were used unless they were actually used.
 
@@ -131,3 +143,4 @@ Codex가 한 작업:
 - Asking AI to format a sentence
 - Generating a one-line README title
 - Creating disposable boilerplate with no decision or validation
+```

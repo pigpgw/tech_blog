@@ -1,6 +1,6 @@
 ---
 name: commit-message-generator
-description: Use when generating, reviewing, or refining commit messages from code or documentation changes. Applies to this project's Korean Conventional Commits rule: analyze git changes, choose an appropriate type and optional scope, write the subject in Korean ending with "~한다", and include body/footer only when useful.
+description: 'Use when generating, reviewing, or refining commit messages from code or documentation changes. Applies to this project''s Korean Conventional Commits rule: analyze git changes, choose an appropriate type and optional scope, write the subject in Korean ending with "~한다", and include body/footer only when useful.'
 ---
 
 # Commit Message Generator

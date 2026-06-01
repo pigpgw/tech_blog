@@ -8,7 +8,7 @@
 
 - [AI 활용 기록](docs/02-ai-usage-log.md)을 통해 AI를 사용한 과정과 산출물을 정리한다.
 - [AGENTS.md](AGENTS.md)에 저장소 작업 규칙과 Codex 공동 작성 기준을 둔다.
-- [.codex/skills](.codex/skills)에 반복해서 사용할 AI 작업 절차를 둔다.
+- [.agents/skills](.agents/skills)에 반복해서 사용할 AI 작업 절차를 둔다.
 
 ### MVP 단계
 

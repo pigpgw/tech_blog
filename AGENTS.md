@@ -1,7 +1,7 @@
 # AGENTS.md
 
 이 파일은 저장소 전체에 적용되는 최소 작업 규칙이다.
-세부 작업 기준은 `.codex/skills`의 전용 Skill을 우선한다.
+세부 작업 기준은 `.agents/skills`의 전용 Skill을 우선한다.
 
 ## 절대 규칙
 
@@ -66,7 +66,7 @@
 - `src/types`: 프로젝트 공통 타입
 - `content/blog`: Markdown 블로그 글
 - `docs`: 프로젝트 문서와 AI 활용 기록
-- `.codex/skills`: 반복 작업을 위한 Codex Skill
+- `.agents/skills`: 반복 작업을 위한 Codex Skill
 
 현재는 루트 `AGENTS.md`만 유지한다. 프론트엔드 전용 규칙의 차이가 명확해지면 `src/AGENTS.md`로 분리한다.
 

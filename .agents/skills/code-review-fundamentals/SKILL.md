@@ -43,6 +43,7 @@ Use Korean by default.
 
 ```md
 **Findings**
+
 - [높음|중간|낮음] path/to/file.tsx:120
   기준: 가독성 / 예측 가능성 / 응집도 / 결합도 / 접근성 / 성능
   문제: ...
@@ -50,9 +51,11 @@ Use Korean by default.
   제안: ...
 
 **Open Questions**
+
 - ...
 
 **검증**
+
 - ...
 ```
 
