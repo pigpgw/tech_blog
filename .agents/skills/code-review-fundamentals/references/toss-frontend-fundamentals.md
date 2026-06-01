@@ -1,6 +1,6 @@
 # Toss Frontend Fundamentals Review Reference
 
-이 참조는 코드리뷰 때 빠르게 적용하기 위한 요약이다. 상세 링크는 저장소 문서 `docs/03-code-review-fundamentals.md`를 우선 확인한다.
+이 참조는 코드리뷰 때 빠르게 적용하기 위한 요약이다. 상세 기준은 상위 `SKILL.md`를 우선 확인한다.
 
 ## 핵심 판단
 
