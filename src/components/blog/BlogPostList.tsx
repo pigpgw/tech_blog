@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
-import type { BlogPost } from "@/types/blog";
+import type { BlogPostSummary } from "@/types/blog";
 import type { ChangeEvent } from "react";
 
 type BlogListProps = {
-  posts: BlogPost[];
+  posts: BlogPostSummary[];
 };
 
 export const BlogPostList = ({ posts }: BlogListProps) => {

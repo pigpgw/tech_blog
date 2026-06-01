@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { getPostBySlug } from "@/lib/blog-posts";
 import { ChevronLeft, Clock3, NotebookPen } from "lucide-react";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -7,6 +6,7 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github.css";
 import { Metadata } from "next";
+import { getPostDetailBySlug } from "@/lib/blog-posts";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -14,7 +14,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = getPostDetailBySlug(slug);
   if (!post) {
     return {
       title: "글을 찾을 수 없습니다",
@@ -34,7 +34,7 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const blogItem = getPostBySlug(slug);
+  const blogItem = getPostDetailBySlug(slug);
 
   if (!blogItem) notFound();
 

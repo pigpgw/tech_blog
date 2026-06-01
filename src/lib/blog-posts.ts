@@ -1,54 +1,55 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import type { BlogPost, BlogPostDetail } from "@/types/blog";
+import type { BlogPostSummary, BlogPostDetail } from "@/types/blog";
+import { z } from "zod";
 
 const postsDirectory = path.join(process.cwd(), "content/blog");
+const BlogPostSummarySchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  publishedAt: z.string(),
+  category: z.string(),
+  draft: z.boolean().default(false),
+});
 
-const isBlogPost = (data: unknown): data is Omit<BlogPost, "id"> => {
-  if (!data || typeof data !== "object") return false;
-
-  const post = data as Record<string, unknown>;
-
-  return (
-    typeof post["slug"] === "string" &&
-    typeof post["title"] === "string" &&
-    typeof post["description"] === "string" &&
-    typeof post["publishedAt"] === "string" &&
-    typeof post["category"] === "string" &&
-    (post["draft"] === undefined || typeof post["draft"] === "boolean")
-  );
-};
-
-export const getAllPosts = (): BlogPostDetail[] => {
+export const getAllPostsSummary = (): BlogPostSummary[] => {
   const fileNames = fs
     .readdirSync(postsDirectory)
     .filter((fileName) => fileName.endsWith(".md"));
 
   return fileNames
-    .map((fileName) => {
+    .map((fileName): BlogPostSummary => {
       const fullPath = path.join(postsDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, "utf8");
-      const { content, data } = matter(fileContents);
+      const { data } = matter(fileContents);
 
-      if (!isBlogPost(data)) {
-        throw new Error(`Invalid blog post frontmatter: ${fileName}`);
-      }
-
-      return {
-        id: fileName.replace(/\.md$/, ""),
-        content,
-        ...data,
-      };
+      return BlogPostSummarySchema.parse(data);
     })
-    .filter((post) => !post.draft);
+    .filter((summary) => !summary.draft);
 };
 
-export const getPostBySlug = (slug: string) =>
-  getAllPosts().find((post) => post.slug === slug);
+export const getPostDetailBySlug = (
+  targetSlug: string,
+): BlogPostDetail | undefined => {
+  const fileNames = fs
+    .readdirSync(postsDirectory)
+    .filter((fileName) => fileName.endsWith(".md"));
 
-export const blogPosts = getAllPosts();
+  for (const fileName of fileNames) {
+    const fullPath = path.join(postsDirectory, fileName);
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const { content, data } = matter(fileContents);
 
-export const blogCategories = Array.from(
-  new Set(blogPosts.map((post) => post.category)),
-);
+    const summary = BlogPostSummarySchema.parse(data);
+
+    if (summary.draft || summary.slug !== targetSlug) continue;
+
+    return {
+      ...summary,
+      content,
+    };
+  }
+  return undefined;
+};

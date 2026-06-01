@@ -1,4 +1,4 @@
-import { BlogPost } from "@/types/blog";
+import { BlogPostSummary } from "@/types/blog";
 import Link from "next/link";
 
 export const BlogPostCard = ({
@@ -7,7 +7,7 @@ export const BlogPostCard = ({
   description,
   publishedAt,
   category,
-}: BlogPost) => {
+}: BlogPostSummary) => {
   const href = slug ? `/blog/${slug}` : "/blog";
   const titleId = `post-title-${slug}`;
   const descriptionId = `post-description-${slug}`;
