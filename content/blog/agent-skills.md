@@ -312,20 +312,6 @@ ai-usage-recorder
 - 사용자의 판단과 Codex의 작업 분리
 - 실제 검증과 미검증 내용을 구분
 
-### Skill 작성 Skill
-
-```txt
-agent-skill-builder
-```
-
-역할:
-
-- Skill 목적 정의
-- trigger description 작성
-- `SKILL.md` 구조화
-- `agents/openai.yaml` 작성
-- validator 실행과 반복 개선
-
 ## Skill 테스트
 
 Skill을 작성한 뒤 다음을 확인한다.

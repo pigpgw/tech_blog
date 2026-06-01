@@ -130,6 +130,19 @@ Codex가 한 작업:
 
 - `.agents/skills/commit-message-generator/SKILL.md`
 
+### `code-review-fundamentals`
+
+목적:
+
+- 코드리뷰 요청 시 버그, 회귀, 유지보수 리스크, 검증 누락을 우선 확인
+- Toss Frontend Fundamentals 기준의 가독성, 예측 가능성, 응집도, 결합도 적용
+- 접근성, 번들링/성능, 디버깅 근거를 필요한 경우 함께 검토
+
+파일:
+
+- `.agents/skills/code-review-fundamentals/SKILL.md`
+- `.agents/skills/code-review-fundamentals/references/toss-frontend-fundamentals.md`
+
 ### `ai-usage-recorder`
 
 목적:
@@ -141,20 +154,6 @@ Codex가 한 작업:
 파일:
 
 - `.agents/skills/ai-usage-recorder/SKILL.md`
-
-### `agent-skill-builder`
-
-목적:
-
-- 반복 업무를 Agent Skill로 만들 때 범위, 트리거, 리소스, 검증 기준을 정리
-- `SKILL.md`를 지식 글이 아니라 실행 가능한 업무 매뉴얼로 작성하도록 안내
-- `agents/openai.yaml`, validation, 실제 사용 후 개선 기준까지 함께 확인
-
-파일:
-
-- `.agents/skills/agent-skill-builder/SKILL.md`
-
----
 
 ## 기록 예시에서 반드시 드러낼 것
 
@@ -178,88 +177,6 @@ Codex가 한 작업:
 
 ---
 
-## 로드맵에 AI 활용 연습 단계를 추가한 작업
+## 기록 목록
 
-상황 / 문제:
-
-- 인프랩, 크래프톤 AI Native Engineer, 토스 계열 프론트엔드 공고에서 공통적으로 요구하는 역량이 단순 React/Next.js 구현을 넘어 모노레포, 운영, 데이터 기반 개선, 문서화, AI 도구 활용까지 확장되어 있었다.
-- 기존 로드맵에는 AI 기능/RAG 적용 항목은 있었지만, 개발 과정에서 AI를 어떻게 쓰고 검증하며 반복 실수를 하네스로 줄일지 연습하는 단계가 부족했다.
-
-내가 한 판단 / 작업:
-
-- 사용자는 AI 활용을 별도 이론 공부가 아니라 프로젝트 단계마다 기록하고 검증하는 방식으로 넣으라고 요구했다.
-- `0단계`와 `1단계` 사이에 AI 활용 연습 기반을 두고, 모든 단계 기록에 AI 활용 항목을 남기도록 방향을 정했다.
-
-Codex가 한 작업:
-
-- `docs/01-blog-project-roadmap.md`에 `0.5단계. AI 활용 연습 기반 만들기`를 추가했다.
-- 프롬프트 엔지니어링, 컨텍스트 엔지니어링, 하네스 엔지니어링, MCP, Skills, ChatGPT/Cursor/Codex 도구 선택 기준을 개념 확인 섹션으로 정리했다.
-- Spec-first, TDD-first, Small loop, Cross-check, AGENTS.md 갱신, MCP 후보 정리 TODO를 추가했다.
-- 단계 기록 형식에 AI 활용 기록 필드를 추가하고, 0~15단계 프로젝트 할 일 끝에 AI 활용 기록 및 AGENTS.md 규칙 업데이트 항목을 넣었다.
-- 후속 적용 항목에 `하네스 고도화`를 추가했다.
-
-프롬프트 원문 / 핵심 질문:
-
-```txt
-아래 로드맵 문서에 AI 활용 연습 단계를 추가해줘.
-0.5단계. AI 활용 연습 기반 만들기
-프롬프트 엔지니어링, 컨텍스트 엔지니어링, 하네스 엔지니어링, MCP, Skills 개념을 이름으로 외우는 게 아니라 실제 프로젝트에서 부딪히면서 익히는 구조를 만든다.
-각 단계(0~15단계) 할 일 끝에 AI 활용 기록 항목을 추가해줘.
-후속 적용 항목에 하네스 고도화를 추가해줘.
-```
-
-검증 / 수정:
-
-- `AGENTS.md`가 이미 존재해 로드맵 TODO는 “만든다” 대신 “만들거나 갱신한다”로 조정했다.
-- 포맷과 남은 참조는 `prettier`, `git diff --check`, `npm run format:check`, `rg`로 확인했다.
-
-선택 이유:
-
-- AI Native 역량은 프롬프트를 잘 쓰는 수준에서 끝나지 않고, 컨텍스트와 하네스를 개선하며 반복 가능한 작업 방식으로 남아야 한다.
-
-배운 점:
-
-- AI 활용도 기능 개발처럼 작은 실험, 검증, 기록, 규칙화 루프가 있어야 실제 역량 증빙으로 남는다.
-
----
-
-## 문서 번호 재정렬과 참조 정리 작업
-
-상황 / 문제:
-
-- 로드맵 문서가 `01`, AI 활용 기록이 `02`, 코드리뷰 기준이 `03`으로 정리되었지만 README, AGENTS.md, Skill 문서에는 이전 번호 참조가 남아 있었다.
-- 오래된 참조가 남으면 AI 하네스와 사람용 문서가 서로 다른 파일을 보게 되어 이후 작업에서 혼선이 생길 수 있었다.
-
-내가 한 판단 / 작업:
-
-- 사용자는 로드맵을 더 다듬는 것보다 최종 마무리와 실제 실행 가능한 상태를 원했다.
-- 문서 구조 자체를 다시 확장하지 않고, 새 번호 체계에 맞지 않는 참조만 정리하는 방향으로 범위를 제한했다.
-
-Codex가 한 작업:
-
-- `README.md`, `AGENTS.md`, `.agents/skills/code-review-fundamentals/SKILL.md`, `.agents/skills/code-review-fundamentals/references/toss-frontend-fundamentals.md`, `.agents/skills/ai-usage-recorder/SKILL.md`의 오래된 문서 경로를 새 경로로 바꿨다.
-- `docs/02-ai-usage-log.md`의 코드블록 닫힘 표기를 정리했다.
-- `rg`로 오래된 참조가 남지 않았는지 확인하고, 포맷과 diff 공백 검증을 실행했다.
-
-프롬프트 원문 / 핵심 질문:
-
-```txt
-최종 마무리 지어봐
-```
-
-검증 / 수정:
-
-- `rg`로 이전 문서 번호 참조가 남지 않았음을 확인했다.
-- `prettier`, `git diff --check`, `npm run format:check`로 문서 포맷과 공백 문제가 없음을 확인했다.
-
-사용한 AI 하네스 / 도구:
-
-- Codex 대화, 터미널, `rg`, `prettier`, `git diff --check`, `npm run format:check`
-
-선택 이유:
-
-- 문서 번호와 AI 하네스 참조가 맞아야 다음 단계에서 Codex와 사용자가 같은 기준 문서를 보고 작업할 수 있다.
-
-배운 점:
-
-- 문서 파일을 재정렬한 뒤에는 본문만이 아니라 README, AGENTS.md, Skill 같은 하네스 파일까지 함께 검색해야 한다.
+아직 등록한 AI 활용 사례가 없다.
