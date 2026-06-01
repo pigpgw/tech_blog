@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "code:review": "node scripts/render-markdown-review.mjs code-review",
     "plan:review": "node scripts/render-plan-review.mjs",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",

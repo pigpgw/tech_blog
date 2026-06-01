@@ -56,4 +56,7 @@ coverage/
 # local planning docs
 docs/01-blog-project-roadmap.md
 docs/02-study-blogging-roadmap.md
+docs/plan/current.md
+docs/plan/index.html
+tmp/code-review/
 tmp/plan-review/
