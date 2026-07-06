@@ -385,13 +385,37 @@ src/                      # 애플리케이션 소스 코드
 │        └─ page.tsx
 ├─ components/            # 화면을 구성하는 재사용 UI 컴포넌트
 ├─ hooks/                 # React custom hook
-├─ lib/                   # 도메인에 종속된 함수
-├─ utils/                 # 도메인과 무관한 순수 공통 함수
+├─ lib/                   # 게시글 조회, 도메인 helper, 공통 helper
+│  └─ utils.ts            # cn 같은 도메인과 무관한 작은 공통 helper
 └─ types/                 # 여러 파일에서 공유하는 TypeScript 타입
 ```
 
-- `lib` 예시: 블로그 글 조회, Markdown/MDX 처리
-- `utils` 예시: 날짜 포맷, 문자열 처리
+- `lib` 예시: 블로그 글 조회, Markdown/MDX 처리, 카테고리 path 변환
+- `lib/utils.ts` 예시: `cn`, 날짜 포맷, 문자열 처리처럼 특정 도메인에 강하게 묶이지 않는 작은 공통 함수
+
+### `src/lib` 함수 네이밍
+
+`src/lib`의 함수는 `lowerCamelCase`를 사용하고, 동사 또는 동사구로 시작한다.
+기본 형태는 `동작 + 도메인 + 대상` 순서를 따른다.
+
+권장 동사:
+
+- `get`: 파일, DB, 외부 입력에서 값을 조회할 때 사용한다.
+- `parse`: 문자열이나 원본 데이터를 구조화된 값으로 해석할 때 사용한다.
+- `slugify`: 사람이 읽는 문자열을 URL slug로 변환할 때 사용한다.
+- `build`: 여러 값을 조합해 최종 문자열이나 객체를 만들 때 사용한다.
+- `format`: 화면 표시용 문자열로 변환할 때 사용한다.
+- `filter`, `sort`, `validate`: 목록 필터링, 정렬, 검증처럼 동작이 명확할 때 사용한다.
+
+예시:
+
+```ts
+getAllPostsSummary();
+getPostDetailBySlug(slug);
+parseBlogCategoryPath(category);
+slugifyBlogCategorySegment(segment);
+buildBlogCategoryHref(category);
+```
 
 ### 3차 MVP: 모노레포 구조 검토
 
