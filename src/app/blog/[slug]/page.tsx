@@ -6,7 +6,7 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github.css";
 import { Metadata } from "next";
-import { getPostDetailBySlug } from "@/lib/blog-posts";
+import { getPostDetailBySlug } from "@/lib/blog";
 
 type Props = {
   params: Promise<{ slug: string }>;

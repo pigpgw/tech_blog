@@ -1,5 +1,3 @@
-// import { blogCategories } from "@/lib/blog-posts";
-
 export const BlogListHeader = () => {
   return (
     <header className="rounded-[32px] border border-slate-200/80 bg-linear-to-br from-white via-white to-slate-50 p-7 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_48px_rgba(15,23,42,0.08)] sm:p-10">

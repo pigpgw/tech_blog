@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import { getAllPostsSummary } from "@/lib/blog-posts";
+import { getAllPostsSummary } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "문제와 해결 과정을 기록한 글",
