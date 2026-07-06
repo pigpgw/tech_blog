@@ -6,6 +6,7 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github.css";
 import { Metadata } from "next";
+import { BlogCategoryBadge } from "@/components/blog/BlogCategoryBadge";
 import { getPostDetailBySlug } from "@/lib/blog";
 
 type Props = {
@@ -57,9 +58,7 @@ export default async function BlogDetailPage({
 
       <header className="mt-6 rounded-[32px] border border-slate-200/80 bg-linear-to-br from-white via-white to-slate-50 p-7 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_48px_rgba(15,23,42,0.08)] sm:p-10">
         <div className="flex flex-wrap items-center gap-3 text-sm">
-          <span className="inline-flex min-h-9 items-center rounded-full bg-blue-50 px-3 font-semibold text-blue-700">
-            {blogItem.category}
-          </span>
+          <BlogCategoryBadge label={blogItem.category.label} />
           <time
             dateTime={blogItem.publishedAt}
             className="inline-flex min-h-9 items-center gap-2 rounded-full bg-slate-100 px-3 font-medium text-slate-600"

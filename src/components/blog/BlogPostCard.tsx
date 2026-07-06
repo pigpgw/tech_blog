@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BlogCategoryBadge } from "@/components/blog/BlogCategoryBadge";
 
 type BlogPostCardProps = {
   slug: string;
@@ -28,9 +29,7 @@ export const BlogPostCard = ({
     >
       <article className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_18px_40px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(15,23,42,0.08),0_24px_48px_rgba(15,23,42,0.12)]">
         <div className="flex flex-wrap items-center gap-3 text-sm">
-          <span className="inline-flex min-h-9 items-center rounded-full bg-blue-50 px-3 font-semibold text-blue-700">
-            {categoryLabel}
-          </span>
+          <BlogCategoryBadge label={categoryLabel} />
           <time dateTime={publishedAt} className="text-slate-500">
             {publishedAt}
           </time>

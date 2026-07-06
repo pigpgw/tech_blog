@@ -1,12 +1,13 @@
-export type BlogCategoryPath = string;
-
 export type BlogPostSummary = {
   id: string;
   slug: string;
   title: string;
   description: string;
   publishedAt: string;
-  category: BlogCategoryPath;
+  category: {
+    path: string;
+    label: string;
+  };
   draft: boolean;
 };
 

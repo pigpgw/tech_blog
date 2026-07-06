@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import { formatBlogCategoryPath, getAllPostsSummary } from "@/lib/blog";
+import { getAllPostsSummary } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "문제와 해결 과정을 기록한 글",
@@ -19,7 +19,7 @@ export default function BlogListPage() {
     title: post.title,
     description: post.description,
     publishedAt: post.publishedAt,
-    categoryLabel: formatBlogCategoryPath(post.category),
+    categoryLabel: post.category.label,
   }));
 
   return (

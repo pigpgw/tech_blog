@@ -1,11 +1,6 @@
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import {
-  formatBlogCategoryPath,
-  getAllPostsSummary,
-  parseBlogCategoryPath,
-  slugifyBlogCategorySegment,
-} from "@/lib/blog";
+import { getAllPostsSummary } from "@/lib/blog";
 
 export default async function BlogCategoryPage({
   params,
@@ -16,10 +11,7 @@ export default async function BlogCategoryPage({
   const categoryPath = segments.join("/");
   const posts = getAllPostsSummary()
     .filter((post) => {
-      const postCategoryPath = parseBlogCategoryPath(post.category)
-        .map(slugifyBlogCategorySegment)
-        .join("/");
-      return postCategoryPath === categoryPath;
+      return post.category.path === categoryPath;
     })
     .sort(
       (a, b) =>
@@ -30,7 +22,7 @@ export default async function BlogCategoryPage({
     title: post.title,
     description: post.description,
     publishedAt: post.publishedAt,
-    categoryLabel: formatBlogCategoryPath(post.category),
+    categoryLabel: post.category.label,
   }));
   return (
     <div className="flex flex-1 flex-col py-10 sm:py-14">

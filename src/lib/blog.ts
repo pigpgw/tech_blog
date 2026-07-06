@@ -11,7 +11,10 @@ const BlogPostSummarySchema = z.object({
   title: z.string(),
   description: z.string(),
   publishedAt: z.string(),
-  category: z.string(),
+  category: z.object({
+    path: z.string(),
+    label: z.string(),
+  }),
   draft: z.boolean().default(false),
 });
 
@@ -54,16 +57,3 @@ export const getPostDetailBySlug = (
   }
   return undefined;
 };
-
-export const parseBlogCategoryPath = (path: string) => path.split("/");
-export const slugifyBlogCategorySegment = (path: string) =>
-  path.toLowerCase().trim().replace(/\s+/g, "-");
-export const buildBlogCategoryHref = (path: string) => {
-  const slugPath = parseBlogCategoryPath(path)
-    .map(slugifyBlogCategorySegment)
-    .join("/");
-
-  return `/blog/categories/${slugPath}`;
-};
-export const formatBlogCategoryPath = (path: string) =>
-  parseBlogCategoryPath(path).join(" > ");
