@@ -40,6 +40,7 @@ export default async function BlogDetailPage({
   if (!blogItem) notFound();
 
   const titleId = "blog-post-title";
+  const categoryLabelSegments = blogItem.category.label.split("/");
 
   return (
     <article
@@ -58,7 +59,7 @@ export default async function BlogDetailPage({
 
       <header className="mt-6 rounded-[32px] border border-slate-200/80 bg-linear-to-br from-white via-white to-slate-50 p-7 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_48px_rgba(15,23,42,0.08)] sm:p-10">
         <div className="flex flex-wrap items-center gap-3 text-sm">
-          <BlogCategoryBadge label={blogItem.category.label} />
+          <BlogCategoryBadge labelSegments={categoryLabelSegments} />
           <time
             dateTime={blogItem.publishedAt}
             className="inline-flex min-h-9 items-center gap-2 rounded-full bg-slate-100 px-3 font-medium text-slate-600"

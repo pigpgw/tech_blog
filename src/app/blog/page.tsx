@@ -19,7 +19,7 @@ export default function BlogListPage() {
     title: post.title,
     description: post.description,
     publishedAt: post.publishedAt,
-    categoryLabel: post.category.label,
+    categoryLabelSegments: post.category.label.split("/"),
   }));
 
   return (

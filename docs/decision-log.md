@@ -80,18 +80,24 @@
   - `slug`는 `/blog/[slug]` 공개 URL과 SEO, 공유 링크를 위한 값으로 유지한다.
   - `BlogPostSummary`와 `BlogPostDetail`은 분리한다.
   - `BlogPostDetail`은 `BlogPostSummary`에 `content`를 더한 타입으로 둔다.
-  - 카테고리 값은 트리와 URL 경로를 만들 수 있는 문자열로 다루며, 타입 이름은 DB id처럼 보이는 `BlogCategoryId`보다 `BlogCategoryPath`를 우선 검토한다.
+  - 카테고리는 URL과 필터링에 쓰는 `path`, 화면 표시에 쓰는 `label`을 분리한다.
+  - `category.path`는 `/blog/categories/[...segments]`와 카테고리 트리 비교에 쓰는 소문자 slug 경로로 둔다.
+  - `category.label`은 사람이 읽는 표시 계층 원본으로 두고, 화면 컴포넌트에는 `/` 기준으로 나눈 배열을 전달해 `>` 구분자로 표시한다.
 - 이유:
   - `id`와 `slug`를 분리하면 공개 URL 변경 가능성과 내부 데이터 정체성을 분리할 수 있다.
   - DB 전환 전에 Markdown frontmatter에 안정적인 `id`를 두면 마이그레이션 때 기존 글의 식별자를 유지하기 쉽다.
   - 현재 frontmatter 검증은 `id`를 문자열로 다루므로 YAML에서 숫자로 파싱되지 않게 따옴표를 붙인다.
   - 목록 조회에서 본문을 제외하면 이후 페이지네이션, 무한 스크롤, 카테고리 트리 생성 시 응답 크기를 줄일 수 있다.
   - `BlogPostDetail = BlogPostSummary & { content: string }` 구조는 중복을 줄이면서도 목록과 상세의 데이터 요구 차이를 드러낸다.
+  - `path`와 `label`을 분리하면 URL 안정성과 화면 표시 문구를 서로 독립적으로 관리할 수 있다.
+  - 카드와 배지 컴포넌트가 표시 세그먼트 배열을 받게 하면 이미 포맷된 문자열과 raw label path가 섞이는 문제를 줄일 수 있다.
 - 영향 범위:
   - `src/types/blog.ts`에서 `id`를 필수값으로 바꾼다.
   - `content/blog`의 각 Markdown frontmatter에 `id`를 추가한다.
-  - `src/lib/blog-posts.ts`의 frontmatter 검증 schema도 `id` 필수 기준으로 맞춘다.
+  - `src/lib/blog.ts`의 frontmatter 검증 schema도 `id` 필수 기준으로 맞춘다.
   - 공개 상세 조회는 계속 `slug`를 사용한다.
+  - `category` frontmatter는 `path`와 `label` 객체 구조로 관리한다.
+  - 블로그 목록, 카테고리 목록, 상세 화면은 `category.label`을 표시 세그먼트 배열로 나눠 배지에 전달한다.
 - 제외:
   - 이번 결정은 타입과 frontmatter 계약을 다룬다.
   - 실제 DB 스키마, slug 변경 이력, redirect 정책, 카테고리 트리 UI 구현은 별도 결정이나 작업으로 다룬다.

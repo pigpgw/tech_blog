@@ -8,7 +8,7 @@ type BlogPostListItem = {
   title: string;
   description: string;
   publishedAt: string;
-  categoryLabel: string;
+  categoryLabelSegments: string[];
 };
 
 type BlogListProps = {
@@ -66,7 +66,7 @@ export const BlogPostList = ({ posts }: BlogListProps) => {
                 title={post.title}
                 description={post.description}
                 publishedAt={post.publishedAt}
-                categoryLabel={post.categoryLabel}
+                categoryLabelSegments={post.categoryLabelSegments}
               />
             </li>
           ))}

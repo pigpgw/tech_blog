@@ -22,7 +22,7 @@ export default async function BlogCategoryPage({
     title: post.title,
     description: post.description,
     publishedAt: post.publishedAt,
-    categoryLabel: post.category.label,
+    categoryLabelSegments: post.category.label.split("/"),
   }));
   return (
     <div className="flex flex-1 flex-col py-10 sm:py-14">
