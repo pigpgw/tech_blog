@@ -6,7 +6,7 @@ export const Header = () => {
     <header className="flex flex-col items-start gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
       <Link
         href="/"
-        aria-label="Park Gunwoo 홈으로 이동"
+        aria-label="Park Geonwoo 홈으로 이동"
         className="inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
       >
         <span
@@ -15,7 +15,7 @@ export const Header = () => {
         >
           PG
         </span>
-        <span>Park Gunwoo</span>
+        <span>Park Geonwoo</span>
       </Link>
       <HeaderNav />
     </header>

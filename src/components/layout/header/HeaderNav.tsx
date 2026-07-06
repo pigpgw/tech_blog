@@ -40,7 +40,7 @@ export const HeaderNav = () => {
         href="https://github.com/pigpgw"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="박건우 GitHub 새 탭에서 열기"
+        aria-label="Park Geonwoo GitHub 새 탭에서 열기"
         className={navLinkClass}
       >
         GitHub
