@@ -119,8 +119,24 @@ npm run dev
 npm run lint
 npm run format:check
 npm run type-check
+npm run test
 npm run build
 ```
+
+### 테스트
+
+```bash
+npm run test
+npm run test:unit
+npm run test:integration
+npm run test:e2e
+```
+
+- `tests/unit`: 순수 함수, 유틸리티, 데이터 변환 로직 단위 테스트를 둔다.
+- `tests/integration`: 여러 모듈이 함께 동작하는 흐름을 검증하는 통합 테스트를 둔다.
+- `tests/e2e`: 브라우저 기반 사용자 흐름 테스트를 둘 예정인 위치다.
+- 현재 `test`는 실행 가능한 `test:unit`, `test:integration`을 순서대로 실행한다.
+- 현재 `test:e2e`는 Playwright 같은 E2E 도구가 도입되기 전까지 실행 환경 미구성 안내만 출력한다.
 
 ### 포맷팅
 
