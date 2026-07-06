@@ -6,6 +6,7 @@ import { z } from "zod";
 
 const postsDirectory = path.join(process.cwd(), "content/blog");
 const BlogPostSummarySchema = z.object({
+  id: z.string(),
   slug: z.string(),
   title: z.string(),
   description: z.string(),

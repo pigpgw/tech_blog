@@ -1,10 +1,11 @@
 ---
+id: "2"
 slug: "blog-post-template"
 title: "블로그 글 작성 템플릿"
 description: "새 글을 작성할 때 필요한 frontmatter와 본문 구조 예시입니다."
 publishedAt: "2026-04-25"
 category: "Template"
-draft: false
+draft: true
 ---
 
 ## 글의 배경

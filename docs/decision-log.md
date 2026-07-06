@@ -64,3 +64,34 @@
   - `.agents/skills/*/SKILL.md`
   - `.agents/skills/*/agents/openai.yaml`
   - Skill 내부 reference 문서 중 사람이 읽는 제목과 설명
+
+## 2026-07-06: 블로그 게시글 식별자와 타입 경계 정리
+
+- 상태: 결정
+- 배경:
+  - 현재 블로그 글은 Markdown 파일로 관리하지만, 이후 Supabase 같은 DB 기반 관리로 전환할 계획이 있다.
+  - 게시글의 `id`가 optional이면 관리자 수정/삭제, 미리보기, 관계 데이터 연결에서 게시글의 내부 정체성이 불안정해진다.
+  - `slug`는 공개 URL에 사용되는 값이고, 내부 식별자인 `id`와 역할이 다르다.
+  - 목록 페이지와 카테고리 트리는 본문 전체가 필요 없고, 상세 페이지에서만 `content`가 필요하다.
+- 결정:
+  - `BlogPostSummary`의 `id`는 optional이 아니라 필수값으로 둔다.
+  - `id`는 내부 식별자이며, DB 전환 후에도 글의 정체성을 유지하는 기준값으로 사용한다.
+  - DB가 없는 Markdown 관리 단계에서는 `id`를 `"1"`, `"2"`처럼 따옴표가 있는 숫자 문자열로 관리한다.
+  - `slug`는 `/blog/[slug]` 공개 URL과 SEO, 공유 링크를 위한 값으로 유지한다.
+  - `BlogPostSummary`와 `BlogPostDetail`은 분리한다.
+  - `BlogPostDetail`은 `BlogPostSummary`에 `content`를 더한 타입으로 둔다.
+  - 카테고리 값은 트리와 URL 경로를 만들 수 있는 문자열로 다루며, 타입 이름은 DB id처럼 보이는 `BlogCategoryId`보다 `BlogCategoryPath`를 우선 검토한다.
+- 이유:
+  - `id`와 `slug`를 분리하면 공개 URL 변경 가능성과 내부 데이터 정체성을 분리할 수 있다.
+  - DB 전환 전에 Markdown frontmatter에 안정적인 `id`를 두면 마이그레이션 때 기존 글의 식별자를 유지하기 쉽다.
+  - 현재 frontmatter 검증은 `id`를 문자열로 다루므로 YAML에서 숫자로 파싱되지 않게 따옴표를 붙인다.
+  - 목록 조회에서 본문을 제외하면 이후 페이지네이션, 무한 스크롤, 카테고리 트리 생성 시 응답 크기를 줄일 수 있다.
+  - `BlogPostDetail = BlogPostSummary & { content: string }` 구조는 중복을 줄이면서도 목록과 상세의 데이터 요구 차이를 드러낸다.
+- 영향 범위:
+  - `src/types/blog.ts`에서 `id`를 필수값으로 바꾼다.
+  - `content/blog`의 각 Markdown frontmatter에 `id`를 추가한다.
+  - `src/lib/blog-posts.ts`의 frontmatter 검증 schema도 `id` 필수 기준으로 맞춘다.
+  - 공개 상세 조회는 계속 `slug`를 사용한다.
+- 제외:
+  - 이번 결정은 타입과 frontmatter 계약을 다룬다.
+  - 실제 DB 스키마, slug 변경 이력, redirect 정책, 카테고리 트리 UI 구현은 별도 결정이나 작업으로 다룬다.
