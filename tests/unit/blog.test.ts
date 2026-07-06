@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildBlogCategoryHref,
+  formatBlogCategoryPath,
   parseBlogCategoryPath,
   slugifyBlogCategorySegment,
 } from "@/lib/blog";
@@ -20,6 +21,12 @@ describe("blog category path", () => {
   it("builds category href from category path", () => {
     expect(buildBlogCategoryHref("CSS/Flexbox Layout")).toBe(
       "/blog/categories/css/flexbox-layout",
+    );
+  });
+
+  it("formats category path for display", () => {
+    expect(formatBlogCategoryPath("CSS/Flexbox Layout")).toBe(
+      "CSS > Flexbox Layout",
     );
   });
 });

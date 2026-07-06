@@ -65,3 +65,5 @@ export const buildBlogCategoryHref = (path: string) => {
 
   return `/blog/categories/${slugPath}`;
 };
+export const formatBlogCategoryPath = (path: string) =>
+  parseBlogCategoryPath(path).join(" > ");
