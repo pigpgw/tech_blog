@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import { getAllPostsSummary } from "@/lib/blog";
+import { formatBlogCategoryPath, getAllPostsSummary } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "문제와 해결 과정을 기록한 글",
@@ -14,10 +14,18 @@ export default function BlogListPage() {
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
+  const postItems = posts.map((post) => ({
+    slug: post.slug,
+    title: post.title,
+    description: post.description,
+    publishedAt: post.publishedAt,
+    categoryLabel: formatBlogCategoryPath(post.category),
+  }));
+
   return (
     <div className="flex flex-1 flex-col py-10 sm:py-14">
       <BlogListHeader />
-      <BlogPostList posts={posts} />
+      <BlogPostList posts={postItems} />
     </div>
   );
 }

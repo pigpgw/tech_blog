@@ -1,11 +1,18 @@
 "use client";
 import { useState } from "react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
-import type { BlogPostSummary } from "@/types/blog";
 import type { ChangeEvent } from "react";
 
+type BlogPostListItem = {
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  categoryLabel: string;
+};
+
 type BlogListProps = {
-  posts: BlogPostSummary[];
+  posts: BlogPostListItem[];
 };
 
 export const BlogPostList = ({ posts }: BlogListProps) => {
@@ -54,7 +61,13 @@ export const BlogPostList = ({ posts }: BlogListProps) => {
         <ul className="grid gap-5">
           {filteredBlogPosts.map((post) => (
             <li key={post.slug}>
-              <BlogPostCard {...post} />
+              <BlogPostCard
+                slug={post.slug}
+                title={post.title}
+                description={post.description}
+                publishedAt={post.publishedAt}
+                categoryLabel={post.categoryLabel}
+              />
             </li>
           ))}
         </ul>
