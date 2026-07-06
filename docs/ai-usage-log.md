@@ -130,18 +130,17 @@ Codex가 한 작업:
 
 - `.agents/skills/commit-message-generator/SKILL.md`
 
-### `code-review-fundamentals`
+### `react-next-frontend-code-review`
 
 목적:
 
-- 코드리뷰 요청 시 버그, 회귀, 유지보수 리스크, 검증 누락을 우선 확인
-- Toss Frontend Fundamentals 기준의 가독성, 예측 가능성, 응집도, 결합도 적용
-- 접근성, 번들링/성능, 디버깅 근거를 필요한 경우 함께 검토
+- React와 Next.js 프론트엔드 코드리뷰 요청 시 버그, 회귀, 유지보수 리스크, 검증 누락을 우선 확인
+- Frontend Fundamentals 코드 품질 기준의 가독성, 예측 가능성, 응집도, 결합도 적용
+- React 한국어 공식 문서와 Next.js 공식 문서를 직접 확인해 컴포넌트, 라우팅, 서버/클라이언트 경계 근거를 검토
 
 파일:
 
-- `.agents/skills/code-review-fundamentals/SKILL.md`
-- `.agents/skills/code-review-fundamentals/references/toss-frontend-fundamentals.md`
+- `.agents/skills/react-next-frontend-code-review/SKILL.md`
 
 ### `ai-usage-recorder`
 

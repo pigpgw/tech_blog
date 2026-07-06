@@ -25,7 +25,7 @@ description: 이 블로그 프로젝트의 UI 퍼블리싱을 구현, 검토, �
 다음 작업에는 사용하지 않는다.
 
 - UI 영향이 없는 순수 backend, database, CI, deployment 작업.
-- 리뷰 결과 형식만 필요한 작업. 리뷰 전용 요청은 `code-review-fundamentals`를 사용한다.
+- 리뷰 결과 형식만 필요한 작업. 리뷰 전용 요청은 `react-next-frontend-code-review`를 사용한다.
 - 무거운 제품 전략, 글 기획, roadmap 재구성.
 - 사용자가 명시적으로 요청하지 않은 refactoring, component extraction, headless UI pattern, compound component, abstraction design.
 

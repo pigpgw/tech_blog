@@ -147,4 +147,4 @@ npm run build
 - 커밋 메시지 작성이나 검토가 필요하면 `commit-message-generator`를 활용한다.
 - AI 활용 기록 초안이 필요하면 `ai-usage-recorder`를 활용한다.
 - UI 퍼블리싱 작업에는 `blog-ui-publisher`를 활용한다.
-- 코드리뷰 요청에는 `code-review-fundamentals`를 활용한다.
+- 코드리뷰 요청에는 `react-next-frontend-code-review`를 활용한다.
