@@ -1,56 +1,73 @@
 ---
 name: code-review-fundamentals
 description: >
-  Use when the user asks for "리뷰", "코드리뷰", "review", PR review, code review, or asks Codex to inspect changed frontend code for quality. Review with Toss Frontend Fundamentals criteria: readability, predictability, cohesion, coupling, plus accessibility, bundling/performance, and debugging evidence when relevant.
+  프론트엔드 코드 변경사항의 정확성, 유지보수성, 접근성, 성능을 점검해야 할 때 사용한다. 사용자가 코드 리뷰, PR 리뷰, review, 변경사항 검토, 버그 탐지, 품질 점검, 리팩터링 피드백을 요청할 때 사용한다.
 ---
 
-# Code Review Fundamentals
+# 코드 리뷰 기본기
 
-## Mission
+## 역할
 
-Review frontend changes as a code reviewer. Prioritize bugs, regressions, maintainability risks, and missing validation. Do not rewrite code unless the user explicitly asks for fixes.
+프론트엔드 변경사항을 코드 리뷰어 관점에서 검토한다. 버그, 회귀, 유지보수 리스크, 누락된 검증을 우선한다. 사용자가 명시적으로 `고쳐줘`, `수정해줘`, `반영해줘`라고 요청하지 않으면 파일을 수정하지 않는다.
 
-## References
+## 참고 자료
 
-- Use this Skill as the canonical code review workflow for this repository.
-- Read `references/toss-frontend-fundamentals.md` when a compact checklist is enough.
-- Use official Toss Frontend Fundamentals as the source of the quality criteria, but do not quote long passages.
+- 이 Skill을 이 저장소의 기본 코드 리뷰 절차로 사용한다.
+- 짧은 체크리스트가 필요하면 `references/toss-frontend-fundamentals.md`를 읽는다.
+- 원문 기준이 필요하면 아래 링크를 참고한다.
+  - https://frontend-fundamentals.com/
+  - https://react.dev/
+  - https://developer.mozilla.org/
+- 품질 기준은 Toss Frontend Fundamentals의 가독성, 예측 가능성, 응집도, 결합도를 사용하되 긴 원문 인용은 하지 않는다.
 
-## Workflow
+## 우선순위
 
-1. Identify the review scope.
-   - If the user provides files or a diff, review that scope.
-   - Otherwise inspect local changes with `git status --short`, `git diff --stat`, and focused `git diff` reads.
-2. Check correctness first.
-   - Look for behavior regressions, broken links, invalid semantics, stale state, async race conditions, accessibility regressions, and missing tests.
-3. Apply the four code quality criteria.
-   - Readability: reduce context, split code that does not run together, name complex conditions and magic numbers, simplify nested conditionals and ternaries.
-   - Predictability: keep names, parameters, return values, side effects, and component roles consistent.
-   - Cohesion: keep code that must change together close together; commonize values only when missing one update is risky.
-   - Coupling: reduce change impact; split responsibilities; avoid props drilling and over-commonization; allow duplication when change cycles are different.
-4. Add auxiliary checks only when relevant.
-   - Accessibility: semantic HTML, labels, roles, keyboard behavior, state exposure, image alt text.
-   - Bundling/performance: code splitting, tree-shaking blockers, unnecessary initial imports, client bundle exposure.
-   - Debugging: reproducibility, logs, root cause fix, regression prevention.
-5. Report findings first.
-   - Order by severity.
-   - Include file and line when possible.
-   - If no serious issue is found, say that clearly and mention residual risks or test gaps.
+1. 정확성
+2. 보안
+3. 접근성
+4. 유지보수성
+5. 성능
+6. 스타일
 
-## Output Format
+## 절차
 
-Use Korean by default.
+0. 변경 의도를 먼저 이해한다.
+   - 무엇이 바뀌었는지, 왜 바뀌었는지, 사용자가 기대한 결과가 무엇인지 확인한다.
+1. 리뷰 범위를 확인한다.
+   - 사용자가 파일이나 diff를 지정했다면 그 범위를 리뷰한다.
+   - 별도 지정이 없으면 `git status --short`, `git diff --stat`, 필요한 `git diff`를 확인한다.
+2. 정확성을 먼저 본다.
+   - 동작 회귀, 깨진 링크, 잘못된 semantic HTML, 오래된 상태, 비동기 race condition, 접근성 회귀, 누락된 테스트를 찾는다.
+3. 네 가지 코드 품질 기준을 적용한다.
+   - 가독성: 한 번에 봐야 하는 맥락을 줄이고, 같이 실행되지 않는 코드를 분리하며, 복잡한 조건과 매직 넘버에 이름을 붙인다.
+   - 예측 가능성: 이름, 파라미터, 반환값, 부수효과, 컴포넌트 역할이 일관적인지 본다.
+   - 응집도: 함께 바뀌어야 하는 코드와 값이 가까이 있는지 본다.
+   - 결합도: 작은 변경이 불필요하게 넓은 파일과 컴포넌트에 영향을 주는지 본다.
+4. 관련 있을 때만 보조 기준을 추가한다.
+   - 접근성: semantic HTML, label, role/state, keyboard flow, alt text.
+   - 번들링/성능: code splitting, tree-shaking 방해, 불필요한 초기 import, 클라이언트 번들 노출.
+   - 디버깅: 재현 가능성, 로그, 원인 추적, 회귀 방지.
+5. 리뷰 결과를 먼저 보고한다.
+   - 심각도 순서로 정렬한다.
+   - 가능한 경우 파일과 라인을 포함한다.
+   - 버그나 회귀라면 가능한 경우 재현 방법을 포함한다.
+   - 중요한 문제가 없으면 그렇게 말하고, 남은 검증 공백이나 잔여 리스크를 적는다.
+
+## 출력 형식
+
+기본 출력은 한국어로 작성한다.
 
 ```md
-**Findings**
+**리뷰 결과**
 
 - [높음|중간|낮음] path/to/file.tsx:120
   기준: 가독성 / 예측 가능성 / 응집도 / 결합도 / 접근성 / 성능
   문제: ...
   영향: ...
+  재현 방법: ...
   제안: ...
 
-**Open Questions**
+**열린 질문**
 
 - ...
 
@@ -59,13 +76,21 @@ Use Korean by default.
 - ...
 ```
 
-For small reviews, omit empty sections. Do not list all criteria if they do not reveal a useful issue.
+작은 리뷰에서는 비어 있는 섹션을 생략한다. 유의미한 문제가 없는데 모든 기준을 나열하지 않는다.
 
-## Guardrails
+## 범위 밖
 
-- Do not invent line numbers or claim tests were run when they were not.
-- Do not treat style preferences as findings unless they create maintainability or behavior risk.
-- Do not automatically demand abstraction. Explain whether readability, cohesion, or coupling should win in this context.
-- Do not fix files unless the user asks `고쳐줘`, `수정해줘`, `반영해줘`, or equivalent.
-- Keep findings direct and evidence-based.
-- Avoid filler, praise, and repeated general advice.
+- 포맷터가 처리하는 스타일은 지적하지 않는다.
+- 사용자가 요청하지 않은 대규모 리팩터링은 제안하지 않는다.
+- 근거 없는 추상화를 요구하지 않는다.
+- 구현 방식의 단순 취향 차이는 지적하지 않는다.
+
+## 주의사항
+
+- 라인 번호를 지어내지 않는다.
+- 실행하지 않은 테스트나 검증을 실행했다고 쓰지 않는다.
+- 단순 취향을 유지보수나 동작 리스크처럼 포장하지 않는다.
+- 추상화를 자동으로 요구하지 않는다. 가독성, 응집도, 결합도 중 무엇을 우선해야 하는지 근거를 적는다.
+- 사용자가 명시적으로 수정을 요청하지 않으면 파일을 고치지 않는다.
+- 리뷰 결과는 직접적이고 근거 중심으로 쓴다.
+- 장식적 표현, 칭찬, 반복적인 일반론을 피한다.

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Code Review Fundamentals"
-  short_description: "토스 펀더멘털 기준으로 코드리뷰를 자동화해준다"
-  default_prompt: "Use $code-review-fundamentals to review this frontend change with readability, predictability, cohesion, and coupling criteria."
+  display_name: "코드 리뷰 기본기"
+  short_description: "토스 프론트엔드 펀더멘털 기준으로 코드리뷰를 수행한다"
+  default_prompt: "$code-review-fundamentals를 사용해서 이 프론트엔드 변경을 가독성, 예측 가능성, 응집도, 결합도 기준으로 리뷰해줘."

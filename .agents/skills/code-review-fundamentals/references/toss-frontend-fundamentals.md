@@ -1,4 +1,4 @@
-# Toss Frontend Fundamentals Review Reference
+# Toss Frontend Fundamentals 리뷰 참고 자료
 
 이 참조는 코드리뷰 때 빠르게 적용하기 위한 요약이다. 상세 기준은 상위 `SKILL.md`를 우선 확인한다.
 
@@ -52,3 +52,5 @@
 - https://frontend-fundamentals.com/a11y/
 - https://frontend-fundamentals.com/debug/
 - https://github.com/toss/frontend-fundamentals
+- https://react.dev/
+- https://developer.mozilla.org/

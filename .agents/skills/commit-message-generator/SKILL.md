@@ -1,32 +1,32 @@
 ---
 name: commit-message-generator
-description: 'Use when generating, reviewing, or refining commit messages from code or documentation changes. Applies to this project''s Korean Conventional Commits rule: analyze git changes, choose an appropriate type and optional scope, write the subject in Korean ending with "~한다", and include body/footer only when useful.'
+description: '코드나 문서 변경사항을 바탕으로 커밋 메시지를 생성, 검토, 다듬을 때 사용한다. 이 프로젝트의 한국어 Conventional Commits 규칙을 적용하며, subject의 "~한다" 종결, 선택적 body/footer, Co-authored-by 규칙을 포함한다.'
 ---
 
-# Commit Message Generator
+# 커밋 메시지 생성기
 
-## One-Line Definition
+## 한 줄 정의
 
-Code change analysis automation that generates a good commit message from the actual diff.
+실제 diff를 분석해 이 프로젝트 규칙에 맞는 커밋 메시지를 만든다.
 
-## Mission
+## 역할
 
-Analyze the current changes and produce a commit message that follows this project's commit convention.
+현재 변경사항을 분석하고, 이 프로젝트의 커밋 컨벤션에 맞는 커밋 메시지를 제안한다.
 
-## Commit Rules
+## 커밋 규칙
 
-- Use Conventional Commits.
-- Write commit content in Korean.
-- End the subject sentence with `~한다`.
-- Use body and footer only when needed.
-- Prefer `type: subject` by default.
-- Use `scope` only when it makes the affected area clearer.
-- Mark breaking changes with `!` or `BREAKING CHANGE:` in the footer.
-- Suggest `Co-authored-by: Codex <codex@openai.com>` only when Codex directly wrote, edited, diagnosed, or otherwise materially contributed to committed code, documentation, configuration, workflow, or Skill artifacts.
-- Do not add `Co-authored-by` when the user performed the actual work and Codex only answered questions, gave light feedback, reviewed wording, or provided suggestions not reflected in committed files.
-- Do not add `Co-authored-by` for trivial formatting-only changes, simple questions, or low-value boilerplate generation.
+- Conventional Commits 형식을 사용한다.
+- 커밋 내용은 한국어로 작성한다.
+- subject 문장은 `~한다` 형식으로 끝낸다.
+- body와 footer는 필요할 때만 작성한다.
+- 기본적으로 `type: subject` 형식을 사용한다.
+- scope는 명확성을 높일 때만 추가한다.
+- breaking change는 `!` 또는 footer의 `BREAKING CHANGE:`로 표시한다.
+- Codex가 커밋될 코드, 문서, 설정, workflow, Skill 산출물 작성/수정/진단에 직접 관여했을 때만 `Co-authored-by: Codex <codex@openai.com>`를 제안한다.
+- 사용자가 실제 작업을 했고 Codex가 가벼운 답변, 표현 검토, 반영되지 않은 제안만 했다면 `Co-authored-by`를 넣지 않는다.
+- 단순 포맷팅, 간단한 질문, 낮은 가치의 boilerplate 생성에는 `Co-authored-by`를 넣지 않는다.
 
-## Format
+## 형식
 
 ```txt
 type(scope)!: subject
@@ -36,13 +36,13 @@ body
 footer
 ```
 
-For most commits, output only:
+대부분의 커밋은 다음 한 줄이면 충분하다.
 
 ```txt
 type: subject
 ```
 
-## Types
+## 커밋 Type 선택
 
 - `feature`: 새로운 기능 추가
 - `fix`: 버그 수정
@@ -52,71 +52,61 @@ type: subject
 - `chore`: 설정, 패키지, 빌드 관련 작업
 - `test`: 테스트 추가 또는 수정
 
-## Workflow
+여러 type이 가능하면 커밋의 주된 사용자 영향 또는 프로젝트 관리 목적을 가장 잘 설명하는 type을 고른다.
 
-1. Inspect changed files with `git status --short`.
-2. Prefer staged changes when they exist:
-   - Use `git diff --cached --stat`.
-   - Use `git diff --cached` when more detail is needed.
-3. If there are no staged changes, inspect unstaged changes:
-   - Use `git diff --stat`.
-   - Use `git diff` when more detail is needed.
-4. Decide whether the changes are one logical commit.
-5. If changes mix unrelated purposes, recommend splitting before generating a final single message.
-6. Choose the narrowest accurate type.
-7. Add a scope only when it improves clarity.
-8. Generate one recommended message and, when useful, 1-2 alternatives.
+## 절차
 
-## Type Selection
+1. `git status --short`로 변경 파일을 확인한다.
+2. staged change가 있으면 우선 확인한다.
+   - `git diff --cached --stat`
+   - 필요하면 `git diff --cached`
+3. staged change가 없으면 unstaged change를 확인한다.
+   - `git diff --stat`
+   - 필요하면 `git diff`
+4. 변경사항이 하나의 논리적 커밋인지 판단한다.
+5. 서로 다른 목적의 변경이 섞였으면 단일 메시지를 만들기 전에 커밋 분리를 권한다.
+6. 가장 좁고 정확한 type을 고른다.
+7. scope가 명확성을 높일 때만 추가한다.
+8. 추천 메시지 하나를 만들고, 유용할 때만 대안 1-2개를 덧붙인다.
 
-- Documentation-only changes: `docs`
-- New user-facing behavior or route: `feature`
-- Incorrect behavior fixed: `fix`
-- Internal code structure changed without behavior change: `refactor`
-- CSS or visual layout change: `style`
-- Tooling, package, CI, config, setup: `chore`
-- Test files or test setup: `test`
+## 본문 작성 기준
 
-When multiple types seem possible, choose the type that reflects the main user-visible or project-management purpose of the commit.
+subject만으로 이유나 의도가 부족할 때만 body를 쓴다.
 
-## Body Guidelines
+좋은 본문 내용:
 
-Write a body only when the subject cannot explain the reason or intent.
+- 변경 이유
+- 중요한 구현 맥락
+- 트레이드오프 또는 마이그레이션 참고 사항
 
-Good body content:
+subject를 반복하지 않는다.
 
-- Why the change was made
-- Important implementation context
-- Tradeoff or migration note
+## 푸터 작성 기준
 
-Avoid repeating the subject in the body.
-
-## Footer Guidelines
-
-Write a footer only for:
+footer는 다음 경우에만 쓴다.
 
 - `BREAKING CHANGE:`
-- related issue or reference link
-- Codex directly contributing to committed artifacts:
+- 관련 issue나 reference
+- Codex가 커밋될 산출물에 직접 관여한 경우
 
 ```txt
 Co-authored-by: Codex <codex@openai.com>
 ```
 
-Use `Co-authored-by` only when Codex-authored or materially Codex-assisted artifacts are part of the commit. Keep the README exclusions: no footer for light feedback, simple questions, trivial formatting-only changes, or low-value boilerplate.
+`Co-authored-by`는 Codex가 실제로 작성하거나 의미 있게 기여한 산출물이 커밋에 포함될 때만 사용한다. README의 제외 기준도 유지한다.
 
-## Output
+## 출력
 
-When the user asks for a commit message, return:
+사용자가 커밋 메시지를 요청하면 다음을 제공한다.
 
-- Recommended message
-- Reason for type/scope choice
-- Optional alternatives when useful
-- Split recommendation if the diff contains unrelated changes
+- 추천 메시지
+- type/scope 선택 이유
+- 유용할 때만 대안
+- 변경이 섞여 있으면 커밋 분리 제안
 
-When the user asks to commit, show the chosen message before committing unless the user already provided an exact message.
+사용자가 커밋까지 요청하면, 정확한 메시지를 이미 제공한 경우가 아니라면 커밋 전에 선택한 메시지를 보여준다.
 
-## Examples
+## 예시
 
 ```txt
 docs: 기술스택 선정 이유를 정리한다
@@ -130,7 +120,7 @@ test: 게시글 정렬 로직 테스트를 추가한다
 fix(post)!: 게시글 slug 생성 방식을 변경한다
 ```
 
-With Codex attribution:
+Codex 공동 작성자 footer가 필요한 예시:
 
 ```txt
 docs: 1차 프로젝트 문서와 AI 활용 기록을 정리한다
@@ -138,7 +128,7 @@ docs: 1차 프로젝트 문서와 AI 활용 기록을 정리한다
 Co-authored-by: Codex <codex@openai.com>
 ```
 
-Bad examples:
+나쁜 예시:
 
 ```txt
 update
@@ -147,4 +137,7 @@ docs: 문서 수정
 style: CSS 고침
 ```
 
-Bad examples fail because they do not explain the actual change or do not end the Korean subject with `~한다`.
+나쁜 이유:
+
+- 실제 변경 내용을 설명하지 않는다.
+- 한국어 subject가 `~한다`로 끝나지 않는다.

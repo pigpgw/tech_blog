@@ -1,4 +1,4 @@
 interface:
-  display_name: "Blog UI Publisher"
+  display_name: "블로그 UI 퍼블리셔"
   short_description: "블로그 프로젝트 UI 퍼블리싱, 접근성, Tailwind 레이아웃 기준을 적용한다"
-  default_prompt: "Use $blog-ui-publisher to implement or review this blog project's UI publishing work."
+  default_prompt: "$blog-ui-publisher를 사용해서 이 블로그 프로젝트의 UI 퍼블리싱 작업을 구현하거나 검토해줘."

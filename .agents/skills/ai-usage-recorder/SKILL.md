@@ -1,62 +1,62 @@
 ---
 name: ai-usage-recorder
-description: Use when deciding whether an AI-assisted task is worth documenting and when drafting structured Korean AI usage records. Selects only meaningful AI usage cases, separates the user's decisions/work from Codex's concrete contribution, and outputs markdown focused on problem solving, prompt engineering, tool/Skill/MCP usage, artifacts, validation/repair, rationale, and lessons learned.
+description: 문제 해결, 프롬프트 조율, 도구/Skill/MCP 사용, 산출물, 검증, 수정, 선택 이유, 배운 점이 있는 AI 협업을 기록할지 판단하거나 한국어 AI 활용 기록 초안을 작성할 때 사용한다.
 ---
 
-# AI Usage Recorder
+# AI 활용 기록 작성기
 
-## Role
+## 역할
 
-You are an AI usage record writer.
+AI 활용 기록 작성자 역할을 한다.
 
-## Mission
+## 목표
 
-Analyze a user's completed or planned work, decide whether it is worth recording, and generate a structured draft only for meaningful AI usage cases.
+사용자가 완료했거나 계획한 작업을 분석해 기록할 가치가 있는 AI 활용 사례인지 판단하고, 의미 있는 경우에만 구조화된 한국어 초안을 작성한다.
 
-## Recording Decision
+## 기록 판단 기준
 
-Record the case when it includes at least one of these:
+다음 중 하나 이상에 해당하면 기록한다.
 
-- New feature implementation or structural design
-- Problem solving or debugging
-- Repetitive work automation, including Skill creation
-- Important technical choice or decision
-- Failure followed by improvement
-- Meaningful productivity or quality improvement through AI
+- 새로운 기능 구현 또는 구조 설계
+- 문제 해결 또는 디버깅
+- Skill 생성 등 반복 작업 자동화
+- 중요한 기술 선택이나 의사결정
+- 실패 후 개선 과정
+- AI를 통한 의미 있는 생산성 또는 품질 개선
 
-Do not record the case when it is only:
+다음에만 해당하면 기록하지 않는다.
 
-- Simple syntax question
-- Trivial boilerplate generation
-- Simple translation or formatting
-- Repetitive low-value work log
-- Basic concept-check learning question
+- 단순 문법 질문
+- 사소한 boilerplate 생성
+- 단순 번역이나 포맷팅
+- 낮은 가치의 반복 작업 로그
+- 기본 개념 확인 질문
 
-If it is not worth recording, return only:
+기록할 가치가 없으면 다음만 반환한다.
 
 ```txt
 기록하지 않는 것이 좋다
 ```
 
-## Writing Principles
+## 작성 원칙
 
-- Focus on how the problem was solved, not just that AI was used.
-- Separate what the user decided or did from what Codex produced or changed.
-- Include the user's original prompt or the most important prompt excerpts when they show how the user directed the work.
-- Explain how the user refined the request through conversation, including rejected or corrected AI output.
-- Record the AI harness used, such as Codex Skills, MCP tools, terminal commands, Git, browser checks, CI, or documentation search.
-- Do not invent work, validation, or results that did not happen.
-- Keep the record factual and not exaggerated.
-- Emphasize process, judgment, and correction over only the final result.
-- Use concise and clear Korean sentences.
-- Avoid filler and promotional wording.
-- Use direct factual wording.
-- Avoid repeated endings such as `~할 수 있습니다`.
-- Avoid hesitant phrasing such as `~하는 편이 좋습니다` and `~에 가깝습니다`.
+- AI를 사용했다는 사실보다 문제가 어떻게 해결됐는지에 집중한다.
+- 사용자가 판단하거나 수행한 일과 Codex가 만든 결과를 분리한다.
+- 사용자의 원래 프롬프트나 핵심 질문이 작업 방향을 잘 보여주면 포함한다.
+- 사용자가 대화 중 요구사항을 어떻게 다듬었는지, 거절하거나 고친 AI 결과가 무엇인지 설명한다.
+- 사용한 AI 하네스를 기록한다: Codex Skills, MCP tools, terminal commands, Git, browser checks, CI, documentation search.
+- 실제로 하지 않은 작업, 검증, 결과를 쓰지 않는다.
+- 사실 중심으로 쓰고 과장하지 않는다.
+- 최종 결과만이 아니라 과정, 판단, 수정에 초점을 둔다.
+- 간결하고 명확한 한국어 문장을 사용한다.
+- 홍보성 표현과 군더더기를 피한다.
+- 직접적이고 사실적인 문장으로 쓴다.
+- `~할 수 있습니다` 같은 반복 어미를 피한다.
+- `~하는 편이 좋습니다`, `~에 가깝습니다` 같은 모호한 표현을 피한다.
 
-## Required Output
+## 필수 출력 형식
 
-When the case is worth recording, output this markdown structure:
+기록할 가치가 있으면 다음 Markdown 구조로 출력한다.
 
 ````md
 ## [제목]
@@ -79,7 +79,6 @@ Codex가 한 작업:
 사용자가 실제로 입력한 프롬프트나 핵심 질문을 작성
 긴 대화라면 대표 문장과 요구사항이 바뀐 지점을 중심으로 작성
 ```
-````
 
 커뮤니케이션 / 프롬프트 개선 과정:
 
@@ -112,35 +111,33 @@ Codex가 한 작업:
 
 - 이번 경험에서 얻은 실제 개발 인사이트 작성
 - 다음에 어떻게 더 잘 적용할지 작성
+````
 
-```
+## 섹션 규칙
 
-## Section Rules
+- `검증 / 수정`은 필수다. 반드시 사실만 쓴다.
+- 아직 검증하지 않았다면 `아직 검증하지 않음`이라고 쓰고, 유용할 때만 구체적인 예정 검증을 덧붙인다.
+- `내가 한 판단 / 작업`은 필수다. Codex가 모든 일을 한 것처럼 쓰지 않는다.
+- `Codex가 한 작업`은 필수다. "AI를 사용했다" 같은 모호한 표현 대신 구체적 행동을 적는다.
+- `프롬프트 원문 / 핵심 질문`은 프롬프트 자체가 요구사항 조정이나 prompt engineering을 보여줄 때 필수다.
+- `커뮤니케이션 / 프롬프트 개선 과정`은 후속 피드백으로 결과가 바뀐 경우 필수다.
+- `사용한 AI 하네스 / 도구`는 필수다. 별도 도구가 없었다면 `일반 Codex 대화만 사용`이라고 쓴다.
+- `선택 이유`에는 속도, 일관성, 유지보수, 구조 중 하나 이상이 들어가야 한다.
+- `배운 점`은 다음 개발에 적용할 수 있을 만큼 실질적으로 쓴다.
+- 산출물이 파일이면 `docs/ai-usage-log.md` 또는 `.agents/skills/name/SKILL.md` 같은 경로를 선호한다.
+- 단순히 작업이 있었다는 말만 반복하는 낮은 가치의 서술은 제거한다.
+- 실제로 사용하지 않은 MCP, browser validation, CI, test를 사용했다고 쓰지 않는다.
 
-- `검증 / 수정` is required, but it must be factual.
-- If validation has not happened yet, write `아직 검증하지 않음` and add a concrete planned validation only when useful.
-- `내가 한 판단 / 작업` is required. Do not make the record look like Codex did everything.
-- `Codex가 한 작업` is required. Name concrete actions, not vague phrases like "AI를 사용했다".
-- `프롬프트 원문 / 핵심 질문` is required when the prompt itself demonstrates prompt engineering or requirement shaping.
-- `커뮤니케이션 / 프롬프트 개선 과정` is required when the output changed through follow-up feedback.
-- `사용한 AI 하네스 / 도구` is required. If no special tool was used, write `일반 Codex 대화만 사용`.
-- `선택 이유` must include at least one of: speed, consistency, maintainability, structure.
-- `배운 점` must be practical enough to apply in future development.
-- Prefer paths when artifacts are files, such as `docs/ai-usage-log.md` or `.agents/skills/name/SKILL.md`.
-- Remove low-value narration that only says the work happened.
-- Do not claim MCP, browser validation, CI, or tests were used unless they were actually used.
+## 좋은 기록 대상 예시
 
-## Good Fit Examples
+- 반복되는 AI 협업 절차를 표준화하기 위해 프로젝트 전용 Skill을 만든 경우
+- 한국어 Conventional Commit 메시지를 자동화하기 위해 `commit-message-generator`를 만든 경우
+- 프로젝트 roadmap을 구현 task로 재구성한 경우
+- 모바일 layout 문제를 AI와 디버깅하고 padding이나 semantic tag를 수정한 경우
 
-- Creating a project-specific Skill to standardize repeated AI-assisted work
-- Creating `commit-message-generator` to automate Korean Conventional Commit messages
-- Using AI to restructure a project roadmap into implementation tasks
-- Using AI to debug a mobile layout and then adjusting padding or semantic tags
+## 나쁜 기록 대상 예시
 
-## Bad Fit Examples
-
-- Asking what a JavaScript method means
-- Asking AI to format a sentence
-- Generating a one-line README title
-- Creating disposable boilerplate with no decision or validation
-```
+- JavaScript method 의미를 물어본 경우
+- 문장 하나를 포맷팅한 경우
+- README 제목 한 줄을 생성한 경우
+- 의사결정이나 검증이 없는 일회성 boilerplate를 만든 경우
