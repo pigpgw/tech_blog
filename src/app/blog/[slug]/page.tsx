@@ -11,7 +11,7 @@ import {
   getBlogCategories,
   getBlogPostDetail,
   getBlogPosts,
-} from "@/lib/blog-api";
+} from "@/services/blog";
 import { buildCategoryLabelSegments } from "@/lib/blog-categories";
 
 type Props = {

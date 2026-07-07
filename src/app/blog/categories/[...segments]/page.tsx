@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import { getBlogCategories, getBlogPosts } from "@/lib/blog-api";
 import { buildCategoryLabelSegments } from "@/lib/blog-categories";
+import { getBlogCategories, getBlogPosts } from "@/services/blog";
 
 export default async function BlogCategoryPage({
   params,

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { getBlogPosts } from "@/lib/blog-api";
 import { SITE_URL } from "@/lib/site";
+import { getBlogPosts } from "@/services/blog";
 
 const buildUrl = (pathname: string) => {
   return new URL(pathname, SITE_URL).toString();

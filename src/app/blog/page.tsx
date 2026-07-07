@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import { getBlogCategories, getBlogPosts } from "@/lib/blog-api";
 import { buildCategoryLabelSegments } from "@/lib/blog-categories";
+import { getBlogCategories, getBlogPosts } from "@/services/blog";
 
 export const metadata: Metadata = {
   title: "문제와 해결 과정을 기록한 글",
