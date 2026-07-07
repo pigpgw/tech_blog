@@ -4,9 +4,7 @@ slug: "claude-prompt-engineering-guide"
 title: "Claude Prompt Engineering 튜토리얼 정리: 좋은 요청은 어떻게 만드는가"
 description: "Anthropic Prompt Engineering Interactive Tutorial을 공부하며 중요해 보였던 역할, 지시사항, 출력 형식, 예시, 근거, 도구 사용 내용을 정리합니다."
 publishedAt: "2026-05-22"
-category:
-  path: "ai/prompt-engineering"
-  label: "AI/Prompt Engineering"
+categoryId: "ai/prompt-engineering"
 draft: false
 ---
 
