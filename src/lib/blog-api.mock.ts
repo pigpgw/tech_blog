@@ -1,8 +1,13 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { dummyCategories } from "@/dummy/categories";
-import type { BlogPostDetail, BlogPostSummary, Category } from "@/types/blog";
+import { mockCategories } from "@/lib/mock-categories";
+import type {
+  BlogPostDetail,
+  BlogPostListResponse,
+  BlogPostSummary,
+  Category,
+} from "@/types/blog";
 
 type MockErrorResponse = {
   message: string;
@@ -50,13 +55,13 @@ export const fetchMockCategories = async (): Promise<
 > => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(createMockSuccessResponse(200, dummyCategories));
+      resolve(createMockSuccessResponse(200, mockCategories));
     }, 1000);
   });
 };
 
 export const fetchMockPosts = async (): Promise<
-  MockResponse<BlogPostSummary[]>
+  MockResponse<BlogPostListResponse>
 > => {
   const posts = fileNames
     .map((fileName): BlogPostSummary => {
@@ -70,7 +75,14 @@ export const fetchMockPosts = async (): Promise<
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(createMockSuccessResponse(200, posts));
+      resolve(
+        createMockSuccessResponse(200, {
+          items: posts,
+          page: 1,
+          pageSize: posts.length,
+          total: posts.length,
+        }),
+      );
     }, 1000);
   });
 };

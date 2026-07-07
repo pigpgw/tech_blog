@@ -23,3 +23,10 @@ export interface BlogPostSummary {
 export interface BlogPostDetail extends BlogPostSummary {
   content: string;
 }
+
+export interface BlogPostListResponse {
+  items: BlogPostSummary[];
+  page: number;
+  pageSize: number;
+  total: number;
+}

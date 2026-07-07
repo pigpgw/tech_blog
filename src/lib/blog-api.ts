@@ -2,7 +2,7 @@ import {
   fetchMockCategories,
   fetchMockPostDetail,
   fetchMockPosts,
-} from "@/app/apis/mock";
+} from "@/lib/blog-api.mock";
 import type { BlogPostDetail, BlogPostSummary, Category } from "@/types/blog";
 
 export const getBlogCategories = async (): Promise<Category[]> => {
@@ -24,7 +24,9 @@ export const getBlogPosts = async (): Promise<BlogPostSummary[]> => {
     throw new Error(error.message);
   }
 
-  return response.json();
+  const data = await response.json();
+
+  return data.items;
 };
 
 export const getBlogPostDetail = async (

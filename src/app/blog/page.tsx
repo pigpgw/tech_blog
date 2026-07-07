@@ -1,7 +1,8 @@
 import { Metadata } from "next";
-import { getBlogPosts } from "@/app/apis/blog";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
+import { getBlogCategories, getBlogPosts } from "@/lib/blog-api";
+import { buildCategoryLabelSegments } from "@/lib/blog-categories";
 
 export const metadata: Metadata = {
   title: "문제와 해결 과정을 기록한 글",
@@ -10,16 +11,23 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogListPage() {
-  const posts = (await getBlogPosts()).sort(
+  const [posts, categories] = await Promise.all([
+    getBlogPosts(),
+    getBlogCategories(),
+  ]);
+  const sortedPosts = posts.sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
-  const postItems = posts.map((post) => ({
+  const postItems = sortedPosts.map((post) => ({
     slug: post.slug,
     title: post.title,
     description: post.description,
     publishedAt: post.publishedAt,
-    categoryLabelSegments: post.categoryId.split("/"),
+    categoryLabelSegments: buildCategoryLabelSegments(
+      post.categoryId,
+      categories,
+    ),
   }));
 
   return (

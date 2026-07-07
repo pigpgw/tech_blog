@@ -6,8 +6,13 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github.css";
 import { Metadata } from "next";
-import { getBlogPostDetail, getBlogPosts } from "@/app/apis/blog";
 import { BlogCategoryBadge } from "@/components/blog/BlogCategoryBadge";
+import {
+  getBlogCategories,
+  getBlogPostDetail,
+  getBlogPosts,
+} from "@/lib/blog-api";
+import { buildCategoryLabelSegments } from "@/lib/blog-categories";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -37,7 +42,10 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const posts = await getBlogPosts();
+  const [posts, categories] = await Promise.all([
+    getBlogPosts(),
+    getBlogCategories(),
+  ]);
   const summary = posts.find((post) => post.slug === slug);
 
   if (!summary) notFound();
@@ -47,7 +55,10 @@ export default async function BlogDetailPage({
   if (!blogItem) notFound();
 
   const titleId = "blog-post-title";
-  const categoryLabelSegments = blogItem.categoryId.split("/");
+  const categoryLabelSegments = buildCategoryLabelSegments(
+    blogItem.categoryId,
+    categories,
+  );
 
   return (
     <article

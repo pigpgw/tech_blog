@@ -1,6 +1,6 @@
 import type { Category } from "@/types/blog";
 
-export const dummyCategories = [
+export const mockCategories = [
   {
     id: "ai",
     name: "AI",
