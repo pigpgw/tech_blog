@@ -95,9 +95,40 @@
   - `src/types/blog.ts`에서 `id`를 필수값으로 바꾼다.
   - `content/blog`의 각 Markdown frontmatter에 `id`를 추가한다.
   - `src/lib/blog.ts`의 frontmatter 검증 schema도 `id` 필수 기준으로 맞춘다.
-  - 공개 상세 조회는 계속 `slug`를 사용한다.
+  - 공개 상세 URL은 계속 `slug`를 사용한다.
+  - 공개 API의 상세 조회 식별자는 2026-07-07 결정에 따라 `id`만 사용한다.
   - `category` frontmatter는 `path`와 `label` 객체 구조로 관리한다.
   - 블로그 목록, 카테고리 목록, 상세 화면은 `category.label`을 표시 세그먼트 배열로 나눠 배지에 전달한다.
 - 제외:
   - 이번 결정은 타입과 frontmatter 계약을 다룬다.
   - 실제 DB 스키마, slug 변경 이력, redirect 정책, 카테고리 트리 UI 구현은 별도 결정이나 작업으로 다룬다.
+
+## 2026-07-07: 블로그 공개 API URL 계약
+
+- 상태: 결정
+- 배경:
+  - 현재는 Markdown 파일을 읽어 블로그 데이터를 만들지만, 이후 Supabase 같은 백엔드로 전환할 계획이 있다.
+  - 백엔드 전환 시 프론트엔드 변경을 줄이려면 실제 구현보다 먼저 프론트엔드가 의존할 API URL 계약을 고정해야 한다.
+  - `slug`는 공개 URL과 화면 표시에는 유용하지만, 중복 가능성과 변경 가능성이 있어 상세 조회 API의 안정 식별자로 쓰지 않는다.
+  - 검색과 카테고리 필터는 특정 글 상세 조회가 아니라 공개 글 목록 조회의 조건이다.
+- 결정:
+  - 블로그 공개 API 명세는 `docs/api-spec.md`에 둔다.
+  - 카테고리 목록은 `GET /categories`로 조회한다.
+  - 공개 글 목록, 검색, 카테고리 필터, 페이지네이션은 `GET /posts`와 query string으로 처리한다.
+  - 공개 글 상세 조회는 `GET /posts/{id}`만 사용한다.
+  - `slug`로 상세 글을 조회하는 API는 제공하지 않는다.
+  - `categoryId`는 query string에서 여러 번 전달할 수 있다.
+  - 여러 `categoryId`가 전달되면 OR 조건으로 조회한다.
+  - `draft` 글은 공개 API 응답에서 제외한다.
+- 이유:
+  - 상세 조회를 `id` 기준으로 고정하면 slug 변경이나 중복 가능성과 API 식별자 안정성을 분리할 수 있다.
+  - 목록 API에 검색, 필터, 페이지네이션을 모으면 프론트엔드가 같은 목록 화면에서 조건만 바꿔 재사용하기 쉽다.
+  - API URL 계약을 먼저 고정하면 현재 Markdown mock 구현을 나중에 실제 백엔드 호출로 바꿀 때 화면 변경 범위를 줄일 수 있다.
+- 영향 범위:
+  - `docs/api-spec.md`
+  - 블로그 데이터 조회를 감싸는 service 함수
+  - 향후 실제 API Route Handler 또는 Supabase 연동 구현
+- 제외:
+  - 이번 결정은 API URL 계약만 다룬다.
+  - ERD, DB schema, 관리자 API, 인증 정책은 별도 결정으로 다룬다.
+  - 실제 API Route Handler 구현은 이번 결정에 포함하지 않는다.
