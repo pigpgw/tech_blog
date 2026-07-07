@@ -15,7 +15,7 @@
     "test:watch": "vitest --passWithNoTests",
     "code:review": "node scripts/render-markdown-review.mjs code-review",
     "plan:review": "node scripts/render-plan-review.mjs",
-    "type-check": "tsc --noEmit",
+    "type-check": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
