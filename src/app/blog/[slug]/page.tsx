@@ -6,8 +6,8 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github.css";
 import { Metadata } from "next";
+import { getBlogPostDetail, getBlogPosts } from "@/app/apis/blog";
 import { BlogCategoryBadge } from "@/components/blog/BlogCategoryBadge";
-import { getPostDetailBySlug } from "@/lib/blog";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -15,7 +15,9 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostDetailBySlug(slug);
+  const posts = await getBlogPosts();
+  const post = posts.find((post) => post.slug === slug);
+
   if (!post) {
     return {
       title: "글을 찾을 수 없습니다",
@@ -35,12 +37,17 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const blogItem = getPostDetailBySlug(slug);
+  const posts = await getBlogPosts();
+  const summary = posts.find((post) => post.slug === slug);
+
+  if (!summary) notFound();
+
+  const blogItem = await getBlogPostDetail(summary.id);
 
   if (!blogItem) notFound();
 
   const titleId = "blog-post-title";
-  const categoryLabelSegments = blogItem.category.label.split("/");
+  const categoryLabelSegments = blogItem.categoryId.split("/");
 
   return (
     <article

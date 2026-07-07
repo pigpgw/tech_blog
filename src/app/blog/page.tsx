@@ -1,7 +1,7 @@
 import { Metadata } from "next";
+import { getBlogPosts } from "@/app/apis/blog";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import { getAllPostsSummary } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "문제와 해결 과정을 기록한 글",
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     "개발하며 배우고 경험한 문제 해결 과정과 기술 내용을 기록하는 개발 블로그",
 };
 
-export default function BlogListPage() {
-  const posts = getAllPostsSummary().sort(
+export default async function BlogListPage() {
+  const posts = (await getBlogPosts()).sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
@@ -19,7 +19,7 @@ export default function BlogListPage() {
     title: post.title,
     description: post.description,
     publishedAt: post.publishedAt,
-    categoryLabelSegments: post.category.label.split("/"),
+    categoryLabelSegments: post.categoryId.split("/"),
   }));
 
   return (

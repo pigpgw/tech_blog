@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
+import { getBlogPosts } from "@/app/apis/blog";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
-import { getAllPostsSummary } from "@/lib/blog";
 
 export default async function BlogCategoryPage({
   params,
@@ -10,9 +10,9 @@ export default async function BlogCategoryPage({
 }) {
   const { segments } = await params;
   const categoryPath = segments.join("/");
-  const posts = getAllPostsSummary()
+  const posts = (await getBlogPosts())
     .filter((post) => {
-      return post.category.path === categoryPath;
+      return post.categoryId === categoryPath;
     })
     .sort(
       (a, b) =>
@@ -26,7 +26,7 @@ export default async function BlogCategoryPage({
     title: post.title,
     description: post.description,
     publishedAt: post.publishedAt,
-    categoryLabelSegments: post.category.label.split("/"),
+    categoryLabelSegments: post.categoryId.split("/"),
   }));
   return (
     <div className="flex flex-1 flex-col py-10 sm:py-14">
