@@ -4,11 +4,23 @@ import { BlogPostList } from "@/components/blog/BlogPostList";
 import { buildCategoryLabelSegments } from "@/lib/blog-categories";
 import { getBlogCategories, getBlogPosts } from "@/services/blog";
 
-export default async function BlogCategoryPage({
-  params,
-}: {
+type Props = {
   params: Promise<{ segments: string[] }>;
-}) {
+};
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  const categoryPaths = Array.from(
+    new Set(posts.map((post) => post.categoryId)),
+  );
+
+  return categoryPaths.map((categoryPath) => ({
+    segments: categoryPath.split("/"),
+  }));
+}
+export default async function BlogCategoryPage({ params }: Props) {
   const { segments } = await params;
   const categoryPath = segments.join("/");
   const [allPosts, categories] = await Promise.all([

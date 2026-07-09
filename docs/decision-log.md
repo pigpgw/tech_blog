@@ -132,3 +132,38 @@
   - 이번 결정은 API URL 계약만 다룬다.
   - ERD, DB schema, 관리자 API, 인증 정책은 별도 결정으로 다룬다.
   - 실제 API Route Handler 구현은 이번 결정에 포함하지 않는다.
+
+## 2026-07-10: Markdown 기반 공개 블로그 라우트 정적 생성
+
+- 상태: 결정
+- 배경:
+  - 현재 1차 MVP의 블로그 글은 `content/blog`의 Markdown 파일로 관리한다.
+  - 글을 추가하거나 수정하려면 파일 변경, 커밋, 배포 과정을 거쳐야 하므로 공개 글 데이터는 빌드 시점에 모두 알 수 있다.
+  - `/blog/[slug]`와 `/blog/categories/[...segments]`는 Dynamic Segment를 가진 라우트라, `generateStaticParams`를 제공하지 않으면 요청 시 서버 렌더링 대상으로 남는다.
+  - 공개 블로그 상세와 카테고리 페이지는 사용자별 권한, 쿠키, 세션, 요청별 데이터가 필요하지 않다.
+- 결정:
+  - 1차 MVP의 공개 블로그 목록, 상세, 카테고리 라우트는 SSG를 기본 렌더링 전략으로 둔다.
+  - `/blog/[slug]`에는 공개 글의 `slug` 목록을 반환하는 `generateStaticParams`를 적용한다.
+  - `/blog/categories/[...segments]`에는 글이 존재하는 `categoryId`를 `/` 기준으로 나눈 `segments` 목록을 반환하는 `generateStaticParams`를 적용한다.
+  - 두 동적 라우트 모두 `dynamicParams = false`를 설정해, 빌드 시 생성한 경로 목록에 없는 요청은 404로 처리한다.
+  - 이후 Supabase 같은 DB 또는 백엔드 기반 글 관리로 전환해 배포 없이 글 데이터가 바뀔 수 있게 되면, SSG 유지, ISR, SSR 중 하나를 다시 판단한다.
+- 이유:
+  - Markdown 기반 글은 빌드 산출물에 포함되므로 ISR을 적용해도 배포 없이 새 데이터를 가져올 원천이 없다.
+  - 공개 글 상세와 카테고리 페이지는 모든 방문자에게 같은 내용을 보여주므로 요청마다 SSR로 처리할 필요가 작다.
+  - SSG는 공개 블로그의 SEO, 응답 속도, 배포 산출물 예측 가능성에 적합하다.
+  - `dynamicParams = false`를 함께 사용하면 존재하지 않는 slug나 카테고리 경로를 런타임에서 불필요하게 렌더링 시도하지 않는다.
+  - DB나 CMS 기반으로 전환하면 데이터 변경 시점이 배포와 분리되므로, 그때는 ISR로 정적 응답 속도와 데이터 갱신을 함께 가져갈지, SSR로 요청마다 최신 데이터를 조회할지 다시 비교해야 한다.
+- 적용 내용:
+  - `src/app/blog/[slug]/page.tsx`에 `generateStaticParams`와 `dynamicParams = false`를 추가한다.
+  - `src/app/blog/categories/[...segments]/page.tsx`에 `generateStaticParams`와 `dynamicParams = false`를 추가한다.
+- 검증:
+  - `npm run type-check` 성공
+  - `npm run build` 성공
+  - 빌드 결과에서 `/blog/[slug]`와 `/blog/categories/[...segments]`가 `● SSG`로 표시된다.
+- 영향 범위:
+  - 공개 블로그 상세 라우트
+  - 공개 블로그 카테고리 라우트
+  - 존재하지 않는 공개 글 slug와 카테고리 경로의 404 처리
+- 제외:
+  - Supabase 연동, DB schema, 관리자 글 관리, ISR/SSR 전환 구현은 이번 결정에 포함하지 않는다.
+  - DB 또는 백엔드 전환 후의 렌더링 전략은 2차 MVP 작업에서 별도로 결정한다.
