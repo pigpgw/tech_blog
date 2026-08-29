@@ -309,5 +309,4 @@
   - 현재 루트의 Next.js는 기준선 확인 후 `frontend/`로 이동하고 모든 검증과 운영 URL을 다시 확인한다.
   - `.git`, `README.md`, `AGENTS.md`와 공통 `docs/`는 저장소 루트에 유지한다.
   - Vercel Root Directory는 `frontend`, Render Root Directory는 `backend`로 지정한다.
-  - 실제 파일 이동과 설정 변경은 사용자가 직접 수행한다.
   - GitHub 연동 목적을 확인하지 않은 OAuth·Webhook 선행 구현

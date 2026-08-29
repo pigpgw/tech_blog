@@ -64,7 +64,7 @@ Vercel: Next.js Frontend
 
 ### Frontend 디렉터리
 
-현재 Next.js 파일은 저장소 루트에 있습니다. 첫 TODO에서 `frontend/`로 이동하고 검증한 뒤 아래 구조를 사용합니다.
+Next.js 파일은 `frontend/`에 있으며 아래 구조를 사용합니다.
 
 ```text
 tech_blog/
@@ -78,6 +78,8 @@ tech_blog/
 │  │  └─ types/
 │  │     └─ blog.ts           # Frontend Blog 타입
 │  ├─ content/blog/           # 현재 Markdown 원본
+│  ├─ AGENTS.md               # Frontend 전용 작업 규칙
+│  ├─ .gitignore              # Frontend 생성물 제외
 │  └─ package.json            # Next.js 실행·검증 명령
 ├─ backend/                   # Spring Boot 독립 프로젝트
 ├─ docs/                      # 공통 API·TODO·결정 문서

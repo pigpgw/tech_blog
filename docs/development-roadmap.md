@@ -45,7 +45,7 @@ Vercel: Next.js Frontend
 
 ### Frontend 디렉터리
 
-현재 Next.js 파일은 저장소 루트에 있습니다. 첫 TODO에서 `frontend/`로 이동하고 검증한 뒤 아래 구조를 사용합니다.
+Next.js 파일은 `frontend/`에 있으며 아래 구조를 사용합니다.
 
 ```text
 tech_blog/
@@ -59,6 +59,8 @@ tech_blog/
 │  │  └─ types/
 │  │     └─ blog.ts           # Frontend Blog 타입
 │  ├─ content/blog/           # 현재 Markdown 원본
+│  ├─ AGENTS.md               # Frontend 전용 작업 규칙
+│  ├─ .gitignore              # Frontend 생성물 제외
 │  └─ package.json            # Next.js 실행·검증 명령
 ├─ backend/                   # Spring Boot 독립 프로젝트
 ├─ docs/                      # 공통 API·TODO·결정 문서
@@ -109,10 +111,10 @@ MSA 단계에서는 `ai` package를 먼저 독립 Spring Boot `ai-service`로 �
 
 ### 1. Frontend·Backend 디렉터리 분리·Spring Boot 세팅
 
-- [ ] 현재 Next.js 기준선 결과를 확인한 뒤 `frontend/`를 만든다.
-- [ ] `src`, `content`, Next.js package·lock 파일과 관련 설정을 `frontend/`로 이동한다.
-- [ ] `.git`, `README.md`, `AGENTS.md`와 공통 `docs/`는 저장소 루트에 유지한다.
-- [ ] `frontend/`에서 `npm ci`, `lint`, `format:check`, `type-check`, `test`, `build`를 다시 실행한다.
+- [x] 현재 Next.js 기준선 결과를 확인한 뒤 `frontend/`를 만든다.
+- [x] `src`, `content`, Next.js package·lock 파일과 관련 설정을 `frontend/`로 이동한다.
+- [x] `.git`, `README.md`, `AGENTS.md`와 공통 `docs/`는 저장소 루트에 유지한다.
+- [x] `frontend/`에서 `npm ci`, `lint`, `format:check`, `type-check`, `test`, `build`를 다시 실행한다.
 - [ ] 기존 Home·Resume·Blog URL과 Vercel 배포가 그대로 동작하는지 확인한다.
 - [ ] Vercel Root Directory를 `frontend`로 지정한다.
 - [ ] 저장소의 `backend/`에 Java 21·Spring Boot·Gradle Groovy DSL 프로젝트를 만든다.
