@@ -71,15 +71,22 @@
 - Tailwind CSS
 - shadcn/ui
 - npm
+- Java 21, Spring Boot와 Gradle Wrapper
+- PostgreSQL과 Flyway
+- Docker와 Docker Compose
+- Spring Security, JWT와 Spring AI는 선행 단계 완료 후 추가
 
-폴더 구조:
+목표 폴더 구조:
 
-- `src/app`: Next.js App Router 페이지, 레이아웃, 라우트 단위 UI
-- `src/lib`: 게시글 조회 등 공통 로직
-- `src/types`: 프로젝트 공통 타입
-- `content/blog`: Markdown 블로그 글
-- `docs`: 프로젝트 문서와 AI 활용 기록
+- `frontend/src/app`: Next.js App Router 페이지, 레이아웃, 라우트 단위 UI
+- `frontend/src/lib`: 게시글 조회 등 공통 로직
+- `frontend/src/types`: 프로젝트 공통 타입
+- `frontend/content/blog`: Markdown 블로그 글
+- `docs`: 프로젝트 TODO, API, 의사결정과 AI 활용 기록
 - `.agents/skills`: 반복 작업을 위한 Codex Skill
+- `backend`: Spring Boot·Gradle 독립 프로젝트
+
+현재 Next.js는 저장소 루트에 있으므로 첫 TODO에서 기준선을 확인한 뒤 `frontend/`로 이동합니다. 실제 이동이 확인되기 전에는 목표 경로가 이미 존재한다고 가정하지 않습니다.
 
 현재는 루트 `AGENTS.md`만 유지한다. 프론트엔드 전용 규칙의 차이가 명확해지면 `src/AGENTS.md`로 분리한다.
 
@@ -88,6 +95,7 @@
 패키지 설치:
 
 ```bash
+cd frontend
 npm install
 ```
 
@@ -113,20 +121,76 @@ npm run build
 ## 도메인 컨텍스트
 
 - 프로젝트 목적은 개인 기술 블로그를 만들고 개발 과정의 문제 해결을 기록하는 것이다.
-- 1차 MVP 범위는 홈, 이력서, 블로그 목록, 블로그 상세 페이지다.
-- 블로그 글은 `content/blog`의 Markdown 파일로 관리한다.
-- 게시글 frontmatter는 `src/lib/blog-posts.ts`에서 검증하고 읽는다.
+- 프로젝트 TODO 원본은 `docs/development-roadmap.md`이며 `/Users/baggeon-u/Desktop/skala/SKALA_STUDY_ROADMAP.md`를 함께 동기화한다.
+- 현재 구현된 Home, Resume, Blog 목록·상세, 카테고리 경로, 목록 검색, Markdown과 URL을 보존한다.
+- 디렉터리 분리 후 블로그 글은 `frontend/content/blog`의 Markdown 파일로 관리한다.
+- 디렉터리 분리 후 게시글 frontmatter와 본문은 `frontend/src/lib/blog-api.mock.ts`에서 읽고, 데이터 접근 경계는 `frontend/src/services/blog.ts`에 둔다.
 - `draft: true`인 글은 공개 목록과 상세 조회에서 제외한다.
 - 공개 글은 `slug`로 접근한다.
-- 관리자 기능과 Supabase 기반 글 관리는 2차 MVP 범위다.
-- 모노레포와 Cloudflare 라우팅은 3차 MVP 범위다.
-- README에 적힌 MVP 범위와 프로젝트 결정을 우선한다.
+- 전환 순서는 `기준선 → frontend/backend 디렉터리 분리 → Backend 컨벤션·Spring 핵심 → PostgreSQL·Flyway → JPA Blog API·Testcontainers → query tuning·AOP·MyBatis 판단 → Docker Compose → Aiven·Render Backend 배포 → 기존 Next 연결 → JWT → Spring AI → AI 서비스 분리 → Markdown UI → GitHub 연동·분리 판단`이다.
+- Frontend의 `id`, `slug`, `description`, `publishedAt`, `draft`, `categoryId`, `content` 모양은 유지하고 Spring DTO에서 DB 컬럼과 매핑한다.
+- 공개 API는 먼저 `GET /api/categories`, `GET /api/posts`, `GET /api/posts/{slug}`만 구현한다.
+- Next.js는 Vercel Root Directory `frontend`, Spring은 Render Root Directory `backend`, PostgreSQL은 Aiven에 배포한다.
+- Blog·Auth·AI는 단일 Spring Boot에서 먼저 운영 검증하고 AI 기능을 첫 번째로 `ai-service`에 분리한다. `identity-service`는 AI 분리 후 인증 중복·배포·장애 근거가 있을 때만 추가한다. GitHub 연동은 Markdown 뒤 마지막 별도 기능 단계에서 구현하고, 운영 후 Webhook·동기화·재시도 근거가 있을 때만 전용 서비스나 worker 분리를 판단한다.
+- Supabase, 관리자 CRUD, 모노레포, Cloudflare 라우팅, 모바일 최적화, Kubernetes, EKS, Harbor, Eureka, Gateway와 Kafka는 현재 범위에서 제외한다.
+- README, `docs/development-roadmap.md`, `docs/api-spec.md`와 최신 의사결정 로그를 함께 적용한다.
+
+## 학습 진행 방식
+
+- 사용자가 코드를 직접 수정하는 것이 기본이다. 사용자가 명시적으로 구현을 요청하지 않으면 Codex는 코드 파일을 수정하지 않는다.
+- 한 번에 개념 하나, 명령 하나 또는 코드 변경 하나만 제시하고 사용자의 결과를 확인한 뒤 다음 단계로 간다.
+- SKALA 자료의 존재 여부로 구현 범위를 제한하지 않는다. 현재 서비스에 필요한 내용은 공식 문서, 현재 코드, 테스트와 실제 운영 요구를 기준으로 구현하고 SKALA 자료는 도움이 될 때만 참고한다.
+- 체크박스는 코드, 테스트, HTTP, 화면 또는 배포 결과가 실제로 확인되었을 때만 완료 처리한다.
+- 문서 계획과 실제 코드가 다르면 현재 코드를 먼저 확인하고 문서를 갱신한다.
+
+## Backend 컨벤션
+
+- Backend 위치는 저장소의 `backend/`, 최상위 Java package는 `com.pigpgw.techblog`로 고정한다.
+- Java 21, Spring Boot, Gradle Groovy DSL과 Gradle Wrapper를 사용한다.
+- package는 `post`, `category`, 이후 `auth`, `user`, `token`, `ai`처럼 도메인 우선으로 구성하고 각 도메인 안에서 `controller`, `service`, `repository`, `domain`, `dto`를 분리한다. `common/config`, `common/exception`만 공통으로 둔다.
+- Entity를 Controller 응답으로 직접 반환하지 않고 `PostSummaryResponse`, `PostDetailResponse`, `CategoryResponse`처럼 목적이 드러나는 DTO로 변환한다.
+- DTO는 가능한 경우 Java `record`, 의존성 주입은 생성자 주입을 사용한다. field `@Autowired`는 사용하지 않는다.
+- Controller는 HTTP, Service는 use case·트랜잭션, Repository는 영속성 책임만 가진다.
+- Controller가 Repository를 직접 호출하지 않으며 Entity에 화면·응답 조합 책임을 넣지 않는다.
+- 조회 Service는 `@Transactional(readOnly = true)`, 쓰기는 필요한 Service method에 `@Transactional`을 사용한다.
+- 공통 성공 응답 wrapper를 만들지 않고 `docs/api-spec.md`의 JSON 계약을 유지한다.
+- 예외는 `GlobalExceptionHandler`에서 HTTP 상태와 `{ "message": "..." }`로 변환한다.
+- DB·모델 비밀값은 환경변수로 주입하고 실제 `.env`, credential, private key를 커밋하지 않는다.
+- Flyway는 `V1__create_blog_schema.sql` 형식을 사용하고 이미 적용된 migration을 수정하지 않는다.
+- H2로 PostgreSQL 검증을 대신하지 않는다. Testcontainers는 Blog API 단계에서 추가하고 Frontend 연결 전에 migration·Repository·API 통합 테스트를 실행한다.
+- 테스트 class는 `*Test`, PostgreSQL 통합 테스트는 `*IntegrationTest`로 구분한다.
+- 공통 wrapper, BaseEntity, CQRS, 불필요한 interface와 멀티모듈은 실제 필요 전에는 만들지 않는다.
+
+## JPA·SQL·MyBatis·AOP 규칙
+
+- JPA와 Spring Data Repository를 기본으로 사용한다.
+- 먼저 Hibernate 생성 SQL, N+1, projection·fetch join·`EntityGraph`와 실제 query plan을 확인한다.
+- JPA derived query·JPQL·projection으로 요구와 성능을 충족하면 MyBatis를 추가하지 않는다.
+- 복잡한 동적 SQL, 집계·리포트 query 또는 JPA로 표현하기 어려운 병목이 실제로 확인된 경우에만 해당 조회에 MyBatis mapper를 추가한다.
+- MyBatis 추가 전후 SQL, 가독성, 테스트와 `EXPLAIN (ANALYZE, BUFFERS)` 결과를 기록한다.
+- index는 query pattern과 실행계획을 근거로 추가하며 측정 없는 성능 향상을 주장하지 않는다.
+- AOP는 요청 ID, Service 실행시간과 예외 위치 같은 횡단 관심사에만 사용하고 비즈니스 판단을 Aspect에 넣지 않는다.
+- AOP 로그에 token, password, Cookie, 본문 전체와 개인정보를 남기지 않는다.
+- IoC/DI는 생성자 주입, PSA는 Repository·Transaction·Validation 추상화에서 실제로 설명할 수 있어야 한다.
+
+## 인증·권한 규칙
+
+- 인증은 Blog 읽기 API와 단일 Backend 운영 배포가 끝난 뒤 같은 Spring 애플리케이션에 추가한다.
+- `user/domain`에는 `User`, `UserRole(USER, ADMIN)`, `UserStatus`, `token/domain`에는 hash로 저장할 `RefreshToken`을 둔다.
+- 회원가입은 항상 `USER`이며 요청의 role을 신뢰하지 않는다. `ADMIN`은 서버 측에서만 부여한다.
+- 비밀번호는 `PasswordEncoder`로 단방향 해시하고 원문을 저장·응답·로그에 남기지 않는다.
+- access token은 짧은 RSA JWT와 Bearer header, refresh token은 hash 저장·회전·폐기와 `HttpOnly`, `Secure`, `SameSite=Lax` Cookie를 사용한다.
+- RSA private key, token 원문과 credential을 저장소 또는 브라우저 `localStorage`에 저장하지 않는다.
+- 공개 Blog 조회, 로그인 사용자용 질문 API, `ADMIN` 전용 `/api/admin/**`를 Spring Security authorization rule로 분리한다.
+- 인증 실패 `401`, 권한 부족 `403`, refresh token 재사용 실패와 logout 후 재사용 실패를 테스트한다.
+- refresh·logout은 Origin을 검증하고 credential CORS는 로컬 Next.js와 운영 도메인만 허용한다.
+- 관리자 CRUD와 화면은 현재 구현 범위가 아니며 Role·토큰·접근 제어 검증과 구분한다.
 
 ## 코딩 컨벤션
 
 - 프로젝트 문서는 한국어로 작성한다.
-- `src/lib`의 함수는 `lowerCamelCase`를 사용하고, 동사 또는 동사구로 시작한다.
-- `src/lib` 함수명은 `동작 + 도메인 + 대상` 순서를 우선한다.
+- `frontend/src/lib`의 함수는 `lowerCamelCase`를 사용하고, 동사 또는 동사구로 시작한다.
+- `frontend/src/lib` 함수명은 `동작 + 도메인 + 대상` 순서를 우선한다.
 - 파일, DB, 외부 입력에서 값을 조회할 때는 `get`을 사용한다.
 - 문자열이나 원본 데이터를 구조화된 값으로 해석할 때는 `parse`를 사용한다.
 - 사람이 읽는 문자열을 URL slug로 변환할 때는 `slugify`를 사용한다.

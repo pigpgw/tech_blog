@@ -3,6 +3,8 @@
 프로젝트를 진행하며 이후 구현 방향에 영향을 주는 중요한 결정만 기록한다.
 단순 작업 메모, 일회성 수정, 실행하지 않은 검증 결과는 남기지 않는다.
 
+과거 결정은 당시의 근거로 보존한다. 이후 결정과 충돌하면 더 최신 결정의 `대체하는 결정` 항목을 따른다.
+
 ## 기록 기준
 
 - 데이터 구조, API 경계, 라우팅, 배포, 인증처럼 이후 구현을 제한하거나 안내하는 결정
@@ -105,7 +107,7 @@
 
 ## 2026-07-07: 블로그 공개 API URL 계약
 
-- 상태: 결정
+- 상태: 2026-08-29 결정으로 상세 조회 식별자와 초기 검색·pagination 범위가 대체됨
 - 배경:
   - 현재는 Markdown 파일을 읽어 블로그 데이터를 만들지만, 이후 Supabase 같은 백엔드로 전환할 계획이 있다.
   - 백엔드 전환 시 프론트엔드 변경을 줄이려면 실제 구현보다 먼저 프론트엔드가 의존할 API URL 계약을 고정해야 한다.
@@ -135,7 +137,7 @@
 
 ## 2026-07-10: Markdown 기반 공개 블로그 라우트 정적 생성
 
-- 상태: 결정
+- 상태: 현재 Markdown 구현 기준. Spring API 연결 단계에서 2026-08-29 결정에 따라 렌더링 방식을 다시 검증
 - 배경:
   - 현재 1차 MVP의 블로그 글은 `content/blog`의 Markdown 파일로 관리한다.
   - 글을 추가하거나 수정하려면 파일 변경, 커밋, 배포 과정을 거쳐야 하므로 공개 글 데이터는 빌드 시점에 모두 알 수 있다.
@@ -167,3 +169,145 @@
 - 제외:
   - Supabase 연동, DB schema, 관리자 글 관리, ISR/SSR 전환 구현은 이번 결정에 포함하지 않는다.
   - DB 또는 백엔드 전환 후의 렌더링 전략은 2차 MVP 작업에서 별도로 결정한다.
+
+## 2026-08-29: SKALA 복습형 Spring·PostgreSQL 전환
+
+- 상태: 결정
+- 배경:
+  - 현재 Next.js에는 Home, Resume, Blog 목록·상세, 카테고리 경로, 목록 검색과 Markdown 글이 이미 구현되어 있다.
+  - 기존 장기 계획은 Supabase 관리자 CRUD와 모노레포·Cloudflare 전환을 포함하지만, 현재 학습 목표는 SKALA에서 배운 Spring Boot, PostgreSQL, Docker, Cloud, JWT, Spring AI와 MSA를 실제 서비스에 적용하는 것이다.
+  - 기존 화면과 기능을 다시 만드는 작업보다 데이터 경계와 Backend·배포를 작은 수직 흐름으로 완성할 필요가 있다.
+- 결정:
+  - 기존 Next.js 화면, 컴포넌트, 공개 URL, 검색, 카테고리와 Frontend 데이터 모양은 유지한다.
+  - 현재 Markdown mock 데이터만 Spring Boot 공개 API와 PostgreSQL로 전환한다.
+  - 공개 API는 먼저 `GET /api/categories`, `GET /api/posts`, `GET /api/posts/{slug}`만 구현한다.
+  - 공개 상세 API는 현재 공개 URL과 같은 slug를 사용한다. DB의 숫자 id는 내부 식별자로 유지한다.
+  - 기존 `categoryId` 문자열에는 DB의 `categories.path`를 매핑하고, DB의 `status=PUBLISHED`인 글은 공개 DTO에서 `draft=false`로 반환한다.
+  - 기존 목록 응답의 `items`, `page`, `pageSize`, `total` 모양은 유지하되 초기에는 전체 공개 글을 반환한다. 서버 검색과 실제 pagination은 글이 늘어난 뒤 별도로 결정한다.
+  - Spring·PostgreSQL을 Docker Compose로 재현한 뒤 단일 Spring Backend를 Render와 Aiven PostgreSQL에 먼저 배포한다.
+  - 로그인·JWT와 Spring AI는 단일 Backend에서 검증한다. 이후 AI 기능만 `ai-service`로 분리하고 Blog·Auth는 `blog-service`에 유지한다.
+  - Frontend는 Vercel과 `www.pigpgw.cloud`를 유지한다.
+- 이유:
+  - 기존 기능을 보존하면 Frontend 재작성 없이 Backend, Database와 Cloud 학습에 집중할 수 있다.
+  - 공개 URL과 상세 API가 같은 slug를 사용하면 목록에서 id를 다시 찾는 중간 호출 없이 상세 글을 조회할 수 있다.
+  - 단일 배포를 먼저 완료하면 인증, AI와 서비스 분리 문제를 한 번에 섞지 않고 단계별로 검증할 수 있다.
+  - PostgreSQL 하나를 로컬, Docker와 운영에서 공통으로 사용하면 DB 차이로 생기는 변수를 줄일 수 있다.
+- 배포 구조:
+  - Frontend: Vercel의 기존 Next.js
+  - Backend: Render의 단일 Spring Boot, 이후 `blog-service`와 `ai-service`
+  - Database: Aiven PostgreSQL
+  - AI: Spring AI와 Gemini Developer API
+- 대체하는 결정:
+  - 2026-07-07 결정의 `GET /posts/{id}` 상세 조회와 초기 검색·pagination 계약을 대체한다.
+  - Supabase 관리자 CRUD와 모노레포·Cloudflare를 다음 MVP로 두었던 README 범위를 현재 활성 TODO에서 제외한다.
+  - 2026-07-10의 SSG는 현재 Markdown 구현까지 유지하고, Spring API 연결 시 Server Component fetch와 `revalidate` 정책을 실제 Vercel build로 다시 결정한다.
+- 유지하는 결정:
+  - 목록 요약과 상세 본문을 분리한다.
+  - DB id와 공개 slug의 역할을 구분한다.
+  - Markdown 단계의 기존 동작과 과거 검증 기록은 삭제하지 않는다.
+- 현재 제외:
+  - Supabase, 관리자 CRUD, Tag, 서버 검색과 실제 pagination
+  - 모노레포, pnpm workspace와 Cloudflare 프록시
+  - 모바일 최적화, PWA와 React Native
+  - Kubernetes, EKS, Harbor, Eureka, Gateway, Kafka와 별도 auth-service
+  - Vector DB, 범용 RAG와 범용 AI Agent
+
+## 2026-08-29: Backend 위치와 최소 코드 컨벤션
+
+- 상태: 결정
+- 배경:
+  - 기존 Next.js는 저장소 루트와 Vercel 설정을 유지해야 한다.
+  - Backend를 시작하기 전에 위치, package, DTO·예외·트랜잭션·migration·테스트 기준이 없으면 구현 중 구조가 반복해서 바뀔 수 있다.
+  - 학습용 MVP이므로 대규모 프로젝트용 추상화보다 Spring의 기본 책임 분리를 직접 확인하는 편이 적합하다.
+- 결정:
+  - Spring Boot 프로젝트는 현재 저장소의 `backend/`에 두고 Next.js 루트는 이동하지 않는다.
+  - npm/pnpm workspace나 여러 Frontend 앱을 만드는 모노레포 전환은 하지 않는다.
+  - Vercel은 저장소 루트, Render는 `backend`를 Root Directory로 사용한다.
+  - Java 21, Spring Boot, Gradle Groovy DSL과 Gradle Wrapper를 사용한다.
+  - 최상위 package는 `com.pigpgw.techblog`로 고정한다.
+  - `post`, `category`, 이후 `auth`, `ai`의 도메인 우선 package와 `common/config`, `common/exception`만 둔다.
+  - Entity는 API에 직접 노출하지 않고 목적이 분명한 DTO로 변환한다. 응답 DTO는 가능한 경우 Java `record`를 사용한다.
+  - 생성자 주입, Service 트랜잭션과 `GlobalExceptionHandler`를 사용한다.
+  - 성공 응답 wrapper는 추가하지 않고 `docs/api-spec.md`의 JSON 계약을 유지한다.
+  - 비밀값은 환경변수로 주입하고 Flyway는 `V{번호}__{설명}.sql` naming을 사용한다.
+  - PostgreSQL 검증을 H2로 대체하지 않으며 Testcontainers는 Blog API 단계에서 추가해 Frontend 연결 전에 migration·Repository·API를 통합 검증한다.
+- 이유:
+  - 한 저장소에서 Frontend 계약과 Backend 변경을 함께 추적하면서도 각 배포의 Root Directory를 분리할 수 있다.
+  - 도메인 우선 package는 이후 AI 기능을 분리할 때 경계를 확인하기 쉽다.
+  - Entity·DTO 분리와 Service 트랜잭션은 SKALA Spring 수업 내용을 현재 Blog use case로 복습할 수 있다.
+  - H2 차이를 피하고 로컬·통합 테스트·Docker·운영 DB를 PostgreSQL로 통일할 수 있다.
+- 제외:
+  - 공통 성공 응답 wrapper, BaseEntity, CQRS와 불필요한 interface
+  - 멀티모듈 Gradle, npm/pnpm workspace와 여러 Frontend 앱
+  - Spring Security와 Spring AI의 선행 설치
+
+## 2026-08-29: 사용자·관리자 권한과 Token 경계
+
+- 상태: 결정
+- 배경:
+  - Blog 조회는 공개 기능이지만 Spring AI 질문과 이후 관리자 기능은 사용자 식별과 권한 검사가 필요하다.
+  - access token과 장기 token의 저장 위치, ADMIN 생성 방식과 401·403 기준을 미리 분리하지 않으면 인증 기능이 Frontend와 운영 Secret에 강하게 섞일 수 있다.
+- 결정:
+  - 인증은 Blog 읽기 API와 단일 Backend 운영 배포가 끝난 뒤 같은 Spring 애플리케이션에 추가한다.
+  - `auth`, `user`, `token` 도메인을 나누고 각 도메인 안에서 Controller·Service·Repository·domain·DTO 책임을 분리한다.
+  - `User`, `UserRole(USER, ADMIN)`, `UserStatus`, `RefreshToken`을 분리하고 Entity를 API 응답에 직접 노출하지 않는다.
+  - 회원가입은 항상 `USER`이며 요청에서 받은 role을 무시한다. `ADMIN`은 서버 측 작업으로만 부여한다.
+  - 비밀번호는 `PasswordEncoder`로 단방향 해시한다.
+  - access token은 짧은 RSA 서명 JWT와 Bearer header를 사용한다.
+  - refresh token은 서버에 hash로 저장하고 `HttpOnly`, `Secure`, `SameSite=Lax` Cookie로 전달하며 재발급 때 회전·폐기한다.
+  - 공개 Blog, 로그인 사용자용 질문 API와 `ADMIN` 전용 `/api/admin/**` authorization rule을 분리한다.
+  - 인증 실패는 `401`, 로그인했지만 권한이 부족한 요청은 `403`으로 구분한다.
+- 보안 기준:
+  - RSA private key, 비밀번호 원문, refresh token 원문과 credential을 저장소·응답·로그·브라우저 `localStorage`에 남기지 않는다.
+  - refresh·logout은 허용 Origin을 검증하고 credential CORS를 허용 도메인으로 제한한다.
+  - refresh token 재사용과 logout 후 재사용이 실패하는지 테스트한다.
+- 현재 제외:
+  - 관리자 CRUD API와 관리자 화면
+  - 이메일 인증, 비밀번호 찾기, 소셜 로그인과 MFA
+  - 별도 auth-service 분리
+
+## 2026-08-29: Backend 우선 순서와 JPA·MyBatis·AOP 기준
+
+- 상태: 결정
+- 배경:
+  - Markdown UI보다 Backend 계층, PostgreSQL, query, 운영 배포와 Frontend 데이터 연결을 먼저 완성하는 것이 현재 우선순위다.
+  - JPA와 MyBatis를 근거 없이 함께 도입하면 같은 영속성 책임이 중복되고 학습·테스트 범위가 불필요하게 커질 수 있다.
+  - AOP도 사용 자체보다 어떤 횡단 관심사를 분리했는지가 중요하다.
+- 결정:
+  - 기준선 확인 후 Backend 세팅, PostgreSQL·Flyway, JPA API, query tuning·AOP, Docker, Backend 운영 배포를 먼저 완료한다.
+  - 운영 Backend가 검증된 뒤 기존 Next.js를 연결한다.
+  - Markdown·코드 블록 UI는 인증·AI·MSA 이후로 미룬다.
+  - JPA를 기본으로 하고 Hibernate SQL, N+1, fetch join·projection·`EntityGraph`, index와 실행계획을 먼저 검토한다.
+  - 복잡한 동적 SQL, 집계·리포트 query 또는 JPA로 해결하기 어려운 성능 병목이 확인된 경우에만 해당 조회에 MyBatis를 추가한다.
+  - AOP는 요청 ID, Service 실행시간과 공통 예외 지점에만 사용하고 비즈니스 규칙과 민감정보는 포함하지 않는다.
+  - Spring 핵심은 IoC/DI를 생성자 주입, AOP를 횡단 관심사, PSA를 Repository·Transaction·Validation 추상화로 코드와 테스트에서 확인한다.
+- 검증:
+  - JPA 유지 또는 MyBatis 선택은 동일 query의 SQL·가독성·테스트·실행계획 근거로 설명한다.
+  - 성능 수치는 데이터 수, 반복 횟수와 환경을 함께 기록한다.
+  - AOP 로그에 token, password, Cookie, 본문 전체와 개인정보가 없는지 테스트한다.
+
+## 2026-08-29: 단일 Spring Boot 우선과 추가 MSA 판단 시점
+
+- 상태: 결정
+- 결정:
+  - Blog·Auth·AI는 단일 Spring Boot 애플리케이션에서 먼저 개발·배포한다.
+  - 운영 흐름을 확인한 뒤 AI를 첫 번째 `ai-service`로 분리한다.
+  - `identity-service`는 AI 분리 후 인증 중복, 독립 배포와 장애 경계의 이점이 확인될 때 판단한다.
+  - GitHub 연동은 AI 분리와 Markdown 작업 뒤 마지막 별도 기능 단계에서 진행한다.
+  - GitHub 기능을 먼저 운영한 뒤 Webhook, 주기 동기화, 재시도와 API 호출 제한을 독립 운영해야 할 때만 전용 서비스나 worker를 검토한다.
+- 현재 제외:
+  - 개발 시작 전 identity-service 생성과 GitHub 연동 선행 구현
+  - GitHub 기능 운영 근거가 없는 github-service 또는 worker 생성
+
+## 2026-08-29: Frontend·Backend 형제 디렉터리로 변경
+
+- 상태: 결정
+- 이전 결정 대체:
+  - `Next.js 루트 유지, backend/ 추가` 구조를 대체한다.
+- 결정:
+  - 같은 저장소 안에 `frontend/`와 `backend/`를 형제 디렉터리로 둔다.
+  - 현재 루트의 Next.js는 기준선 확인 후 `frontend/`로 이동하고 모든 검증과 운영 URL을 다시 확인한다.
+  - `.git`, `README.md`, `AGENTS.md`와 공통 `docs/`는 저장소 루트에 유지한다.
+  - Vercel Root Directory는 `frontend`, Render Root Directory는 `backend`로 지정한다.
+  - 실제 파일 이동과 설정 변경은 사용자가 직접 수행한다.
+  - GitHub 연동 목적을 확인하지 않은 OAuth·Webhook 선행 구현

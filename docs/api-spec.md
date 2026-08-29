@@ -1,16 +1,16 @@
 # 블로그 공개 API 명세
 
+이 문서는 기존 Next.js 화면과 타입을 유지하면서 Spring Boot Backend로 전환할 때 사용할 최소 공개 API 계약입니다.
+
 ## 공통 규칙
 
-- Base URL: `/api`
+- Base URL: 환경별 Backend URL + `/api`
 - 응답 형식: JSON
-- 공개 API는 인증이 필요 없다.
-- 지원 method는 `GET`이다.
-- 지원하지 않는 method는 `405 Method Not Allowed`를 반환한다.
-- 서버 오류는 `500 Internal Server Error`를 반환한다.
-- 상세 조회는 `id`만 사용한다.
-- `slug` 상세 조회 API는 제공하지 않는다.
-- `draft` 글은 공개 API 응답에서 제외한다.
+- 공개 Blog 조회는 인증이 필요 없습니다.
+- 공개 글은 PostgreSQL의 `status=PUBLISHED`인 글만 반환합니다.
+- 날짜는 ISO 8601 문자열로 반환합니다.
+- 지원하지 않는 method는 `405 Method Not Allowed`를 반환합니다.
+- 예상하지 못한 서버 오류는 `500 Internal Server Error`를 반환합니다.
 
 ## 공통 에러 응답
 
@@ -20,9 +20,21 @@
 }
 ```
 
+## Frontend 호환 필드
+
+| API 필드 | Backend 원본 | 설명 |
+| --- | --- | --- |
+| `id` | `posts.id` | 기존 타입에 맞춘 문자열 |
+| `slug` | `posts.slug` | 공개 URL과 상세 조회 키 |
+| `description` | `posts.description` | 글 요약 |
+| `publishedAt` | `posts.published_at` | 공개일 |
+| `draft` | `posts.status` | 공개 응답에서는 항상 `false` |
+| `categoryId` | `categories.path` | 기존 카테고리 경로 문자열 |
+| `content` | `posts.content` | Markdown 본문, 상세에만 포함 |
+
 ## `GET /categories`
 
-카테고리 목록을 조회한다.
+기존 카테고리 경로와 표시 순서를 유지할 카테고리 목록을 조회합니다.
 
 ### Request
 
@@ -30,17 +42,7 @@
 GET /api/categories
 ```
 
-### Status Codes
-
-| Status | Description             |
-| ------ | ----------------------- |
-| `200`  | 카테고리 목록 조회 성공 |
-| `405`  | 지원하지 않는 method    |
-| `500`  | 서버 오류               |
-
 ### Response `200 OK`
-
-카테고리가 없으면 빈 배열을 반환한다.
 
 ```json
 [
@@ -61,20 +63,19 @@ GET /api/categories
 ]
 ```
 
-### Response Fields
+`id`와 `parentId`는 DB 숫자 PK가 아니라 기존 Frontend와 URL에서 사용하는 `categories.path`입니다. DB PK는 API 외부에 노출하지 않아도 됩니다.
 
-| Field      | Type             | Required | Description                  |
-| ---------- | ---------------- | -------- | ---------------------------- |
-| `id`       | `string`         | yes      | 카테고리 식별자              |
-| `name`     | `string`         | yes      | 화면에 표시할 카테고리 이름  |
-| `slug`     | `string`         | yes      | URL에 사용할 카테고리 문자열 |
-| `parentId` | `string \| null` | yes      | 상위 카테고리 식별자         |
-| `order`    | `number`         | yes      | 같은 부모 안에서의 정렬 순서 |
+### Status Codes
+
+| Status | Description |
+| --- | --- |
+| `200` | 카테고리 목록 조회 성공 |
+| `405` | 지원하지 않는 method |
+| `500` | 서버 오류 |
 
 ## `GET /posts`
 
-공개 글 목록을 조회한다.
-검색어, 카테고리, 페이지네이션 조건은 query string으로 전달한다.
+공개 글 요약 목록을 최신순으로 조회합니다. 첫 Backend 전환에서는 현재 Frontend 호환을 위해 전체 공개 목록을 반환하고, 검색과 카테고리 필터는 Frontend에서 유지합니다.
 
 ### Request
 
@@ -82,47 +83,7 @@ GET /api/categories
 GET /api/posts
 ```
 
-### Query Parameters
-
-| Name         | Type       | Required | Description                              |
-| ------------ | ---------- | -------- | ---------------------------------------- |
-| `query`      | `string`   | no       | 검색어                                   |
-| `categoryId` | `string[]` | no       | 카테고리 식별자. 여러 번 전달할 수 있다. |
-| `page`       | `number`   | no       | 페이지 번호. 기본값은 `1`이다.           |
-| `pageSize`   | `number`   | no       | 페이지당 글 수. 기본값은 `10`이다.       |
-
-카테고리 필터 정책:
-
-- `categoryId`는 카테고리 `id`를 받는다.
-- `categoryId`는 여러 번 전달할 수 있다.
-- 여러 `categoryId`는 OR 조건으로 조회한다.
-- 부모 카테고리를 전달하면 해당 부모의 하위 카테고리 글도 포함한다.
-- 예: `categoryId=ai`는 `ai`와 `ai/prompt-engineering`에 속한 글을 함께 조회한다.
-- 존재하지 않는 `categoryId`가 전달되면 `400 Bad Request`를 반환한다.
-
-### Request Examples
-
-```http
-GET /api/posts
-GET /api/posts?query=react
-GET /api/posts?categoryId=ai
-GET /api/posts?categoryId=ai&categoryId=ai/prompt-engineering
-GET /api/posts?categoryId=ai&query=prompt
-GET /api/posts?page=1&pageSize=10
-```
-
-### Status Codes
-
-| Status | Description                     |
-| ------ | ------------------------------- |
-| `200`  | 공개 글 목록 조회 성공          |
-| `400`  | query parameter가 유효하지 않음 |
-| `405`  | 지원하지 않는 method            |
-| `500`  | 서버 오류                       |
-
 ### Response `200 OK`
-
-빈 결과도 `200 OK`로 반환한다.
 
 ```json
 {
@@ -131,89 +92,39 @@ GET /api/posts?page=1&pageSize=10
       "id": "1",
       "slug": "claude-prompt-engineering-guide",
       "title": "Claude Prompt Engineering 튜토리얼 정리: 좋은 요청은 어떻게 만드는가",
-      "description": "Anthropic Prompt Engineering Interactive Tutorial을 공부하며 중요해 보였던 역할, 지시사항, 출력 형식, 예시, 근거, 도구 사용 내용을 정리합니다.",
+      "description": "글 요약",
       "publishedAt": "2026-05-22",
       "draft": false,
       "categoryId": "ai/prompt-engineering"
     }
   ],
   "page": 1,
-  "pageSize": 10,
+  "pageSize": 1,
   "total": 1
 }
 ```
 
-빈 결과:
+초기 단계의 `page`, `pageSize`, `total`은 기존 응답 모양을 보존하기 위한 값입니다. 실제 서버 pagination이 필요해질 때 query parameter와 경계 조건을 별도 결정합니다.
 
-```json
-{
-  "items": [],
-  "page": 1,
-  "pageSize": 10,
-  "total": 0
-}
-```
+빈 결과도 `200 OK`와 빈 `items`를 반환합니다.
 
-### Response Fields
+### Status Codes
 
-| Field      | Type                | Required | Description            |
-| ---------- | ------------------- | -------- | ---------------------- |
-| `items`    | `BlogPostSummary[]` | yes      | 공개 글 요약 목록      |
-| `page`     | `number`            | yes      | 현재 페이지 번호       |
-| `pageSize` | `number`            | yes      | 페이지당 글 수         |
-| `total`    | `number`            | yes      | 조건에 맞는 전체 글 수 |
+| Status | Description |
+| --- | --- |
+| `200` | 공개 글 목록 조회 성공 |
+| `405` | 지원하지 않는 method |
+| `500` | 서버 오류 |
 
-### `items` Fields
+## `GET /posts/{slug}`
 
-| Field         | Type      | Required | Description                                             |
-| ------------- | --------- | -------- | ------------------------------------------------------- |
-| `id`          | `string`  | yes      | 글의 내부 식별자                                        |
-| `slug`        | `string`  | yes      | 공개 URL 표시용 문자열. 상세 조회 키로 사용하지 않는다. |
-| `title`       | `string`  | yes      | 글 제목                                                 |
-| `description` | `string`  | yes      | 글 요약                                                 |
-| `publishedAt` | `string`  | yes      | 공개일. `YYYY-MM-DD` 형식                               |
-| `draft`       | `boolean` | yes      | 공개 API에서는 항상 `false`                             |
-| `categoryId`  | `string`  | yes      | 글이 속한 카테고리 식별자                               |
-
-### Error Response `400 Bad Request`
-
-```json
-{
-  "message": "Invalid query parameter"
-}
-```
-
-## `GET /posts/{id}`
-
-공개 글 상세 정보를 조회한다.
+공개 URL과 같은 slug로 글 상세를 조회합니다.
 
 ### Request
 
 ```http
-GET /api/posts/{id}
+GET /api/posts/claude-prompt-engineering-guide
 ```
-
-### Path Parameters
-
-| Name | Type     | Required | Description      |
-| ---- | -------- | -------- | ---------------- |
-| `id` | `string` | yes      | 글의 내부 식별자 |
-
-### Request Example
-
-```http
-GET /api/posts/1
-```
-
-### Status Codes
-
-| Status | Description                    |
-| ------ | ------------------------------ |
-| `200`  | 공개 글 상세 조회 성공         |
-| `400`  | path parameter가 유효하지 않음 |
-| `404`  | id에 해당하는 공개 글이 없음   |
-| `405`  | 지원하지 않는 method           |
-| `500`  | 서버 오류                      |
 
 ### Response `200 OK`
 
@@ -222,7 +133,7 @@ GET /api/posts/1
   "id": "1",
   "slug": "claude-prompt-engineering-guide",
   "title": "Claude Prompt Engineering 튜토리얼 정리: 좋은 요청은 어떻게 만드는가",
-  "description": "Anthropic Prompt Engineering Interactive Tutorial을 공부하며 중요해 보였던 역할, 지시사항, 출력 형식, 예시, 근거, 도구 사용 내용을 정리합니다.",
+  "description": "글 요약",
   "publishedAt": "2026-05-22",
   "draft": false,
   "categoryId": "ai/prompt-engineering",
@@ -230,31 +141,50 @@ GET /api/posts/1
 }
 ```
 
-### Response Fields
+### Status Codes
 
-| Field         | Type      | Required | Description                                             |
-| ------------- | --------- | -------- | ------------------------------------------------------- |
-| `id`          | `string`  | yes      | 글의 내부 식별자                                        |
-| `slug`        | `string`  | yes      | 공개 URL 표시용 문자열. 상세 조회 키로 사용하지 않는다. |
-| `title`       | `string`  | yes      | 글 제목                                                 |
-| `description` | `string`  | yes      | 글 요약                                                 |
-| `publishedAt` | `string`  | yes      | 공개일. `YYYY-MM-DD` 형식                               |
-| `draft`       | `boolean` | yes      | 공개 API에서는 항상 `false`                             |
-| `categoryId`  | `string`  | yes      | 글이 속한 카테고리 식별자                               |
-| `content`     | `string`  | yes      | Markdown 본문                                           |
+| Status | Description |
+| --- | --- |
+| `200` | 공개 글 상세 조회 성공 |
+| `400` | slug 형식이 유효하지 않음 |
+| `404` | 공개된 글이 없음 |
+| `405` | 지원하지 않는 method |
+| `500` | 서버 오류 |
 
-### Error Response `400 Bad Request`
+## 후속 인증 API
 
-```json
+로그인·JWT 단계에서 다음 경로를 구현합니다.
+
+- `POST /api/auth/signup`: 항상 `USER`로 회원가입
+- `POST /api/auth/login`: access token 응답과 refresh token Cookie 발급
+- `POST /api/auth/refresh`: refresh token 회전 후 새 access token 발급
+- `POST /api/auth/logout`: 저장된 refresh token 폐기와 Cookie 만료
+- `GET /api/users/me`: 로그인한 사용자 정보 조회
+
+공개 Blog 조회에는 인증이 필요 없고 글 질문 API는 로그인 사용자만 사용합니다. `/api/admin/**`는 `ADMIN`만 허용하지만 관리자 CRUD API와 화면은 현재 범위에 포함하지 않습니다.
+
+access token은 짧은 RSA 서명 JWT와 Bearer header를 사용합니다. refresh token은 hash로 저장하고 `HttpOnly`, `Secure`, `SameSite=Lax` Cookie로 전달하며 재발급 때 회전합니다. 상세 request·response 필드는 인증 구현 단계에서 Entity를 노출하지 않는 DTO와 테스트 사례를 기준으로 확정합니다.
+
+## 후속 AI API
+
+단일 Backend에서 Spring AI를 구현할 때 다음 경로를 추가합니다.
+
+```http
+POST /api/posts/{slug}/questions
+Authorization: Bearer <access-token>
+Content-Type: application/json
+
 {
-  "message": "Invalid path parameter"
+  "question": "이 글에서 좋은 프롬프트의 핵심은 무엇인가요?"
 }
 ```
 
-### Error Response `404 Not Found`
+이 API는 로그인 사용자만 사용하고, 해당 글의 title·description·content만 Context로 전달합니다. 세부 응답과 오류 계약은 Spring AI 단계에서 테스트 사례와 함께 확정합니다.
 
-```json
-{
-  "message": "Post not found"
-}
-```
+## 현재 제외
+
+- 관리자 CRUD API
+- 서버 검색과 실제 pagination
+- Tag API
+- Supabase API
+- 서비스 분리 전 내부 Context API
