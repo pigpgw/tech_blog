@@ -1,18 +1,24 @@
 # dependencies
 /node_modules/
-/.npm/
 
 # next.js
 /.next/
-/out/
 /next-env.d.ts
 
 # testing
 /coverage/
 
-# typescript and lint cache
+# typescript
 /*.tsbuildinfo
-/.eslintcache
 
 # vercel
 /.vercel/
+
+# environment
+/.env
+/.env.*
+!/.env.example
+
+# logs
+/*.log
+/npm-debug.log*
