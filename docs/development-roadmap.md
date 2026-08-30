@@ -1,6 +1,5 @@
 # pigpgw.cloud TODO
 
-
 ## 전체 구조
 
 ### 1차: 단일 Spring Boot 배포
@@ -115,16 +114,14 @@ MSA 단계에서는 `ai` package를 먼저 독립 Spring Boot `ai-service`로 �
 - [x] `src`, `content`, Next.js package·lock 파일과 관련 설정을 `frontend/`로 이동한다.
 - [x] `.git`, `README.md`, `AGENTS.md`와 공통 `docs/`는 저장소 루트에 유지한다.
 - [x] `frontend/`에서 `npm ci`, `lint`, `format:check`, `type-check`, `test`, `build`를 다시 실행한다.
-- [ ] 기존 Home·Resume·Blog URL과 Vercel 배포가 그대로 동작하는지 확인한다.
-- [ ] Vercel Root Directory를 `frontend`로 지정한다.
-- [ ] 저장소의 `backend/`에 Java 21·Spring Boot·Gradle Groovy DSL 프로젝트를 만든다.
-- [ ] Render Root Directory를 `backend`로 사용할 수 있게 Backend 내부에서 독립 빌드되도록 구성한다.
-- [ ] package를 `com.pigpgw.techblog`로 설정한다.
+- [x] 저장소의 `backend/`에 Java 21·Spring Boot·Gradle Groovy DSL 프로젝트를 만든다.
+- [x] Render Root Directory를 `backend`로 사용할 수 있게 Backend 내부에서 독립 빌드되도록 구성한다.
+- [x] package를 `com.pigpgw.techblog`로 설정한다.
 - [ ] Spring Web, JPA, PostgreSQL Driver, Validation, Flyway와 Actuator를 추가한다.
 - [ ] `post`, `category` 안에 `controller`, `service`, `repository`, `domain`, `dto`를 나누고 `common/config`, `common/exception`만 공통으로 둔다.
 - [ ] Entity 비노출, DTO `record`, 생성자 주입, Service 트랜잭션과 전역 예외 규칙을 확인한다.
 - [ ] DB URL·username·password는 환경변수로 주입하고 실제 Secret은 커밋하지 않는다.
-- [ ] Gradle Wrapper로 `./gradlew test`와 `./gradlew bootRun`이 실행되는지 확인한다.
+- [x] Gradle Wrapper로 `./gradlew test`와 `./gradlew bootRun`이 실행되는지 확인한다.
 
 #### Spring 핵심 적용 기준
 
