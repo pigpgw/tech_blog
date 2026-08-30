@@ -77,8 +77,8 @@ DB의 숫자 `categories.id`는 FK로 사용하고 API의 문자열 `categoryId`
 - [x] Category 자기참조와 Category 1:N Post 관계를 그린다.
 - [x] `IDENTITY`, `TEXT`, `TIMESTAMPTZ` 선택 이유를 기록한다.
 - [x] PK·FK·NOT NULL·DEFAULT·UNIQUE·CHECK를 포함한 V1 DDL을 작성하고 로컬 PostgreSQL 적용을 확인한다.
-- [ ] 보호된 `미분류` Category와 기존 글을 `V2__seed_initial_post.sql`로 작성한다.
-- [ ] 빈 PostgreSQL에 Flyway V1·V2가 순서대로 적용되는지 확인한다.
+- [x] 보호된 `미분류` Category와 기존 글을 `V2__seed_initial_post.sql`로 작성한다.
+- [x] 빈 PostgreSQL에 Flyway V1·V2가 순서대로 적용되는지 확인한다.
 - [ ] 중복 slug와 잘못된 status가 제약조건으로 거부되는지 확인한다.
 - [ ] JOIN, 상태 필터, slug 조회와 발행일 정렬 SQL을 직접 작성한다.
 - [ ] `BEGIN` → UPDATE → 확인 → `ROLLBACK` 후 데이터 복원을 확인한다.
@@ -314,6 +314,6 @@ Eureka, Gateway, Kafka와 Outbox는 실제 필요가 생길 때만 추가합니�
 
 ## 다음 탐구 후보
 
-1단계 Frontend·Backend 분리, Spring Boot 초기 세팅과 Compose PostgreSQL 직접 연결, Flyway V1 Blog schema 적용은 완료했습니다. 다음 후보는 V1 제약조건 실패 동작을 직접 확인하고 `V2__seed_initial_post.sql`에 옮길 초기 데이터를 결정하는 것입니다.
+1단계 Frontend·Backend 분리, Spring Boot 초기 세팅과 Compose PostgreSQL 직접 연결, Flyway V1 Blog schema와 V2 초기 데이터 적용은 완료했습니다. 다음 후보는 중복 slug·잘못된 status의 제약조건 실패, 기본 조회 SQL과 transaction rollback을 직접 확인하는 것입니다.
 
 공통 code 문자열은 [에러 코드 계약](error-codes.md), Backend 예외 변환과 Frontend 오류 화면 기준은 [Frontend·Backend 오류 처리 설계](error-handling.md)를 따릅니다.

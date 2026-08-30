@@ -102,9 +102,10 @@ npm run dev
 - `tech_blog` Database와 `tech_blog_user` Role 생성
 - Spring Boot의 PostgreSQL 연결과 Actuator health `UP`
 - Backend test 성공
-- Flyway V1과 Blog Schema 적용
+- 빈 PostgreSQL에 Flyway V1·V2 순차 적용
+- `미분류`, 공개 Category와 기존 Markdown 글 초기 데이터 확인
 
-아직 새 clone·빈 Volume에서 다른 개발자가 수행한 전체 온보딩, Flyway V2, Hibernate Schema validation과 Blog API는 완료하지 않았습니다.
+아직 새 clone·빈 Volume에서 다른 개발자가 수행한 전체 온보딩, Hibernate Schema validation과 Blog API는 완료하지 않았습니다.
 
 ## 공통 원칙
 

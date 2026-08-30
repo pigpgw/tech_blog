@@ -17,7 +17,7 @@ Spring AI 질문과 답변은 현재 저장하지 않으므로 2차와 3차 모�
 - **전체 목표 ERD**는 2차의 Blog, 로그인과 관리자 게시글 관리가 모두 구현된 뒤의 테이블 구조이며 3차에서도 그대로 유지됩니다.
 - **Migration 단계별 변화**는 빈 DB가 V1, V2, V3를 거치며 어떻게 바뀌는지 설명합니다.
 - **dbdiagram.io DBML**은 최종 구조를 시각화하는 코드입니다. 이를 그대로 V1 SQL로 내보내지 않습니다.
-- V1 Blog schema는 구현해 로컬 PostgreSQL 적용을 확인했습니다. V2 초기 데이터와 V3 Auth schema는 설계 상태입니다.
+- V1 Blog schema와 V2 초기 데이터는 구현해 빈 로컬 PostgreSQL의 순차 적용을 확인했습니다. V3 Auth schema는 설계 상태입니다.
 
 ## 전체 목표 ERD
 
@@ -116,7 +116,7 @@ erDiagram
 | V2   | Data   | 보호된 `미분류`와 기존 공개 Markdown Category·Post 추가         | seed 적용 후 공개 글과 경로가 원본과 일치하는지 검증 |
 | V3   | Schema | User·Email Verification·Refresh Token과 `posts.created_by` 추가 | 인증·이메일 token 제약조건과 작성자 FK 검증          |
 
-V1은 로컬 PostgreSQL의 `flyway_schema_history`에서 적용 성공을 확인했고 `categories`, `posts`, PK·FK·UNIQUE·CHECK와 FK index가 생성된 것을 확인했습니다. 제약조건별 실패 동작과 빈 환경의 V1·V2 연속 적용은 후속 단계에서 검증합니다.
+빈 로컬 PostgreSQL의 `flyway_schema_history`에서 V1·V2 순차 적용 성공을 확인했습니다. V1은 `categories`, `posts`, PK·FK·UNIQUE·CHECK와 FK index를 생성하고, V2는 `미분류`, `ai`, `ai/prompt-engineering` Category와 기존 공개 Markdown 글을 추가합니다. 제약조건별 실패 동작은 후속 단계에서 검증합니다.
 
 ```mermaid
 flowchart LR
@@ -382,6 +382,7 @@ Auth migration에서는 다음 항목을 구현합니다.
 - 파일: `backend/src/main/resources/db/migration/V2__seed_initial_post.sql`
 - 범위: 보호된 최상위 `미분류` Category와 기존 공개 Markdown Category·Post 데이터
 - 구조 변경: 없음
+- 상태: 빈 로컬 PostgreSQL의 Flyway 순차 적용과 원본 Markdown 본문 일치 확인
 
 ### V3 Auth schema
 
