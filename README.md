@@ -155,7 +155,7 @@ Java 21을 사용합니다. 최소 Spring Boot Backend와 Compose PostgreSQL이 
 
 처음 실행하거나 특정 세팅을 복습할 때는 [로컬 세팅 안내](docs/setup/README.md)에서 빠른 시작 또는 Backend·Database·연결·Flyway 문서를 선택합니다.
 
-Backend가 같은 폴더의 `.env`를 읽어 Compose PostgreSQL에 연결되고 Actuator health가 `UP`을 반환하는 것까지 확인했습니다. Flyway V1으로 Blog schema를 적용했으며 다음 단계는 제약조건 동작 검증과 V2 초기 데이터입니다.
+Backend가 같은 폴더의 `.env`를 읽어 Compose PostgreSQL에 연결되고 Actuator health가 `UP`을 반환하는 것까지 확인했습니다. Flyway V1으로 Blog schema를 만들고 V2로 `미분류`, 공개 Category와 기존 글을 추가했습니다. 다음 단계는 제약조건 실패 동작과 기본 조회 SQL 검증입니다.
 
 ```bash
 cd backend

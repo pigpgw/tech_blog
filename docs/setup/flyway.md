@@ -50,12 +50,12 @@ V{번호}__{설명}.sql
 | 버전 | 파일                         | 역할                                  | 상태      |
 | ---- | ---------------------------- | ------------------------------------- | --------- |
 | V1   | `V1__create_blog_schema.sql` | `categories`, `posts`와 제약조건 생성 | 적용 확인 |
-| V2   | `V2__seed_initial_post.sql`  | `미분류`와 기존 공개 글 초기 데이터   | 미구현    |
+| V2   | `V2__seed_initial_post.sql`  | `미분류`와 기존 공개 글 초기 데이터   | 적용 확인 |
 | V3   | `V3__create_auth_schema.sql` | User·Email·Refresh Token Schema       | 설계      |
 
 한 파일에는 이름으로 설명할 수 있는 하나의 Schema 또는 Data 변경 목적만 둡니다.
 
-## V1 적용
+## V1·V2 적용
 
 Spring Boot는 기존 datasource를 사용해 시작 시 migration을 자동 적용합니다.
 
@@ -65,7 +65,7 @@ cd backend
 ./gradlew bootRun
 ```
 
-최초 적용에서는 Flyway가 `flyway_schema_history`를 만들고 V1 SQL을 실행합니다. 이미 적용된 DB에서는 checksum을 검증하고 다시 실행하지 않습니다.
+빈 PostgreSQL에서는 Flyway가 `flyway_schema_history`를 만들고 V1, V2를 순서대로 실행합니다. V1까지 적용된 DB에서는 checksum을 검증한 뒤 V2만 실행하며 이미 성공한 migration은 다시 실행하지 않습니다.
 
 ## 적용 결과 확인
 
@@ -73,7 +73,7 @@ cd backend
 docker compose exec postgres psql -U tech_blog_user -d tech_blog -c "SELECT installed_rank, version, description, success FROM flyway_schema_history ORDER BY installed_rank;"
 ```
 
-V1의 `success`가 `true`이면 정상입니다.
+V1과 V2의 `success`가 모두 `true`이면 정상입니다.
 
 ```bash
 docker compose exec postgres psql -U tech_blog_user -d tech_blog -c "\dt"
@@ -100,7 +100,7 @@ Docker init SQL과 Flyway에서 같은 테이블을 중복 생성하지 않습�
 
 ## 적용된 migration 변경 금지
 
-Flyway는 적용된 파일의 checksum을 기록합니다. 적용 후 V1을 수정하면 다른 개발자·CI·운영 DB의 이력과 달라집니다.
+Flyway는 적용된 파일의 checksum을 기록합니다. 적용 후 migration을 수정하면 다른 개발자·CI·운영 DB의 이력과 달라집니다.
 
 - 이미 적용하거나 공유한 migration은 수정하지 않음
 - Schema 변경은 다음 번호의 migration으로 추가
@@ -139,8 +139,9 @@ Flyway 오류의 SQLSTATE, constraint 이름과 실패한 migration 버전을 �
 ## 완료 기준
 
 - Flyway starter와 PostgreSQL 모듈 포함
-- V1 적용 이력 성공
+- 빈 PostgreSQL의 V1·V2 적용 이력 성공
 - `categories`, `posts`, PK·FK·UNIQUE·CHECK와 FK index 생성 확인
+- `미분류`, 공개 Category와 기존 Markdown 글 seed 확인
 - migration 변경 원칙 문서화
 
 다음 단계: [개발 체크포인트의 JPA Blog 읽기 API](../development-roadmap.md#3-jpa-blog-읽기-api)
