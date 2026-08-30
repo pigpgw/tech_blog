@@ -14,6 +14,7 @@
 ## 작업 전 확인
 
 - `README.md`, 루트 `AGENTS.md`와 현재 경로에 더 가까운 `AGENTS.md`를 확인한다.
+- 팀 작업 흐름은 이 문서, 로컬 온보딩과 단계별 세팅은 `docs/setup/README.md`를 확인한다.
 - `docs`에서는 현재 작업과 관련된 문서만 확인한다.
 - 문서와 코드가 다르면 현재 코드를 먼저 확인하고 문서를 갱신한다.
 
@@ -24,6 +25,7 @@
 - 문서만 수정한 경우에는 필요한 최소 검증만 수행한다.
 - 체크박스는 코드, 테스트, HTTP, 화면 또는 배포 결과가 실제로 확인됐을 때만 완료한다.
 - 결과에는 실행한 명령, 성공·실패, 실패 원인과 미실행 항목을 구분해 적는다.
+- Backend와 Frontend의 오류 code를 추가·변경할 때는 `docs/error-codes.md`를 함께 갱신한다.
 
 ## GitHub 작업 흐름
 
@@ -34,6 +36,18 @@
 
 브랜치는 `feature/<slug>`, `fix/<slug>`, `docs/<slug>`, `chore/<slug>` 형식을 사용하고 `<slug>`는 영어 kebab-case로 작성한다.
 
+## 학습과 팀 확장 기준
+
+- SKALA 수업 내용을 복기할 때는 개인 환경에서 한 번에 개념 하나를 직접 실행하고 결과를 확인한다.
+- 처음부터 팀 자동화를 완성하지 않고 수동 실행으로 원리를 확인한 뒤 반복 가능한 설정으로 옮긴다.
+- Docker PostgreSQL은 `docker run` 학습 → PostgreSQL Compose 재현 → Spring 직접 연결 → Spring 컨테이너화 순서로 진행한다.
+- 개인 개발 흐름이 검증된 뒤 여러 개발자가 독립적으로 clone·실행·검증할 수 있는 온보딩과 CI로 확장한다.
+- 개인 절대 경로, 로컬 계정명, 실제 Secret과 개인에게만 존재하는 설정에 의존하지 않는다.
+- 새 환경변수는 소유 프로젝트의 `.env.example`과 실행 문서를 같은 변경에서 갱신한다.
+- API·오류 code·DB migration·공개 URL처럼 다른 작업자가 의존하는 계약은 관련 문서와 호환성 영향을 함께 갱신한다.
+- 이미 공유되거나 적용된 Flyway migration은 수정하지 않고 새 버전으로 변경한다.
+- 환경 설정은 새 컴퓨터에서 반복 가능한 명령으로 제공하고 실제 새 환경 검증 전에는 온보딩 완료로 기록하지 않는다.
+
 ## 프로젝트 기준
 
 - `frontend`: Next.js App Router, React, TypeScript, Tailwind CSS와 shadcn/ui
@@ -43,7 +57,7 @@
 
 현재 Home, Resume, Blog 목록·상세·카테고리, 검색, Markdown과 공개 URL을 보존한다.
 Frontend는 Vercel Root Directory `frontend`, Backend는 Render Root Directory `backend`를 사용한다.
-상세 구현 순서와 제외 범위는 `README.md`, `docs/development-roadmap.md`, `docs/api-spec.md`와 최신 `docs/decision-log.md`를 따른다.
+현재 개발 흐름과 제외 범위는 `README.md`, `docs/development-roadmap.md`, `docs/api-spec.md`와 최신 `docs/decision-log.md`를 참고하되 현재 코드와 검증 결과를 우선한다.
 
 ## 학습 진행 방식
 
