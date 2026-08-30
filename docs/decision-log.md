@@ -172,7 +172,10 @@
 
 ## 2026-08-29: SKALA 복습형 Spring·PostgreSQL 전환
 
-- 상태: 결정
+- 상태: 일부 대체됨
+- 후속 변경:
+  - 관리자 CRUD 제외는 `관리자 전용 게시글 관리와 Auth ERD 확장` 결정으로 대체됐다.
+  - AI 분리는 `3단계 아키텍처와 Spring AI 분리 시점`의 운영 근거 기준을 따른다.
 - 배경:
   - 현재 Next.js에는 Home, Resume, Blog 목록·상세, 카테고리 경로, 목록 검색과 Markdown 글이 이미 구현되어 있다.
   - 기존 장기 계획은 Supabase 관리자 CRUD와 모노레포·Cloudflare 전환을 포함하지만, 현재 학습 목표는 SKALA에서 배운 Spring Boot, PostgreSQL, Docker, Cloud, JWT, Spring AI와 MSA를 실제 서비스에 적용하는 것이다.
@@ -214,7 +217,10 @@
 
 ## 2026-08-29: Backend 위치와 최소 코드 컨벤션
 
-- 상태: 결정
+- 상태: 일부 대체됨
+- 후속 변경:
+  - Next.js 위치와 Vercel Root Directory는 `Frontend·Backend 형제 디렉터리로 변경` 결정으로 대체됐다.
+  - Backend 위치와 코드 컨벤션은 계속 유지한다.
 - 배경:
   - 기존 Next.js는 저장소 루트와 Vercel 설정을 유지해야 한다.
   - Backend를 시작하기 전에 위치, package, DTO·예외·트랜잭션·migration·테스트 기준이 없으면 구현 중 구조가 반복해서 바뀔 수 있다.
@@ -243,7 +249,10 @@
 
 ## 2026-08-29: 사용자·관리자 권한과 Token 경계
 
-- 상태: 결정
+- 상태: 일부 대체됨
+- 후속 변경:
+  - 관리자 CRUD와 이메일 인증 제외는 `관리자 전용 게시글 관리와 Auth ERD 확장` 결정으로 대체됐다.
+  - JWT, Role과 Token 보안 기준은 계속 유지한다.
 - 배경:
   - Blog 조회는 공개 기능이지만 Spring AI 질문과 이후 관리자 기능은 사용자 식별과 권한 검사가 필요하다.
   - access token과 장기 token의 저장 위치, ADMIN 생성 방식과 401·403 기준을 미리 분리하지 않으면 인증 기능이 Frontend와 운영 Secret에 강하게 섞일 수 있다.
@@ -288,7 +297,9 @@
 
 ## 2026-08-29: 단일 Spring Boot 우선과 추가 MSA 판단 시점
 
-- 상태: 결정
+- 상태: 일부 대체됨
+- 후속 변경:
+  - AI 기능은 운영 후 자동으로 분리하지 않고 `3단계 아키텍처와 Spring AI 분리 시점`에 정의한 근거가 확인될 때만 분리한다.
 - 결정:
   - Blog·Auth·AI는 단일 Spring Boot 애플리케이션에서 먼저 개발·배포한다.
   - 운영 흐름을 확인한 뒤 AI를 첫 번째 `ai-service`로 분리한다.
@@ -306,9 +317,11 @@
   - `Next.js 루트 유지, backend/ 추가` 구조를 대체한다.
 - 결정:
   - 같은 저장소 안에 `frontend/`와 `backend/`를 형제 디렉터리로 둔다.
-  - 현재 루트의 Next.js는 기준선 확인 후 `frontend/`로 이동하고 모든 검증과 운영 URL을 다시 확인한다.
+  - 루트의 Next.js를 기준선 확인 후 `frontend/`로 이동하고 모든 검증과 운영 URL을 다시 확인한다.
   - `.git`, `README.md`, `AGENTS.md`와 공통 `docs/`는 저장소 루트에 유지한다.
   - Vercel Root Directory는 `frontend`, Render Root Directory는 `backend`로 지정한다.
+- 적용 결과:
+  - Next.js 이동과 Frontend 검증을 완료했고 Vercel Root Directory를 `frontend`로 사용한다.
 - 제외:
   - GitHub 연동 목적을 확인하지 않은 OAuth·Webhook 선행 구현
 
