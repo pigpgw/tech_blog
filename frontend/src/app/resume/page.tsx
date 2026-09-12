@@ -1,5 +1,5 @@
 import { PrintResume } from "@/components/resume/PrintResume";
-import { ArrowUpRight, Mail, Phone } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, Mail, Phone } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -143,7 +143,12 @@ export default function ResumePage() {
           <h1 className="page-title serif">
             A bit <em>about me.</em>
           </h1>
-          <PrintResume />
+          <div className="resume-actions">
+            <a className="small-link" href="/park-geon-woo-resume.pdf" download>
+              이력서 PDF 다운로드 <ArrowDownToLine size={15} aria-hidden="true" />
+            </a>
+            <PrintResume />
+          </div>
         </div>
       </header>
       <section className="resume-intro" aria-labelledby="resume-name">

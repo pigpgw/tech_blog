@@ -578,6 +578,12 @@ a {
   justify-content: space-between;
   gap: 24px;
 }
+.resume-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 .page-number {
   font-family: var(--serif);
   font-size: 52px;

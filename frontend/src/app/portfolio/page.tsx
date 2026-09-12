@@ -38,9 +38,9 @@ export default function PortfolioPage() {
           >
             <ArrowDownToLine size={16} /> 포트폴리오 PDF
           </a>
-          <Link href="/resume">
-            이력서 <ArrowUpRight size={16} />
-          </Link>
+          <a href="/park-geon-woo-resume.pdf" download>
+            이력서 PDF <ArrowDownToLine size={16} />
+          </a>
           <a href="https://github.com/pigpgw">
             GitHub <ArrowUpRight size={16} />
           </a>

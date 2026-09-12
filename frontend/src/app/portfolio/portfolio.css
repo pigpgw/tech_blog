@@ -775,17 +775,14 @@
   }
   .pf-print-cover,
   .pf-print-overview {
-    break-after: page;
+    break-after: auto;
     padding: 0;
   }
   .pf-print-cases {
-    break-after: page;
+    break-after: auto;
     padding: 0;
   }
-  .pf-print article:last-child .pf-print-cases {
-    break-after: auto;
-  }
-  .pf-print article:last-child .pf-print-cases > section:nth-child(3) {
+  .pf-print article + article .pf-print-overview {
     break-before: page;
   }
   .pf-print h2,
@@ -793,7 +790,7 @@
     break-after: avoid;
   }
   .pf-print section {
-    break-inside: avoid;
+    break-inside: auto;
     margin: 20px 0;
   }
   .pf-print p {
