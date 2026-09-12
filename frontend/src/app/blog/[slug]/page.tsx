@@ -1,131 +1,157 @@
 import Link from "next/link";
-import { ChevronLeft, Clock3, NotebookPen } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
-import "highlight.js/styles/github.css";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { BlogCategoryBadge } from "@/components/blog/BlogCategoryBadge";
+import {
+  CodeBlock,
+  ReadingProgress,
+} from "@/components/blog/ArticleInteractions";
 import {
   getBlogCategories,
   getBlogPostDetail,
   getBlogPosts,
 } from "@/services/blog";
 import { buildCategoryLabelSegments } from "@/lib/blog-categories";
-
-type Props = {
-  params: Promise<{ slug: string }>;
-};
-
+import {
+  formatPublishedDate,
+  getArticleHeadings,
+  getReadingMinutes,
+} from "@/lib/blog-presentation";
+type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const posts = await getBlogPosts();
-  const post = posts.find((post) => post.slug === slug);
-
-  if (!post) {
-    return {
-      title: "글을 찾을 수 없습니다",
-      description: "요청한 블로그 글을 찾을 수 없습니다.",
-    };
-  }
-
-  return {
-    title: post.title,
-    description: post.description,
-  };
+  const post = (await getBlogPosts()).find((item) => item.slug === slug);
+  return post
+    ? { title: post.title, description: post.description }
+    : {
+        title: "글을 찾을 수 없습니다",
+        description: "요청한 블로그 글을 찾을 수 없습니다.",
+      };
 }
-
 export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return (await getBlogPosts()).map((post) => ({ slug: post.slug }));
 }
-
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function Page({ params }: Props) {
   const { slug } = await params;
   const [posts, categories] = await Promise.all([
     getBlogPosts(),
     getBlogCategories(),
   ]);
   const summary = posts.find((post) => post.slug === slug);
-
   if (!summary) notFound();
-
-  const blogItem = await getBlogPostDetail(summary.id);
-
-  if (!blogItem) notFound();
-
-  const titleId = "blog-post-title";
-  const categoryLabelSegments = buildCategoryLabelSegments(
-    blogItem.categoryId,
-    categories,
-  );
-
+  const post = await getBlogPostDetail(summary.id);
+  if (!post) notFound();
+  const headings = getArticleHeadings(post.content);
   return (
-    <article
-      aria-labelledby={titleId}
-      className="flex flex-1 flex-col py-10 sm:py-14"
-    >
-      <div className="flex items-center justify-between gap-4">
-        <Link
-          href="/blog"
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
-        >
-          <ChevronLeft className="size-4" aria-hidden="true" />
-          목록으로 돌아가기
+    <>
+      <ReadingProgress />
+      <div className="article-shell">
+        <Link className="article-back" href="/blog">
+          <ArrowLeft size={15} aria-hidden="true" /> 모든 기록으로 돌아가기
         </Link>
-      </div>
-
-      <header className="mt-6 rounded-[32px] border border-slate-200/80 bg-linear-to-br from-white via-white to-slate-50 p-7 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_48px_rgba(15,23,42,0.08)] sm:p-10">
-        <div className="flex flex-wrap items-center gap-3 text-sm">
-          <BlogCategoryBadge labelSegments={categoryLabelSegments} />
-          <time
-            dateTime={blogItem.publishedAt}
-            className="inline-flex min-h-9 items-center gap-2 rounded-full bg-slate-100 px-3 font-medium text-slate-600"
+        <article aria-labelledby="article-title">
+          <header className="article-header">
+            <div className="meta">
+              <BlogCategoryBadge
+                labelSegments={buildCategoryLabelSegments(
+                  post.categoryId,
+                  categories,
+                )}
+              />
+              <span>DEVELOPMENT NOTES</span>
+            </div>
+            <h1 id="article-title">{post.title}</h1>
+            <p className="dek">{post.description}</p>
+            <div className="byline">
+              <span className="avatar" aria-hidden="true">
+                g
+              </span>
+              <span>박건우</span>
+              <span aria-hidden="true">·</span>
+              <time dateTime={post.publishedAt}>
+                {formatPublishedDate(post.publishedAt)}
+              </time>
+              <span aria-hidden="true">·</span>
+              <span>약 {getReadingMinutes(post.content)}분 읽기</span>
+            </div>
+          </header>
+          <div
+            className={
+              "reading-layout" + (headings.length === 0 ? " no-toc" : "")
+            }
           >
-            <Clock3 className="size-4" aria-hidden="true" />
-            {blogItem.publishedAt}
-          </time>
-        </div>
-
-        <h1
-          id={titleId}
-          className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl"
-        >
-          {blogItem.title}
-        </h1>
-        <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600">
-          {blogItem.description}
-        </p>
-      </header>
-
-      <div className="mt-8 rounded-[32px] border border-slate-200 bg-white px-7 py-8 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_48px_rgba(15,23,42,0.08)] sm:px-10 sm:py-10">
-        <div className="flex items-center gap-2 text-sm font-semibold text-slate-500">
-          <NotebookPen className="size-4" aria-hidden="true" />
-          Article
-        </div>
-
-        <div className="blog-markdown mt-6">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight]}
-            components={{
-              h1: "h2",
-            }}
-          >
-            {blogItem.content}
-          </ReactMarkdown>
-        </div>
+            <div className="prose blog-markdown">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+                components={{
+                  h1: ({ node, ...props }) => (
+                    <h2
+                      {...props}
+                      id={"section-" + node?.position?.start.line}
+                    />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2
+                      {...props}
+                      id={"section-" + node?.position?.start.line}
+                    />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3
+                      {...props}
+                      id={"section-" + node?.position?.start.line}
+                    />
+                  ),
+                  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+                  table: ({ children }) => (
+                    <div
+                      className="markdown-table"
+                      tabIndex={0}
+                      role="region"
+                      aria-label="표"
+                    >
+                      <table>{children}</table>
+                    </div>
+                  ),
+                }}
+              >
+                {post.content}
+              </ReactMarkdown>
+              <div className="article-end">
+                <span className="muted">읽어주셔서 감사합니다.</span>
+                <Link className="small-link" href="/blog">
+                  다른 기록 읽기 <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+            {headings.length > 0 && (
+              <nav className="article-toc" aria-label="글 목차">
+                <p className="eyebrow">IN THIS NOTE</p>
+                {headings.map((heading) => (
+                  <a
+                    key={heading.id}
+                    href={"#" + heading.id}
+                    className={
+                      heading.level === 3 ? "toc-subheading" : undefined
+                    }
+                  >
+                    {heading.title}
+                  </a>
+                ))}
+                <div className="sidebar-note">
+                  <span className="serif">Read slowly.</span>
+                </div>
+              </nav>
+            )}
+          </div>
+        </article>
       </div>
-    </article>
+    </>
   );
 }
