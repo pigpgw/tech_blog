@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { getBlogPosts } from "@/services/blog";
+import { portfolioProjects } from "@/content/portfolio";
 
 const buildUrl = (pathname: string) => {
   return new URL(pathname, SITE_URL).toString();
@@ -29,6 +30,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   return [
+    { url: buildUrl("/portfolio") },
+    ...portfolioProjects.map(({ slug }) => ({
+      url: buildUrl(`/portfolio/${slug}`),
+    })),
     {
       url: buildUrl("/"),
     },
@@ -38,6 +43,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: buildUrl("/resume"),
+    },
+    {
+      url: buildUrl("/lab"),
     },
     ...posts.map((post) => ({
       url: buildUrl(`/blog/${post.slug}`),

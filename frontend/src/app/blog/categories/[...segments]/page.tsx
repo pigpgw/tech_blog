@@ -1,24 +1,21 @@
 import { notFound } from "next/navigation";
 import { BlogListHeader } from "@/components/blog/BlogListHeader";
 import { BlogPostList } from "@/components/blog/BlogPostList";
+import { BlogCategories } from "@/components/blog/BlogCategories";
+import {
+  buildBlogCategoryLinks,
+  buildBlogListItems,
+  sortPublishedPosts,
+} from "@/lib/blog-presentation";
 import { buildCategoryLabelSegments } from "@/lib/blog-categories";
 import { getBlogCategories, getBlogPosts } from "@/services/blog";
-
-type Props = {
-  params: Promise<{ segments: string[] }>;
-};
-
+type Props = { params: Promise<{ segments: string[] }> };
 export const dynamicParams = false;
-
 export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-  const categoryPaths = Array.from(
-    new Set(posts.map((post) => post.categoryId)),
+  const posts = sortPublishedPosts(await getBlogPosts());
+  return Array.from(new Set(posts.map((post) => post.categoryId))).map(
+    (path) => ({ segments: path.split("/") }),
   );
-
-  return categoryPaths.map((categoryPath) => ({
-    segments: categoryPath.split("/"),
-  }));
 }
 export default async function BlogCategoryPage({ params }: Props) {
   const { segments } = await params;
@@ -27,31 +24,26 @@ export default async function BlogCategoryPage({ params }: Props) {
     getBlogPosts(),
     getBlogCategories(),
   ]);
-  const posts = allPosts
-    .filter((post) => {
-      return post.categoryId === categoryPath;
-    })
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-    );
-
-  if (posts.length === 0) notFound();
-
-  const postItems = posts.map((post) => ({
-    slug: post.slug,
-    title: post.title,
-    description: post.description,
-    publishedAt: post.publishedAt,
-    categoryLabelSegments: buildCategoryLabelSegments(
-      post.categoryId,
-      categories,
-    ),
-  }));
+  const allItems = buildBlogListItems(allPosts, categories);
+  const items = allItems.filter((post) => post.categoryId === categoryPath);
+  if (items.length === 0) notFound();
   return (
-    <div className="flex flex-1 flex-col py-10 sm:py-14">
-      <BlogListHeader />
-      <BlogPostList posts={postItems} />
-    </div>
+    <>
+      <BlogListHeader
+        count={items.length}
+        categoryLabel={buildCategoryLabelSegments(
+          categoryPath,
+          categories,
+        ).join(" / ")}
+      />
+      <div className="blog-layout">
+        <BlogCategories
+          categories={buildBlogCategoryLinks(allPosts, categories)}
+          total={allItems.length}
+          selectedId={categoryPath}
+        />
+        <BlogPostList posts={items} />
+      </div>
+    </>
   );
 }

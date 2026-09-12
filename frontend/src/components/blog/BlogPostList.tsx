@@ -1,90 +1,62 @@
 "use client";
 import { useState } from "react";
+import { Search } from "lucide-react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
-import type { ChangeEvent } from "react";
-
-type BlogPostListItem = {
-  slug: string;
-  title: string;
-  description: string;
-  publishedAt: string;
-  categoryLabelSegments: string[];
-};
-
-type BlogListProps = {
-  posts: BlogPostListItem[];
-};
-
-export const BlogPostList = ({ posts }: BlogListProps) => {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearchQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const filteredBlogPosts = posts.filter((post) =>
-    post.title.toLocaleLowerCase().includes(searchQuery.toLowerCase()),
+import type { BlogListItem } from "@/lib/blog-presentation";
+export const BlogPostList = ({ posts }: { posts: BlogListItem[] }) => {
+  const [query, setQuery] = useState("");
+  const filtered = posts.filter((post) =>
+    post.title.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
   );
-
-  const hasPosts = filteredBlogPosts.length > 0;
-  const resultLabel = searchQuery
-    ? `"${searchQuery}" 검색 결과 ${filteredBlogPosts.length}개`
-    : `전체 글 ${filteredBlogPosts.length}개`;
-
   return (
-    <section aria-labelledby="blog-list" className="mt-8 sm:mt-10">
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 id="blog-list" className="text-lg font-semibold text-slate-950">
-          전체 글
+    <section aria-labelledby="blog-list">
+      <div className="blog-toolbar">
+        <h2 id="blog-list" className="result-label">
+          {query.trim() ? "검색 결과" : "전체 기록"}{" "}
+          <strong>{String(filtered.length).padStart(2, "0")}</strong>
         </h2>
-        <div className="w-full sm:w-72">
-          <label htmlFor="blog-search" className="sr-only">
-            블로그 글 검색
-          </label>
+        <label className="search-field">
+          <Search size={15} aria-hidden="true" />
+          <span className="sr-only">블로그 글 검색</span>
           <input
             id="blog-search"
             type="search"
-            onChange={handleSearchQueryChange}
-            value={searchQuery}
+            placeholder="기록 속에서 제목 찾기"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
             aria-describedby="blog-search-status"
-            placeholder="검색할 블로그 제목을 입력하세요"
-            className="min-h-11 w-full rounded-full border border-slate-200 bg-white px-4 text-sm font-medium text-slate-950 shadow-sm ring-1 ring-slate-900/[0.03] transition outline-none placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20"
           />
-        </div>
+        </label>
       </div>
-
       <p id="blog-search-status" className="sr-only" role="status">
-        {resultLabel}
+        검색 결과 {filtered.length}개
       </p>
-
-      {hasPosts ? (
-        <ul className="grid gap-5">
-          {filteredBlogPosts.map((post) => (
+      {filtered.length ? (
+        <ul className="post-list">
+          {filtered.map((post) => (
             <li key={post.slug}>
-              <BlogPostCard
-                slug={post.slug}
-                title={post.title}
-                description={post.description}
-                publishedAt={post.publishedAt}
-                categoryLabelSegments={post.categoryLabelSegments}
-              />
+              <BlogPostCard {...post} />
             </li>
           ))}
         </ul>
       ) : (
-        <div className="rounded-[28px] border border-dashed border-slate-300 bg-white/70 px-6 py-12 text-center">
-          <p className="text-lg font-semibold text-slate-950">
-            {searchQuery
+        <div className="empty">
+          <p>
+            {query.trim()
               ? "검색 결과가 없습니다."
               : "아직 발행된 글이 없습니다."}
           </p>
-          <p className="mt-3 text-sm leading-7 text-slate-600">
-            {searchQuery
-              ? "다른 검색어로 다시 찾아보세요."
-              : "첫 번째 글을 정리하면 이 목록에 바로 노출됩니다."}
-          </p>
+          {query.trim() && (
+            <button className="reset-button" onClick={() => setQuery("")}>
+              검색 초기화
+            </button>
+          )}
         </div>
       )}
+      <div className="archive-end">
+        <span>차곡차곡 쌓인 생각들.</span>
+        <span>Learning in public.</span>
+      </div>
     </section>
   );
 };
