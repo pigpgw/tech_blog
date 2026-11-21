@@ -16,6 +16,20 @@ export const mockCategories = [
     order: 1,
   },
   {
+    id: "javascript",
+    name: "JavaScript",
+    slug: "javascript",
+    parentId: null,
+    order: 2,
+  },
+  {
+    id: "javascript/runtime",
+    name: "Runtime",
+    slug: "runtime",
+    parentId: "javascript",
+    order: 1,
+  },
+  {
     id: "category",
     name: "Category",
     slug: "category",
