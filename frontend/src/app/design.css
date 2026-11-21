@@ -1182,10 +1182,18 @@ a {
 .prose ul,
 .prose ol {
   padding-left: 22px;
-  margin: 20px 0;
+  margin: 14px 0;
 }
 .prose li {
-  margin: 8px 0;
+  margin: 4px 0;
+  line-height: 1.75;
+}
+.prose li > p {
+  margin: 0;
+}
+.prose li > ul,
+.prose li > ol {
+  margin: 4px 0;
 }
 .prose code {
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
@@ -1212,24 +1220,36 @@ a {
 }
 .code-label {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   background: var(--deep);
   color: #b9c5e1;
   border-bottom: 1px solid #53607d;
-  padding: 12px 20px;
-  margin-bottom: -23px;
+  padding: 11px 18px;
   margin-top: 25px;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.06em;
+}
+.code-language {
+  color: #f0f3fa;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 .copy-code {
   font-size: 10px;
   color: #e3e8f5;
   text-decoration: underline;
 }
+.copy-code:focus-visible {
+  outline: 2px solid #b8c7ff;
+  outline-offset: 3px;
+}
 .prose blockquote {
   margin: 26px 0;
   padding: 20px 24px;
+  border: 1px solid var(--line);
   border-left: 3px solid var(--brand);
   background: var(--surface);
   font-size: 15px;
@@ -2208,6 +2228,9 @@ body {
 }
 .prose .code-block {
   margin: 25px 0;
+  overflow: hidden;
+  border: 1px solid #53607d;
+  background: var(--deep);
 }
 .prose .code-block .code-label {
   margin: 0;
@@ -2215,6 +2238,7 @@ body {
 .prose .code-block pre {
   margin: 0;
   border-radius: 0;
+  border: 0;
 }
 .prose .code-block pre code {
   color: #e3e8f5;

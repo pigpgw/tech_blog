@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import type { Metadata } from "next";
+import { isValidElement, type ReactNode } from "react";
 import { BlogCategoryBadge } from "@/components/blog/BlogCategoryBadge";
 import {
   CodeBlock,
@@ -22,6 +23,45 @@ import {
   getReadingMinutes,
 } from "@/lib/blog-presentation";
 type Props = { params: Promise<{ slug: string }> };
+
+const languageLabels: Record<string, string> = {
+  bash: "Bash",
+  css: "CSS",
+  html: "HTML",
+  javascript: "JavaScript",
+  js: "JavaScript",
+  json: "JSON",
+  markdown: "Markdown",
+  md: "Markdown",
+  plaintext: "Plain text",
+  py: "Python",
+  python: "Python",
+  text: "Plain text",
+  ts: "TypeScript",
+  txt: "Plain text",
+  typescript: "TypeScript",
+  xml: "XML",
+};
+
+const getCodeLanguageLabel = (children: ReactNode): string => {
+  const codeElement = Array.isArray(children)
+    ? children.find((child) => isValidElement(child))
+    : children;
+
+  if (!isValidElement<{ className?: string }>(codeElement)) {
+    return "Plain text";
+  }
+
+  const className = codeElement.props.className;
+  const language =
+    typeof className === "string"
+      ? className.match(/(?:language|lang)-([\w-]+)/)?.[1]
+      : undefined;
+
+  if (!language) return "Plain text";
+  return languageLabels[language.toLowerCase()] ?? language;
+};
+
 export const dynamicParams = false;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -108,7 +148,11 @@ export default async function Page({ params }: Props) {
                       id={"section-" + node?.position?.start.line}
                     />
                   ),
-                  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+                  pre: ({ children }) => (
+                    <CodeBlock languageLabel={getCodeLanguageLabel(children)}>
+                      {children}
+                    </CodeBlock>
+                  ),
                   table: ({ children }) => (
                     <div
                       className="markdown-table"

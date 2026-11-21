@@ -21,7 +21,13 @@ export const ReadingProgress = () => {
   }, []);
   return <div ref={ref} className="reading-progress" aria-hidden="true" />;
 };
-export const CodeBlock = ({ children }: { children: ReactNode }) => {
+export const CodeBlock = ({
+  children,
+  languageLabel,
+}: {
+  children: ReactNode;
+  languageLabel: string;
+}) => {
   const preRef = useRef<HTMLPreElement>(null);
   const [message, setMessage] = useState("");
   const copy = async () => {
@@ -35,8 +41,8 @@ export const CodeBlock = ({ children }: { children: ReactNode }) => {
   return (
     <div className="code-block">
       <div className="code-label">
-        <span>CODE</span>
-        <button className="copy-code" onClick={copy}>
+        <span className="code-language">{languageLabel}</span>
+        <button type="button" className="copy-code" onClick={copy}>
           코드 복사
         </button>
       </div>
